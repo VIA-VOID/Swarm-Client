@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2369139859002416771}
   m_Layer: 0
   m_Name: Prefab_Campfire_Unlit
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,26 +23,36 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9046428374051729307}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8608486897544732814}
   - {fileID: 753226600544048584}
   - {fileID: 8401926753321744778}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &753226600543915848
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2369139859002416771}
     m_Modifications:
     - target: {fileID: 100000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
       propertyPath: m_Name
       value: SM_Campsite_Rocks_Unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -57,6 +67,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -67,14 +81,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -89,11 +95,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
 --- !u!4 &753226600544048584 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 78666b157dd3af4408d100651b7b698a, type: 3}
   m_PrefabInstance: {fileID: 753226600543915848}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8401926753321345802
@@ -101,11 +109,20 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2369139859002416771}
     m_Modifications:
     - target: {fileID: 100000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
       propertyPath: m_Name
       value: SM_Campsite_Ash
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
       propertyPath: m_LocalPosition.x
@@ -120,6 +137,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -130,14 +151,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -152,11 +165,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
 --- !u!4 &8401926753321744778 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 1d4d66ba1084d9f4385248aab8cc1601, type: 3}
   m_PrefabInstance: {fileID: 8401926753321345802}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8608486897544870414
@@ -164,11 +179,20 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2369139859002416771}
     m_Modifications:
     - target: {fileID: 100000, guid: 24713146f35be974ab53288063b68613, type: 3}
       propertyPath: m_Name
       value: SM_Campsite_Firewood_Used_Unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 24713146f35be974ab53288063b68613, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
       propertyPath: m_LocalPosition.x
@@ -183,6 +207,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -193,14 +221,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -215,10 +235,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24713146f35be974ab53288063b68613, type: 3}
 --- !u!4 &8608486897544732814 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 24713146f35be974ab53288063b68613,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 24713146f35be974ab53288063b68613, type: 3}
   m_PrefabInstance: {fileID: 8608486897544870414}
   m_PrefabAsset: {fileID: 0}
