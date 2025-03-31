@@ -57,8 +57,7 @@ public class TcpClientSocket
         Debug.Log("[TcpClientSocket] 수신 대기 시작");
         _clientSocket.BeginReceive(_recvBuffer, 0, _bufferSize, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
     }
-
-
+    
     private void ReceiveCallback(IAsyncResult ar)
     {
         try
