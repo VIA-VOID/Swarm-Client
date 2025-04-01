@@ -12,61 +12,80 @@ using UnityEditor;
 
 public class GridMapScannerDOTS : MonoBehaviour
 {
-    public int mapWidth = 5000;
-    public int mapHeight = 5000;
     public float tileSize = 1f;
-    public float maxSlopeAngle = 45f;
-    public float maxHeightThreshold = 3f;
+    public float minHeight = -168f;
+    public float maxHeight = -163.5f;
+    public string[] blockTags = { "Prop", "Tree", "Rock" }; // 장애물 태그만 유지
 
-    public string[] waterTags = { "Water" };
-    public string[] terrainTags = { "Terrain" };
-    public string[] blockerTags = { "Prop", "Tree", "Rock" };
-
-    public Renderer texturePreviewRenderer;
-    public GameObject textureQuad;
-
-    private NativeArray<Bounds> waterBounds;
-    private NativeArray<Bounds> terrainBounds;
-    private NativeArray<Bounds> blockerBounds;
     private NativeArray<byte> resultMap;
+    private NativeArray<Bounds> obstacleBounds;
+    private NativeArray<float> heightMap;
+
     private byte[] resultMapCopy;
 
+    public Renderer texturePreviewRenderer; // Quad의 MeshRenderer
+    public GameObject textureQuad;  
+
     private Terrain terrain;
-    private TerrainData terrainData;
+    private int mapWidth;
+    private int mapHeight;
 
     void Start()
     {
         terrain = Terrain.activeTerrain;
-        terrainData = terrain.terrainData;
+        mapWidth = Mathf.RoundToInt(terrain.terrainData.size.x / tileSize);
+        mapHeight = Mathf.RoundToInt(terrain.terrainData.size.z / tileSize);
         Scan();
     }
 
     void Scan()
     {
-        List<Bounds> waterList = CollectBoundsByTags(waterTags);
-        List<Bounds> terrainList = CollectBoundsByTags(terrainTags);
-        List<Bounds> blockerList = CollectBoundsByTags(blockerTags);
+        // 1. 장애물 오브젝트 찾기 (태그 기준 필터링)
+        List<Bounds> boundsList = new List<Bounds>();
+        foreach (string tag in blockTags)
+        {
+            GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject obj in taggedObjects)
+            {
+                Collider col = obj.GetComponent<Collider>();
+                
+                Debug.Log($"[TagCheck] {obj.name} 태그={obj.tag}, collider={(col != null ? "O" : "X")}");
 
-        waterBounds = new NativeArray<Bounds>(waterList.ToArray(), Allocator.TempJob);
-        terrainBounds = new NativeArray<Bounds>(terrainList.ToArray(), Allocator.TempJob);
-        blockerBounds = new NativeArray<Bounds>(blockerList.ToArray(), Allocator.TempJob);
+                if (col != null)
+                {
+                    boundsList.Add(col.bounds);
+                }
+            }
+        }
+
+        obstacleBounds = new NativeArray<Bounds>(boundsList.ToArray(), Allocator.TempJob);
         resultMap = new NativeArray<byte>(mapWidth * mapHeight, Allocator.TempJob);
+        heightMap = new NativeArray<float>(mapWidth * mapHeight, Allocator.TempJob);
+
+        // Terrain 높이 미리 샘플링
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                Vector3 worldPos = terrain.transform.position + new Vector3(x * tileSize, 0, y * tileSize);
+                float height = terrain.SampleHeight(worldPos) + terrain.transform.position.y;
+                heightMap[y * mapWidth + x] = height;
+            }
+        }
 
         GridCheckJob job = new GridCheckJob
         {
             mapWidth = mapWidth,
-            mapHeight = mapHeight,
             tileSize = tileSize,
-            startPosition = transform.position,
-            maxSlopeAngle = maxSlopeAngle,
-            maxHeight = maxHeightThreshold,
-            waterBounds = waterBounds,
-            terrainBounds = terrainBounds,
-            blockerBounds = blockerBounds,
-            result = resultMap
+            startPosition = terrain.transform.position,
+            obstacleBounds = obstacleBounds,
+            result = resultMap,
+            heightMap = heightMap,
+            minHeight = minHeight,
+            maxHeight = maxHeight
         };
 
-        JobHandle handle = job.Schedule(mapWidth * mapHeight, 64);
+        JobHandle handle = job.Schedule(resultMap.Length, 64);
         handle.Complete();
 
         Debug.Log("맵 스캔 완료!");
@@ -74,70 +93,56 @@ public class GridMapScannerDOTS : MonoBehaviour
         resultMapCopy = new byte[resultMap.Length];
         resultMap.CopyTo(resultMapCopy);
 
+        SaveResultToJson();
+        
         CreateTexturePreview();
 
-        waterBounds.Dispose();
-        terrainBounds.Dispose();
-        blockerBounds.Dispose();
+        obstacleBounds.Dispose();
+        heightMap.Dispose();
         resultMap.Dispose();
     }
 
-    List<Bounds> CollectBoundsByTags(string[] tags)
+    void SaveResultToJson()
     {
-        List<Bounds> boundsList = new();
-        foreach (string tag in tags)
-        {
-            foreach (var obj in GameObject.FindGameObjectsWithTag(tag))
-            {
-                if (obj.TryGetComponent(out Collider col))
-                    boundsList.Add(col.bounds);
-            }
-        }
-        return boundsList;
-    }
+        StringBuilder json = new StringBuilder();
 
-    void CreateTexturePreview()
-    {
-        Texture2D tex = new Texture2D(mapWidth, mapHeight, TextureFormat.RGB24, false);
-        tex.filterMode = FilterMode.Point;
-        Color[] colors = new Color[mapWidth * mapHeight];
+        json.AppendLine("{");
+        json.AppendLine($"\t\"mapSize\": {{");
+        json.AppendLine($"\t\t\"width\": {mapWidth},");
+        json.AppendLine($"\t\t\"height\": {mapHeight}");
+        json.AppendLine("\t},");
+        json.AppendLine("\t\"mapData\": [");
 
         for (int y = 0; y < mapHeight; y++)
         {
+            json.Append("\t\t\"");
             for (int x = 0; x < mapWidth; x++)
             {
-                int index = y * mapWidth + x;
-                colors[index] = resultMapCopy[index] == 1 ? Color.red : Color.green;
+                json.Append(resultMap[y * mapWidth + x] == 1 ? "1" : "0");
             }
+            json.AppendLine(y < mapHeight - 1 ? "\"," : "");
         }
 
-        tex.SetPixels(colors);
-        tex.Apply();
+        json.AppendLine("\t]");
+        json.AppendLine("}");
 
-        if (texturePreviewRenderer != null)
-            texturePreviewRenderer.sharedMaterial.mainTexture = tex;
+        string path = Application.dataPath + "/mapData.json";
+        File.WriteAllText(path, json.ToString());
 
-        if (textureQuad != null)
-        {
-            textureQuad.transform.localScale = new Vector3(mapWidth, mapHeight, 1);
-            textureQuad.transform.position = transform.position + new Vector3(mapWidth / 2f, 0, mapHeight / 2f);
-            textureQuad.transform.rotation = Quaternion.Euler(90, 0, 0);
-        }
+        Debug.Log("맵 JSON 저장 완료: " + path);
     }
 
     [BurstCompile]
     public struct GridCheckJob : IJobParallelFor
     {
         public int mapWidth;
-        public int mapHeight;
         public float tileSize;
         public Vector3 startPosition;
-        public float maxSlopeAngle;
+        public float minHeight;
         public float maxHeight;
 
-        [ReadOnly] public NativeArray<Bounds> waterBounds;
-        [ReadOnly] public NativeArray<Bounds> terrainBounds;
-        [ReadOnly] public NativeArray<Bounds> blockerBounds;
+        [ReadOnly] public NativeArray<Bounds> obstacleBounds;
+        [ReadOnly] public NativeArray<float> heightMap;
         public NativeArray<byte> result;
 
         public void Execute(int index)
@@ -145,60 +150,60 @@ public class GridMapScannerDOTS : MonoBehaviour
             int x = index % mapWidth;
             int y = index / mapWidth;
 
-            Vector3 worldPos = startPosition + new Vector3(x + 0.5f, 0f, y + 0.5f) * tileSize;
-            Bounds tileBounds = new Bounds(worldPos + Vector3.up * 0.5f, Vector3.one * tileSize);
+            Vector3 tileCenter = startPosition + new Vector3(x + 0.5f, 0, y + 0.5f) * tileSize;
+            Bounds tileBounds = new Bounds(tileCenter + Vector3.up * 0.5f, Vector3.one * tileSize);
 
-            // 1. Blocker (Prop, Tree, Rock)
-            for (int i = 0; i < blockerBounds.Length; i++)
-                if (tileBounds.Intersects(blockerBounds[i])) { result[index] = 1; return; }
-
-            // 2. Water only?
-            bool hasWater = false;
-            for (int i = 0; i < waterBounds.Length; i++)
-                if (tileBounds.Intersects(waterBounds[i])) { hasWater = true; break; }
-
-            bool hasTerrain = false;
-            for (int i = 0; i < terrainBounds.Length; i++)
-                if (tileBounds.Intersects(terrainBounds[i])) { hasTerrain = true; break; }
-
-            if (hasWater && !hasTerrain) { result[index] = 1; return; }
-
-            // 3. Terrain 검사: 높이 + 경사도
-            float height = SampleTerrainHeight(worldPos);
-            float slope = SampleTerrainSlope(worldPos);
-
-            if (height > maxHeight || slope > maxSlopeAngle)
+            for (int i = 0; i < obstacleBounds.Length; i++)
             {
-                result[index] = 1;
+                if (tileBounds.Intersects(obstacleBounds[i]))
+                {
+                    result[index] = 1;
+                    return;
+                }
+            }
+
+            float sampledHeight = heightMap[y * mapWidth + x];
+            if (sampledHeight > maxHeight || sampledHeight < minHeight)
+            {
+                result[index] = 1; // 너무 높거나 너무 낮으면 이동 불가
                 return;
             }
 
-            result[index] = 0;
+            result[index] = 0; // 그 사이만 이동 가능
+        }
+    }
+
+    void CreateTexturePreview()
+    {
+        Texture2D tex = new Texture2D(mapWidth, mapHeight, TextureFormat.RGB24, false);
+        tex.filterMode = FilterMode.Point;
+
+        Color[] colors = new Color[mapWidth * mapHeight];
+
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                int index = y * mapWidth + x;
+                byte value = resultMapCopy[index];
+                colors[index] = value == 1 ? Color.red : Color.green;
+            }
+        }
+        tex.SetPixels(colors);
+        tex.Apply();
+
+        // Apply to material
+        if (texturePreviewRenderer != null)
+        {
+            texturePreviewRenderer.sharedMaterial.mainTexture = tex;
         }
 
-        float SampleTerrainHeight(Vector3 worldPos)
+        // Resize and position quad
+        if (textureQuad != null)
         {
-#if UNITY_EDITOR
-            Terrain terrain = Terrain.activeTerrain;
-            return terrain.SampleHeight(worldPos);
-#else
-            return 0f;
-#endif
-        }
-
-        float SampleTerrainSlope(Vector3 worldPos)
-        {
-#if UNITY_EDITOR
-            Terrain terrain = Terrain.activeTerrain;
-            TerrainData data = terrain.terrainData;
-            Vector3 localPos = terrain.transform.InverseTransformPoint(worldPos);
-            float normX = localPos.x / data.size.x;
-            float normZ = localPos.z / data.size.z;
-            Vector3 normal = data.GetInterpolatedNormal(normX, normZ);
-            return Vector3.Angle(Vector3.up, normal);
-#else
-            return 0f;
-#endif
+            textureQuad.transform.localScale = new Vector3(mapWidth, mapHeight, 1);
+            textureQuad.transform.position = terrain.transform.position + new Vector3(mapWidth / 2f, 0, mapHeight / 2f);
+            textureQuad.transform.rotation = Quaternion.Euler(90, 0, 0);
         }
     }
 }
