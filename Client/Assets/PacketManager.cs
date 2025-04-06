@@ -23,8 +23,9 @@ public struct PacketMessage
     public short a;
     public int b;
     public short c;
-    public int size; // msg 길이
-    public string msg; // 문자열은 따로 처리
+    public int msgLength;
+    
+    //가변길이는 별도로 처리
 }
 
 #endregion
@@ -35,7 +36,8 @@ public class PacketManager : MonoBehaviour
     private byte[] _recvBuffer = new byte[4096];
     private PacketHeader sendHeader;
     private PacketMessage sendMessage;
-
+    private string sendMsgText;
+    
     private NetworkBufferManager _bufferManager = new NetworkBufferManager();
 
     public string serverIp = "127.0.0.1";
@@ -62,6 +64,7 @@ public class PacketManager : MonoBehaviour
     {
         try
         {
+            // NetStream 대신 사용
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             await _socket.ConnectAsync(IPAddress.Parse(serverIp), serverPort);
             Debug.Log($"[Socket] 연결됨: {serverIp}:{serverPort}");
@@ -86,9 +89,10 @@ public class PacketManager : MonoBehaviour
         sendMessage.a = 1;
         sendMessage.b = 1234;
         sendMessage.c = 2;
-        sendMessage.msg = message;
+        sendMsgText = message;
 
-        byte[] packet = BuildPacket();
+        byte[] packet = BuildPacketWithMarshal();
+        // 패킷 형식 자체를 보냄
         await _socket.SendAsync(packet, SocketFlags.None);
         Debug.Log($"[Send] {packet.Length} bytes 보냄");
     }
@@ -101,18 +105,11 @@ public class PacketManager : MonoBehaviour
         {
             try
             {
-                //헤더 수신
                 int read = await _socket.ReceiveAsync(_recvBuffer.AsMemory(0, headerSize), SocketFlags.None);
                 if (read < headerSize) continue;
 
-                PacketHeader header;
-                using (var br = new BinaryReader(new MemoryStream(_recvBuffer, 0, headerSize)))
-                {
-                    header.type = br.ReadInt16();
-                    header.size = br.ReadInt32();
-                }
+                PacketHeader header = ByteToStructure<PacketHeader>(_recvBuffer);
 
-                // 바디 수신
                 int bodySize = header.size;
                 int offset = 0;
                 while (offset < bodySize)
@@ -134,61 +131,85 @@ public class PacketManager : MonoBehaviour
         }
     }
 
-    #region 패킷 조립 & 파싱
+    #region 패킷 조립, 파싱
 
-    byte[] BuildPacket()
+    byte[] BuildPacketWithMarshal()
     {
-        byte[] msgBytes = Encoding.UTF8.GetBytes(sendMessage.msg);
-        sendMessage.size = msgBytes.Length;
+        byte[] msgBytes = Encoding.UTF8.GetBytes(sendMsgText);
+        sendMessage.msgLength = msgBytes.Length;
 
         sendHeader.type = 100;
-        sendHeader.size = sizeof(short) + sizeof(int) + sizeof(short) + msgBytes.Length;
+        sendHeader.size = Marshal.SizeOf<PacketMessage>() + msgBytes.Length;
+        
+        int totalSize = Marshal.SizeOf<PacketHeader>() + sendHeader.size;
+        byte[] buffer = new byte[totalSize];
 
-        using (var ms = new MemoryStream())
-        using (var bw = new BinaryWriter(ms))
-        {
-            bw.Write(sendHeader.type);
-            bw.Write(sendHeader.size);
-            bw.Write(sendMessage.a);
-            bw.Write(sendMessage.b);
-            bw.Write(sendMessage.c);
-            bw.Write(sendMessage.size);
-            bw.Write(msgBytes);
-            return ms.ToArray();
-        }
+        int offset = 0;
+
+        // 헤더 사이즈 부터 메세지 길이만큼
+        byte[] headerBytes = StructureToBytes(sendHeader);
+        Buffer.BlockCopy(headerBytes, 0, buffer, offset, headerBytes.Length);
+        offset += headerBytes.Length;
+
+        byte[] fixedBytes = StructureToBytes(sendMessage);
+        Buffer.BlockCopy(fixedBytes, 0, buffer, offset, fixedBytes.Length);
+        offset += fixedBytes.Length;
+
+        Buffer.BlockCopy(msgBytes, 0, buffer, offset, msgBytes.Length);
+
+        return buffer;
     }
 
     void ReceivePacket(byte[] data)
     {
-        using (var ms = new MemoryStream(data))
-        using (var br = new BinaryReader(ms))
+        int offset = 0;
+
+        PacketHeader header = ByteToStructure<PacketHeader>(data, ref offset);
+        if (header.type != 100)
         {
-            PacketHeader header = new PacketHeader
-            {
-                type = br.ReadInt16(),
-                size = br.ReadInt32()
-            };
-
-            if (header.type != 100)
-            {
-                Debug.LogWarning("알 수 없는 패킷 타입");
-                return;
-            }
-
-            PacketMessage msg = new PacketMessage
-            {
-                a = br.ReadInt16(),
-                b = br.ReadInt32(),
-                c = br.ReadInt16(),
-                size = br.ReadInt32()
-            };
-
-            byte[] msgBytes = br.ReadBytes(msg.size);
-            msg.msg = Encoding.UTF8.GetString(msgBytes);
-
-            Debug.Log($"[Recv] a: {msg.a}, b: {msg.b}, c: {msg.c}, msgSize: {msg.size}, msg: {msg.msg}");
+            Debug.LogWarning("알 수 없는 패킷 타입");
+            return;
         }
+
+        PacketMessage fixedPart = ByteToStructure<PacketMessage>(data, ref offset);
+        string msg = Encoding.UTF8.GetString(data, offset, fixedPart.msgLength);
+
+        Debug.Log($"[Recv] a: {fixedPart.a}, b: {fixedPart.b}, c: {fixedPart.c}, msgSize: {fixedPart.msgLength}, msg: {msg}");
     }
 
+    // 구조체 바이트로 변경
+    static byte[] StructureToBytes<T>(T structure) where T : struct
+    {
+        // 변경시 마샬 적용
+        int size = Marshal.SizeOf<T>();
+        byte[] bytes = new byte[size];
+        IntPtr ptr = Marshal.AllocHGlobal(size);
+        Marshal.StructureToPtr(structure, ptr, false);
+        Marshal.Copy(ptr, bytes, 0, size);
+        Marshal.FreeHGlobal(ptr);
+        return bytes;
+    }
+
+    // 바이트를 구조체로
+    static T ByteToStructure<T>(byte[] data, ref int offset) where T : struct
+    {
+        // 마찬가지로 마샬 적용
+        int size = Marshal.SizeOf<T>();
+        IntPtr ptr = Marshal.AllocHGlobal(size);
+        Marshal.Copy(data, offset, ptr, size);
+        T result = Marshal.PtrToStructure<T>(ptr);
+        Marshal.FreeHGlobal(ptr);
+        offset += size;
+        return result;
+    }
+
+    static T ByteToStructure<T>(byte[] data) where T : struct
+    {
+        int offset = 0;
+        return ByteToStructure<T>(data, ref offset);
+    }
+    
     #endregion
 }
+
+
