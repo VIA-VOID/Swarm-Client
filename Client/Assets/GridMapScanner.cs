@@ -48,12 +48,16 @@ public class GridMapScannerDOTS : MonoBehaviour
             foreach (GameObject obj in taggedObjects)
             {
                 Collider col = obj.GetComponent<Collider>();
-                
                 Debug.Log($"[TagCheck] {obj.name} 태그={obj.tag}, collider={(col != null ? "O" : "X")}");
 
                 if (col != null)
                 {
                     boundsList.Add(col.bounds);
+                }
+                else
+                {
+                    // Collider가 없더라도 해당 위치를 장애물로 간주
+                    boundsList.Add(new Bounds(obj.transform.position, Vector3.one * tileSize));
                 }
             }
         }
@@ -94,7 +98,6 @@ public class GridMapScannerDOTS : MonoBehaviour
         resultMap.CopyTo(resultMapCopy);
 
         SaveResultToJson();
-        
         CreateTexturePreview();
 
         obstacleBounds.Dispose();
@@ -116,7 +119,7 @@ public class GridMapScannerDOTS : MonoBehaviour
         for (int y = 0; y < mapHeight; y++)
         {
             json.Append("\t\t\"");
-            for (int x = 0; x < mapWidth; x++)
+            for (int x = mapWidth - 1; x >= 0; x--) // 좌우 대칭으로 저장
             {
                 json.Append(resultMap[y * mapWidth + x] == 1 ? "1" : "0");
             }
@@ -150,7 +153,7 @@ public class GridMapScannerDOTS : MonoBehaviour
             int x = index % mapWidth;
             int y = index / mapWidth;
 
-            Vector3 tileCenter = startPosition + new Vector3(x + 0.5f, 0, y + 0.5f) * tileSize;
+            Vector3 tileCenter = startPosition + new Vector3(x + 0.5f, 0, y * tileSize + 0.5f * tileSize);
             Bounds tileBounds = new Bounds(tileCenter + Vector3.up * 0.5f, Vector3.one * tileSize);
 
             for (int i = 0; i < obstacleBounds.Length; i++)
@@ -165,11 +168,11 @@ public class GridMapScannerDOTS : MonoBehaviour
             float sampledHeight = heightMap[y * mapWidth + x];
             if (sampledHeight > maxHeight || sampledHeight < minHeight)
             {
-                result[index] = 1; // 너무 높거나 너무 낮으면 이동 불가
+                result[index] = 1;
                 return;
             }
 
-            result[index] = 0; // 그 사이만 이동 가능
+            result[index] = 0;
         }
     }
 
@@ -192,13 +195,11 @@ public class GridMapScannerDOTS : MonoBehaviour
         tex.SetPixels(colors);
         tex.Apply();
 
-        // Apply to material
         if (texturePreviewRenderer != null)
         {
             texturePreviewRenderer.sharedMaterial.mainTexture = tex;
         }
 
-        // Resize and position quad
         if (textureQuad != null)
         {
             textureQuad.transform.localScale = new Vector3(mapWidth, mapHeight, 1);
