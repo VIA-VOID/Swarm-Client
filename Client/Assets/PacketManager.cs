@@ -1,4 +1,7 @@
+using System;
 using System.IO;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public struct PacketHeader
@@ -18,15 +21,78 @@ public struct PacketMessage
 
 public class PacketManager : MonoBehaviour
 {
-    void Start()
+    private TcpClient _client;
+    private NetworkStream _stream;
+    private byte[] _recvBuffer = new byte[4096];
+    
+    public string serverIp = "127.0.0.1";
+    public int serverPort = 5000;
+    
+    async void Start()
     {
-        string testMessage = "Hello, Server";
-        var sendBuffer = SendPacket(1, 2222, 3, testMessage);
+        await ConnectToServer();
+    }
+    
+    async Task ConnectToServer()
+    {
+        try
+        {
+            _client = new TcpClient();
+            await _client.ConnectAsync(serverIp, serverPort);
+            _stream = _client.GetStream();
+            Debug.Log($"서버에 연결됨: {serverIp}:{serverPort}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"서버 연결 실패: {e.Message}");
+        }
+    }
+    
+    async Task SendToServer(byte[] data)
+    {
+        if (_stream == null)
+        {
+            Debug.LogError("네트워크 스트림이 없습니다.");
+            return;
+        }
 
-        Debug.Log($"[Send] {sendBuffer.Length} bytes");
+        try
+        {
+            await _stream.WriteAsync(data, 0, data.Length);
+            Debug.Log($"[Send] {data.Length} bytes 보냄");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"보내기 실패: {e.Message}");
+        }
+    }
+    
+    async Task ReceiveFromServer()
+    {
+        if (_stream == null)
+        {
+            Debug.LogError("네트워크 스트림이 없습니다.");
+            return;
+        }
 
-        // 수신 테스트 (Loopback)
-        ReceivePacket(sendBuffer);
+        try
+        {
+            int bytesRead = await _stream.ReadAsync(_recvBuffer, 0, _recvBuffer.Length);
+            if (bytesRead > 0)
+            {
+                byte[] actualData = new byte[bytesRead];
+                Array.Copy(_recvBuffer, actualData, bytesRead);
+                OnReceive(actualData);
+            }
+            else
+            {
+                Debug.Log("서버로부터 받은 데이터 없음");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"수신 실패: {e.Message}");
+        }
     }
     
     void OnReceive(byte[] recvBuffer)
