@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d65b086e7aeba35488ce22a49fd779b0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleDoor_B.prefab
+  uploadId: 601478

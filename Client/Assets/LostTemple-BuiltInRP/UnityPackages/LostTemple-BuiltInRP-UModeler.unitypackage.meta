@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b044a2387a61dac41bdf204adffdce9d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/UnityPackages/LostTemple-BuiltInRP-UModeler.unitypackage
+  uploadId: 601478

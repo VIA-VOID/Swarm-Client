@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 79cd65d8ad29f934491caa903bff3fc7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/MeshAssets/TempleFrameA_B.asset
+  uploadId: 601478

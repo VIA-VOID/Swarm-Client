@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0f0549dde96183a44a1f8be3f88adeaa
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleTile_G.prefab
+  uploadId: 601478

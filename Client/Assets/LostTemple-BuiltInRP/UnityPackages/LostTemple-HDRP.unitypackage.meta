@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f3f53ee059b45a4d9a5b9fc75e8aea9
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/UnityPackages/LostTemple-HDRP.unitypackage
+  uploadId: 601478

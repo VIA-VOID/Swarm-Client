@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ac340208ebdbe624f9349d5b571c1a0e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleStair_A.prefab
+  uploadId: 601478

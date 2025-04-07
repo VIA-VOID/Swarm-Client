@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a9204b493ee46954499f2bdfb65f70fb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleTerrain_A.mat
+  uploadId: 601478

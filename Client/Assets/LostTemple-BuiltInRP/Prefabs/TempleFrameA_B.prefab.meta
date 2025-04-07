@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b0501d32bc55cd842a09e56bce59489e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleFrameA_B.prefab
+  uploadId: 601478

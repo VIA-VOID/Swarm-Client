@@ -8367,27 +8367,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 41.64479
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 37.501656
+      value: 27.015375
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 41.64479
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -457
+      value: -261
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 136
+      value: -280
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2405
+      value: -1741
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8416,6 +8416,10 @@ PrefabInstance:
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908579219, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_Name
@@ -19234,6 +19238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660319f038c03de47ac185bc8f6ecb15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _recvBuffer: 
+  sendMsgText: 
   serverIp: 192.168.0.3
   serverPort: 7777
   message: 
@@ -32587,27 +32593,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 33.73228
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 17.330917
+      value: 5.137784
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 33.73228
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1710
+      value: -1028.3
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 71
+      value: -13.2
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1264
+      value: -900
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32636,6 +32642,10 @@ PrefabInstance:
     - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349112522908150195, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1349112522908579219, guid: 4fe912d12d4c7d447823fbaf2a08909e, type: 3}
       propertyPath: m_Name

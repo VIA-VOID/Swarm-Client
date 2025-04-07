@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c22ae288034f6e548bd32ec50720b454
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/MeshAssets/TempleTile_O.asset
+  uploadId: 601478
