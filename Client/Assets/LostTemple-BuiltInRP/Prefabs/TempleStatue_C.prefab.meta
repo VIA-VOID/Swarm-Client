@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e9c70514aa8270741968341c5d4f1b8e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleStatue_C.prefab
+  uploadId: 601478

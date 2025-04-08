@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5604bca7f29c0e64f99cd4ff1117c0e4
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleWall_B.prefab
+  uploadId: 601478

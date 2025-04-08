@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2e71eb77db1b6084ebf289195802fadc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/MeshAssets/TempleWall_C.asset
+  uploadId: 601478

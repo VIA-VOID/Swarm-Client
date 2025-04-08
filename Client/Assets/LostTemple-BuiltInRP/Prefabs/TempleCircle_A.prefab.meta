@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bea5de77ab0b75e4a8d56a921e7ce630
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TempleCircle_A.prefab
+  uploadId: 601478

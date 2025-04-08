@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dae828d5cae1bd94aab2f763e28d7d0d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleStatue_A.mat
+  uploadId: 601478

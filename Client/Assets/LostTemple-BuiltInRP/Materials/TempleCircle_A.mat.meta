@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 51125ee74d1473545b08bd394a87d1fc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleCircle_A.mat
+  uploadId: 601478

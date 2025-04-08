@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 64fb900ef09f4a8408fe16ffaa341bac
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Fx/ps_fire_mater.mat
+  uploadId: 601478

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a083df206171cd442ad47ea449fe5719
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/MeshAssets/TempleStair_B.asset
+  uploadId: 601478

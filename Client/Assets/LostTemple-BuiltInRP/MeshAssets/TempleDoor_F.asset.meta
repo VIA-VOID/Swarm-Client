@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b39b64943afc9294283f013c9159e87d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/MeshAssets/TempleDoor_F.asset
+  uploadId: 601478

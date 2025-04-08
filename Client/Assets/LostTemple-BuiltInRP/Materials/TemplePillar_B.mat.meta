@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 168d31c7e639f71488f4fbb4f78a9d1a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TemplePillar_B.mat
+  uploadId: 601478

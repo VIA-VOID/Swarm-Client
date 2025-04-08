@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bbfe7b52e1885d147a76f262d6967fc5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleFrameC_C.mat
+  uploadId: 601478

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 830133906d887b74cb2225a7685f504c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleDoor_D.mat
+  uploadId: 601478

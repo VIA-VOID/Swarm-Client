@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a344020c7836f9e40be76ae1fc0d96ec
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Materials/TempleGrass_A.mat
+  uploadId: 601478

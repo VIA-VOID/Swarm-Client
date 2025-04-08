@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4d1fa22d899e1ca46b2276ffda0f9c19
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 184661
+  packageName: The Lost Temple
+  packageVersion: 1.0.7
+  assetPath: Assets/LostTemple-BuiltInRP/Prefabs/TemplePillar_A.prefab
+  uploadId: 601478
