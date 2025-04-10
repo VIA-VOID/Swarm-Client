@@ -42,11 +42,16 @@ public class GridMapScannerDOTS : MonoBehaviour
     {
         // 1. 장애물 오브젝트 찾기 (태그 기준 필터링)
         List<Bounds> boundsList = new List<Bounds>();
+        float checkRange = Mathf.Max(mapWidth, mapHeight) * tileSize * 1.5f; // 여유를 두고
+        Vector3 center = terrain.transform.position + new Vector3(mapWidth / 2f, 0, mapHeight / 2f);
+
         foreach (string tag in blockTags)
         {
             GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tag);
             foreach (GameObject obj in taggedObjects)
             {
+                float dist = Vector3.Distance(center, obj.transform.position);
+                if (dist > checkRange) continue;
                 Collider col = obj.GetComponent<Collider>();
                 Debug.Log($"[TagCheck] {obj.name} 태그={obj.tag}, collider={(col != null ? "O" : "X")}");
 

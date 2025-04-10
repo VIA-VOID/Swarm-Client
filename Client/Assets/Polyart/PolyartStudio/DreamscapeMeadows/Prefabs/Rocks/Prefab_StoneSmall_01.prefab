@@ -159,10 +159,10 @@ GameObject:
   - component: {fileID: 8954046015142207241}
   - component: {fileID: 657135340131036754}
   - component: {fileID: 6027499674089617974}
-  - component: {fileID: 1214488670292909671}
+  - component: {fileID: 4633842561167573431}
   m_Layer: 0
   m_Name: SM_Stone_01_LOD0
-  m_TagString: Untagged
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,8 +235,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1214488670292909671
-MeshCollider:
+--- !u!65 &4633842561167573431
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -253,10 +253,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4157849199946572140, guid: a17b0d5eea69fbb4b8f668dc3957157f, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.7381392, y: 1.3261592, z: 1.79563}
+  m_Center: {x: -0.113401175, y: 0.15213558, z: -0.0031588972}
 --- !u!1 &5595084168870190371
 GameObject:
   m_ObjectHideFlags: 0
