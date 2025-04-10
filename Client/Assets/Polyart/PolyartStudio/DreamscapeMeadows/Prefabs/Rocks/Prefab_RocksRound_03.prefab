@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9032936889210252161}
   - component: {fileID: 9032936889208957857}
   - component: {fileID: 9032936889207957857}
-  - component: {fileID: 884298482459838947}
+  - component: {fileID: 8979724278425045030}
   m_Layer: 0
   m_Name: Prefab_RocksRound_03
   m_TagString: Rock
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &884298482459838947
-MeshCollider:
+--- !u!65 &8979724278425045030
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,7 +105,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b5e5d4f01b3eae544b67c1276e71fc43, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.5190923, y: 2.027102, z: 2.2209284}
+  m_Center: {x: -0.057074666, y: 0.822137, z: -0.23722836}

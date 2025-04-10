@@ -53,11 +53,21 @@ public class GridMapScannerDOTS : MonoBehaviour
                 if (col != null)
                 {
                     boundsList.Add(col.bounds);
+
+#if UNITY_EDITOR
+                    // 시각화
+                    debugBounds.Add((col.bounds.center, col.bounds.size, Color.red));
+#endif
                 }
                 else
                 {
                     // Collider가 없더라도 해당 위치를 장애물로 간주
-                    boundsList.Add(new Bounds(obj.transform.position, Vector3.one * tileSize));
+                    Bounds fallbackBounds = new Bounds(obj.transform.position + Vector3.up * 1.5f, new Vector3(tileSize, 3f, tileSize));
+                    boundsList.Add(fallbackBounds);
+
+#if UNITY_EDITOR
+                    debugBounds.Add((fallbackBounds.center, fallbackBounds.size, Color.yellow));
+#endif
                 }
             }
         }
@@ -152,9 +162,14 @@ public class GridMapScannerDOTS : MonoBehaviour
         {
             int x = index % mapWidth;
             int y = index / mapWidth;
+            
+            float sampledHeight = heightMap[y * mapWidth + x];
+            
+            Vector3 tileCenter = startPosition + new Vector3(x + 0.5f, 0, y + 0.5f) * tileSize;
+            Vector3 boundsCenter = new Vector3(tileCenter.x, sampledHeight + 1.5f, tileCenter.z); // 지형 높이에 맞춰 올림
+            Vector3 boundsSize = new Vector3(tileSize, 3f, tileSize);
 
-            Vector3 tileCenter = startPosition + new Vector3(x + 0.5f, 0, y * tileSize + 0.5f * tileSize);
-            Bounds tileBounds = new Bounds(tileCenter + Vector3.up * 0.5f, Vector3.one * tileSize);
+            Bounds tileBounds = new Bounds(boundsCenter, boundsSize);
 
             for (int i = 0; i < obstacleBounds.Length; i++)
             {
@@ -165,7 +180,6 @@ public class GridMapScannerDOTS : MonoBehaviour
                 }
             }
 
-            float sampledHeight = heightMap[y * mapWidth + x];
             if (sampledHeight > maxHeight || sampledHeight < minHeight)
             {
                 result[index] = 1;
@@ -207,4 +221,19 @@ public class GridMapScannerDOTS : MonoBehaviour
             textureQuad.transform.rotation = Quaternion.Euler(90, 0, 0);
         }
     }
+    
+#if UNITY_EDITOR
+    private List<(Vector3 center, Vector3 size, Color color)> debugBounds = new();
+
+    void OnDrawGizmos()
+    {
+        if (debugBounds == null) return;
+
+        foreach (var (center, size, color) in debugBounds)
+        {
+            Handles.color = color;
+            Handles.DrawWireCube(center, size);
+        }
+    }
+#endif
 }

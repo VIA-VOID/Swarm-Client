@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2921132140309026224}
   - component: {fileID: 2921132140310353296}
   - component: {fileID: 2921132140311451472}
-  - component: {fileID: 2921132140315748144}
+  - component: {fileID: 6467821042343700833}
   m_Layer: 0
   m_Name: Cliff_04_LOD1
   m_TagString: Untagged
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2921132140315748144
-MeshCollider:
+--- !u!65 &6467821042343700833
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,10 +105,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 5.604734, y: 3.7772686, z: 4.404092}
+  m_Center: {x: -0.79557204, y: 1.4414552, z: -0.48368925}
 --- !u!1 &2921132140309449106
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +119,7 @@ GameObject:
   - component: {fileID: 2921132140309026226}
   - component: {fileID: 2921132140310353298}
   - component: {fileID: 2921132140311451474}
-  - component: {fileID: 2921132140315748146}
+  - component: {fileID: 6438337909165009125}
   m_Layer: 0
   m_Name: Cliff_04_LOD0
   m_TagString: Untagged
@@ -196,8 +195,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2921132140315748146
-MeshCollider:
+--- !u!65 &6438337909165009125
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -214,10 +213,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 5.6051273, y: 3.7746644, z: 4.402919}
+  m_Center: {x: -0.79317474, y: 1.4401531, z: -0.48310274}
 --- !u!1 &2921132140309449108
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +289,7 @@ GameObject:
   - component: {fileID: 2921132140309026230}
   - component: {fileID: 2921132140310353302}
   - component: {fileID: 2921132140311451478}
-  - component: {fileID: 2921132140315748150}
+  - component: {fileID: 4867297715436439294}
   m_Layer: 0
   m_Name: Cliff_04_LOD2
   m_TagString: Untagged
@@ -367,8 +365,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2921132140315748150
-MeshCollider:
+--- !u!65 &4867297715436439294
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -385,7 +383,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: ba53360b4195cb542922626d94e36105, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 5.603682, y: 3.776127, z: 4.4098682}
+  m_Center: {x: -0.79679203, y: 1.442026, z: -0.480801}
