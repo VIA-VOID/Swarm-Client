@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 448fa941c0f58f047a9b0d81a7364c1f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 87005
+  packageName: Archbishop
+  packageVersion: 3.0
+  assetPath: Assets/Suriyun/Archbishop/LightingData.asset
+  uploadId: 727524
