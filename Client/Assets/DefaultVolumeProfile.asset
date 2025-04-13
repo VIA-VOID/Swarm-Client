@@ -435,25 +435,25 @@ MonoBehaviour:
   m_Name: DefaultVolumeProfile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -4226488956914657809}
-  - {fileID: -6615249163586679287}
-  - {fileID: 6225871079095767021}
-  - {fileID: 5251976045009109327}
-  - {fileID: 895214233864529839}
-  - {fileID: -6993183169467428043}
-  - {fileID: 2100894538897898366}
-  - {fileID: 5931577509930351249}
-  - {fileID: -3947954402828128151}
-  - {fileID: 1135460939825940417}
-  - {fileID: 6503305394144825081}
-  - {fileID: 4746924242463410113}
-  - {fileID: -4466133285348348793}
-  - {fileID: 1042792440703323208}
-  - {fileID: 7563885699474801496}
-  - {fileID: 3196780165316948927}
-  - {fileID: -3259247894012457063}
-  - {fileID: -8324663833585271035}
-  - {fileID: -3748945749752635038}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &895214233864529839
 MonoBehaviour:
   m_ObjectHideFlags: 3
