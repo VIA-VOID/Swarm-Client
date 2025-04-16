@@ -5,6 +5,7 @@ ShaderImporter:
   defaultTextures:
   - _TextureSample0: {fileID: 2800000, guid: 1206ec3b97ff9e043bab9ed180f8a4d7, type: 3}
   nonModifiableTextures: []
+  preprocessorOverride: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
