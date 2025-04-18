@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Grass_01
   m_Shader: {fileID: 4800000, guid: 70ff6e3a81c1f424c9f9da756571a30f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords:
@@ -23,11 +25,11 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
-  - MOTIONVECTORS
+  - TransparentBackface
   - DistortionVectors
   - TransparentDepthPrepass
   - TransparentDepthPostpass
-  - TransparentBackface
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -214,3 +216,4 @@ Material:
     - _TrunkBendFactor: {r: 1, g: 0, b: 0, a: 0}
     - _WindFade: {r: 50, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
