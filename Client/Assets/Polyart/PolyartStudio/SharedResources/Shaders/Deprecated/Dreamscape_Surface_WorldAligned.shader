@@ -103,35 +103,3 @@ Shader "Polyart/Dreamscape Surface World Aligned"
 	}
 	Fallback "Diffuse"
 }
-/*ASEBEGIN
-Version=18800
-882;203;2845;1556;5837.981;762.0314;1.850619;True;True
-Node;AmplifyShaderEditor.TexturePropertyNode;101;-3954.886,782.42;Inherit;True;Property;_RoughnessTexture;Roughness Texture;2;0;Create;True;0;0;0;False;0;False;27df379498a773a4abdf1795b2d01bd5;2629a988a9ded7e46b01c37f62fe801d;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.RangedFloatNode;91;-4222.14,546.9656;Inherit;False;Property;_Tiling;Tiling;3;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.TexturePropertyNode;96;-3948.405,523.949;Inherit;True;Property;_NormalTexture;Normal Texture;1;1;[Normal];Create;True;0;0;0;False;0;False;b7f4798948b6337489969d4a8ed40732;2629a988a9ded7e46b01c37f62fe801d;True;bump;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.FunctionNode;107;-3566.886,787.42;Inherit;False;PolyartWorldAlignedTexture;-1;;15;50170ee3abb6acd4fb2e1a9c8b24ec90;0;3;1;SAMPLER2D;0,0,0,0;False;2;FLOAT;1;False;4;FLOAT3;0,0,0;False;4;COLOR;0;COLOR;26;COLOR;27;COLOR;25
-Node;AmplifyShaderEditor.TexturePropertyNode;55;-3942.295,245.9384;Inherit;True;Property;_AlbedoTexture;Albedo Texture;0;0;Create;True;0;0;0;False;0;False;2629a988a9ded7e46b01c37f62fe801d;2629a988a9ded7e46b01c37f62fe801d;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.OneMinusNode;104;-3268.886,856.42;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;105;-3616.886,672.42;Inherit;False;Property;_NormalIntensity;Normal Intensity;4;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;106;-3467.886,964.42;Inherit;False;Property;_SmoothnessIntensity;Smoothness Intensity;5;0;Create;True;0;0;0;False;0;False;1;1;-1;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;108;-3653.33,528.2086;Inherit;False;PolyartWorldAlignedTexture;-1;;16;50170ee3abb6acd4fb2e1a9c8b24ec90;0;3;1;SAMPLER2D;0,0,0,0;False;2;FLOAT;1;False;4;FLOAT3;0,0,0;False;4;COLOR;0;COLOR;26;COLOR;27;COLOR;25
-Node;AmplifyShaderEditor.UnpackScaleNormalNode;97;-3322.33,597.2086;Inherit;False;2;0;FLOAT4;0,0,0,0;False;1;FLOAT;1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;103;-3068.886,857.42;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode;109;-3633.666,251.3295;Inherit;False;PolyartWorldAlignedTexture;-1;;17;50170ee3abb6acd4fb2e1a9c8b24ec90;0;3;1;SAMPLER2D;0,0,0,0;False;2;FLOAT;1;False;4;FLOAT3;0,0,0;False;4;COLOR;0;COLOR;26;COLOR;27;COLOR;25
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;-2759.431,322.9893;Float;False;True;-1;2;;0;0;Standard;Polyart/Dreamscape Surface World Aligned;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;1;NatureRendererInstancing=True;False;0;0;False;-1;-1;0;False;-1;3;Pragma;multi_compile_instancing;False;;Custom;Include;Assets/Visual Design Cafe/Nature Shaders/Common/Nodes/Integrations/Nature Renderer.cginc;False;;Custom;Pragma;instancing_options procedural:SetupNatureRenderer;False;;Custom;0;0;False;0.1;False;-1;0;False;-1;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
-WireConnection;107;1;101;0
-WireConnection;107;2;91;0
-WireConnection;104;0;107;25
-WireConnection;108;1;96;0
-WireConnection;108;2;91;0
-WireConnection;97;0;108;25
-WireConnection;97;1;105;0
-WireConnection;103;0;104;0
-WireConnection;103;1;106;0
-WireConnection;109;1;55;0
-WireConnection;109;2;91;0
-WireConnection;0;0;109;25
-WireConnection;0;1;97;0
-WireConnection;0;4;103;0
-ASEEND*/
-//CHKSM=C2CF2FCBB4E3998F18FACE08AD0051BACDC7E7DC
