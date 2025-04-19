@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 37b729007e79e0b4790c38681ea74409
+timeCreated: 1525695322
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86804
+  packageName: Dragoon
+  packageVersion: 3.0
+  assetPath: Assets/Suriyun/Animations/Animations_v3/Canvas.prefab
+  uploadId: 727525
