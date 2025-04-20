@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,8 +14,10 @@ public class LoginSceneController : SceneController
     [LabelText("로딩바 대기 시간")]
     [SerializeField] private float duration = 3f;
 
+    [LabelText("로딩 배경 이미지")]
     [SerializeField] private GameObject touchBG;
     
+    [LabelText("로딩 완료 이미지")]
     [SerializeField] private Image gameStartImage;
     
     [LabelText("씬 오브젝트")]
@@ -23,6 +26,9 @@ public class LoginSceneController : SceneController
     [LabelText("씬전환 연출")]
     [SerializeField] private GameObject sceneTransition;
 
+    [LabelText("선택 가능한 캐릭터 리스트")]
+    [SerializeField] private List<SelectableCharacter> selectableCharacters;
+    
     private void Start()
     {
         Show(loadingBarImage, Loading);

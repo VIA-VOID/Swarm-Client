@@ -5,4 +5,7 @@ using UnityEngine;
 public class SelectableCharacter : MonoBehaviour
 {
     private Animator animator;
+    private Transform characterPos;
+    
+    //private string idle
 }
