@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public abstract class UIController : MonoBehaviour
+public abstract class SceneController : MonoBehaviour
 {
     
     [LabelText("사용할 UI 리스트")]

@@ -57,8 +57,8 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _alpha: 0
-    - _scroll: 0
+    - _alpha: 1
+    - _scroll: -1.2
     m_Colors:
     - _InColor: {r: 0, g: 0, b: 0, a: 0}
     - _OutColor: {r: 0.4528302, g: 0.3060737, b: 0.1388395, a: 0}
