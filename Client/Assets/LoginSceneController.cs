@@ -22,7 +22,7 @@ public class LoginSceneController : SceneController
 
     [Header("카메라 이동")]
     [SerializeField] private Camera mainCam;
-    [SerializeField] private float camMoveTime = 1.2f;
+    [SerializeField] private float camMoveTime = 1f;
     
     [LabelText("트랜지션 시작 위치")]
     [SerializeField] private Transform camStartPoint;
@@ -177,7 +177,7 @@ public class LoginSceneController : SceneController
     void MoveCameraTo(Transform target)
     {
         mainCam.transform.DOMove(target.position,  camMoveTime).SetEase(Ease.InOutSine);
-        mainCam.transform.DOLookAt(target.position, camMoveTime).SetEase(Ease.InOutSine);
+        mainCam.transform.DORotateQuaternion(target.rotation, camMoveTime).SetEase(Ease.InOutSine);
     }
 
     void UpdateArrowInteractable()

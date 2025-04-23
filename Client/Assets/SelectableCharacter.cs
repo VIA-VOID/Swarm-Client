@@ -23,10 +23,15 @@ public class SelectableCharacter : MonoBehaviour, IPointerClickHandler
     public Action<SelectableCharacter> OnSelected;
     public Transform FocusPoint => focusPoint != null ? focusPoint : transform;
 
+    [Header("아웃라인")]
+    [SerializeField] private Outline outline;      
+    
     void Awake()
     {
         anim = GetComponent<Animator>();
-        SetIdle();               // 시작은 Idle
+        if (outline == null) outline = GetComponentInChildren<Outline>();
+        outline?.SetOutline(false);                  // 시작은 꺼둠
+        SetIdle();           // 시작은 Idle
     }
     
     public void OnPointerClick(PointerEventData eventData)
@@ -38,7 +43,8 @@ public class SelectableCharacter : MonoBehaviour, IPointerClickHandler
     public void SetIdle()
     {
         if (attackRoutine != null) StopCoroutine(attackRoutine);
-        anim?.SetInteger("animation", idleValue);
+        anim.SetInteger("animation", idleValue);
+        outline?.SetOutline(false);  
     }
 
     public void PlayAttackThenSelected()
@@ -49,6 +55,8 @@ public class SelectableCharacter : MonoBehaviour, IPointerClickHandler
 
     IEnumerator AttackThenSelectedRoutine()
     {
+        yield return new WaitForSeconds(1); 
+        
         int prevHash = anim.GetCurrentAnimatorStateInfo(0).shortNameHash;
 
         anim.SetInteger("animation", attackValue);
@@ -61,6 +69,7 @@ public class SelectableCharacter : MonoBehaviour, IPointerClickHandler
             yield return null;
 
         anim.SetInteger("animation", selectedValue);
+        outline?.SetOutline(true);
         attackRoutine = null;
     }
 }
