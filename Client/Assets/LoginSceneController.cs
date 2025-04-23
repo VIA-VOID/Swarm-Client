@@ -36,6 +36,8 @@ public class LoginSceneController : SceneController
     [SerializeField] private Button rightArrowBtn;
     [SerializeField] private Button backBtn;
 
+    [SerializeField] private GameObject characterDetailPanel;
+
     private int currentIndex = -1;     // ‑1이면 아무 것도 선택 안 한 상태
 
     private void Start()
@@ -134,6 +136,7 @@ public class LoginSceneController : SceneController
         MoveCameraTo(ch.FocusPoint);
         UpdateArrowInteractable();
         backBtn.gameObject.SetActive(true);
+        characterDetailPanel.gameObject.SetActive(true);
     }
 
     public void PrevCharacter()
@@ -172,6 +175,7 @@ public class LoginSceneController : SceneController
 
         UpdateArrowInteractable();
         backBtn.gameObject.SetActive(false);
+        characterDetailPanel.gameObject.SetActive(false);
     }
 
     void MoveCameraTo(Transform target)
@@ -183,7 +187,7 @@ public class LoginSceneController : SceneController
     void UpdateArrowInteractable()
     {
         bool hasSelection = currentIndex != -1;
-        leftArrowBtn.interactable  = hasSelection && currentIndex > 0;
-        rightArrowBtn.interactable = hasSelection && currentIndex < selectableCharacters.Count - 1;
+        leftArrowBtn.gameObject.SetActive(hasSelection && currentIndex > 0);
+        rightArrowBtn.gameObject.SetActive(hasSelection && currentIndex < selectableCharacters.Count - 1);
     }
 }
