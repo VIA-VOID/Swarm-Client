@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e346cd147c05382419cb7ae0b09ec5e4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 317283
+  packageName: P09_Modular_Humanoid_Lite
+  packageVersion: 2025.4.15
+  assetPath: Assets/P09_Modular_Humanoid_Lite/Scenes/DemoScene_Data/Animation/Other/magica_Run_N_Copy.anim
+  uploadId: 749127

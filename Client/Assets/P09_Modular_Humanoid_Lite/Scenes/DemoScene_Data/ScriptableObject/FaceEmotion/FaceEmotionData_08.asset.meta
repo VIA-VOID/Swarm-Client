@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dea37f255c882408d979d4fce423469e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 317283
+  packageName: P09_Modular_Humanoid_Lite
+  packageVersion: 2025.4.15
+  assetPath: Assets/P09_Modular_Humanoid_Lite/Scenes/DemoScene_Data/ScriptableObject/FaceEmotion/FaceEmotionData_08.asset
+  uploadId: 749127

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 808e495a490064d07a29fca7b2be1701
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 317283
+  packageName: P09_Modular_Humanoid_Lite
+  packageVersion: 2025.4.15
+  assetPath: Assets/P09_Modular_Humanoid_Lite/Scenes/DemoScene_Data/ScriptableObject/BustSize/BustSizeEditPartData_03.asset
+  uploadId: 749127

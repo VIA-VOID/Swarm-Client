@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class InfoPanel : MonoBehaviour
 {
-    [SerializeField] private TEMp
+    //[SerializeField] private TEMp
 }
