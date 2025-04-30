@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[Serializable]
 public abstract class SceneController : MonoBehaviour
 {
-    
     [LabelText("사용할 UI 리스트")]
     public List<GameObject> usingUIList;
     protected Canvas rootCanvas { get; private set; }

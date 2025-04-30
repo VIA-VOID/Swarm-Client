@@ -21,22 +21,18 @@ public class LoginSceneController : SceneController
     [SerializeField] private List<SelectableCharacter> selectableCharacters;
 
     [Header("카메라 이동")]
-    [SerializeField] private Camera mainCam;
-    [SerializeField] private float camMoveTime = 1f;
-    
-    [LabelText("트랜지션 시작 위치")]
-    [SerializeField] private Transform camStartPoint;
-    
-    [LabelText("트랜지션 종료 위치")]
-    [SerializeField] private Transform camOriginPos;
+    [SerializeField, LabelText("메인 카메라")] private Camera mainCam;
+    [SerializeField, LabelText("카메라 이동 시간")] private float camMoveTime = 1f;
+    [SerializeField, LabelText("트랜지션 시작 위치")] private Transform camStartPoint;
+    [SerializeField, LabelText("트랜지션 종료 위치")] private Transform camOriginPos;
 
     [Header("UI 버튼")]
-    [SerializeField] private GameObject characterSelectUIPanel;
-    [SerializeField] private Button leftArrowBtn;
-    [SerializeField] private Button rightArrowBtn;
-    [SerializeField] private Button backBtn;
+    [SerializeField, LabelText("캐릭터 선택 패널UI")] private GameObject characterSelectUIPanel;
+    [SerializeField, LabelText("왼쪽 이동 버튼")] private Button leftArrowBtn;
+    [SerializeField, LabelText("오른쪽 이동 버튼")] private Button rightArrowBtn;
+    [SerializeField, LabelText("뒤로가기 버튼")] private Button backBtn;
 
-    [SerializeField] private GameObject characterDetailPanel;
+    [SerializeField, LabelText("캐릭터 상세 보기 패널UI")] private GameObject characterDetailPanel;
 
     private int currentIndex = -1;     // ‑1이면 아무 것도 선택 안 한 상태
 
@@ -125,7 +121,8 @@ public class LoginSceneController : SceneController
     
     void SelectCharacter(SelectableCharacter ch)
     {
-        // 이전 선택 해제
+        if (currentIndex == selectableCharacters.IndexOf(ch)) return;
+        
         if (currentIndex != -1)
             selectableCharacters[currentIndex].SetIdle();
 
@@ -178,6 +175,11 @@ public class LoginSceneController : SceneController
         characterDetailPanel.gameObject.SetActive(false);
     }
 
+    public bool CheckDetailUIPanel()
+    {
+        return currentIndex != -1;
+    }
+    
     void MoveCameraTo(Transform target)
     {
         mainCam.transform.DOMove(target.position,  camMoveTime).SetEase(Ease.InOutSine);
