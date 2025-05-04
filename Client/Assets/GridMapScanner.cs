@@ -136,7 +136,7 @@ public class GridMapScannerDOTS : MonoBehaviour
             json.Append("\t\t\"");
             for (int x = mapWidth - 1; x >= 0; x--) // 좌우 대칭으로 저장
             {
-                json.Append(resultMap[y * mapWidth + x] == 1 ? "1" : "0");
+                json.Append(resultMap[y * mapWidth + x] == 1 ? "0" : "1");
             }
             json.AppendLine(y < mapHeight - 1 ? "\"," : "");
         }
