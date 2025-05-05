@@ -11,7 +11,7 @@ public class LoginSceneController : SceneController
     [SerializeField, LabelText("로딩바 이미지")]   private GameObject loadingBarImage;
     [SerializeField, LabelText("로딩바 대기 시간")] private float duration = 3f;
     [SerializeField, LabelText("로딩 배경 이미지")]  private GameObject touchBG;
-    [SerializeField, LabelText("로딩 완료 이미지")]  private Image      gameStartImage;
+    [SerializeField, LabelText("메인 패널")] private GameObject mainPanel;
 
     [Header("씬 오브젝트")]
     [SerializeField] private GameObject sceneObjectParent;
@@ -62,22 +62,14 @@ public class LoginSceneController : SceneController
         }
 
         img.fillAmount = 1;
-        Hide(loadingBarImage, BlinkText);
-    }
-
-    void BlinkText()
-    {
-        Show(gameStartImage.gameObject, () =>
-        {
-            gameStartImage.DOFade(0.1f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).From(1);
-            touchBG.GetComponent<Button>().interactable = true;
-        });
+        Hide(loadingBarImage);
+        Show(mainPanel);
     }
 
     public void Fade()
     {
         Hide(touchBG);
-        Hide(gameStartImage.gameObject);
+        Hide(mainPanel);
 
         if (camStartPoint != null)
         {

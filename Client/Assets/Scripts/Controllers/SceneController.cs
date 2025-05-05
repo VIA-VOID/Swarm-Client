@@ -8,6 +8,10 @@ public abstract class SceneController : MonoBehaviour
 {
     [LabelText("사용할 UI 리스트")]
     public List<GameObject> usingUIList;
+
+    [SerializeField, LabelText("세로 UI 패널")] private GameObject portraitPanel;
+    [SerializeField, LabelText("가로 UI 패널")] private GameObject landScapePanel;
+    
     protected Canvas rootCanvas { get; private set; }
     protected bool Initialized { get; private set; }
     
@@ -19,6 +23,11 @@ public abstract class SceneController : MonoBehaviour
         // 게임 시작 직후 바로 Visible 상태라면 미리 초기화
         if (gameObject.activeInHierarchy)
             Initialize();
+    }
+
+    public GameObject GetPanel(bool isPortrait)
+    {
+        return isPortrait ? portraitPanel : landScapePanel;
     }
     
     public virtual void Initialize()
