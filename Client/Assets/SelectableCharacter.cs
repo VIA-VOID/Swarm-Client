@@ -40,15 +40,14 @@ public class SelectableCharacter : MonoBehaviour, IPointerClickHandler, IPointer
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (loginSceneController.CheckDetailUIPanel()) return;
-        OnSelected?.Invoke(this);
+        // if (loginSceneController.CheckDetailUIPanel()) return;
+        // OnSelected?.Invoke(this);
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (loginSceneController.CheckDetailUIPanel()) return;
-        
-        SetOutLine(true);
+        // if (loginSceneController.CheckDetailUIPanel()) return;
+        // SetOutLine(true);
     }
     
     public void OnPointerExit(PointerEventData eventData)

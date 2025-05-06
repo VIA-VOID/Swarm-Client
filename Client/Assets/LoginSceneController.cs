@@ -17,8 +17,8 @@ public class LoginSceneController : SceneController
     [SerializeField] private GameObject sceneObjectParent;
     [SerializeField] private GameObject sceneTransition;
 
-    [Header("선택 가능한 캐릭터")]
-    [SerializeField] private List<SelectableCharacter> selectableCharacters;
+    // [Header("선택 가능한 캐릭터")]
+    // [SerializeField] private List<SelectableCharacter> selectableCharacters;
 
     [Header("카메라 이동")]
     [SerializeField, LabelText("메인 카메라")] private Camera mainCam;
@@ -28,22 +28,15 @@ public class LoginSceneController : SceneController
 
     [Header("UI 버튼")]
     [SerializeField, LabelText("캐릭터 선택 패널UI")] private GameObject characterSelectUIPanel;
-    [SerializeField, LabelText("왼쪽 이동 버튼")] private Button leftArrowBtn;
-    [SerializeField, LabelText("오른쪽 이동 버튼")] private Button rightArrowBtn;
-    [SerializeField, LabelText("뒤로가기 버튼")] private Button backBtn;
-
-    [SerializeField, LabelText("캐릭터 상세 보기 패널UI")] private GameObject characterDetailPanel;
+    [SerializeField, LabelText("설정창")] private Button settingBtn;
 
     private int currentIndex = -1;     // ‑1이면 아무 것도 선택 안 한 상태
 
     private void Start()
     {
-        foreach (var ch in selectableCharacters)
-            ch.OnSelected = SelectCharacter;
-
-        UpdateArrowInteractable();
-
         Show(loadingBarImage, Loading);
+        
+        SoundManager.Instance.PlayBGM(0);
     }
 
     void Loading() => StartCoroutine(FillRoutine());
@@ -63,7 +56,7 @@ public class LoginSceneController : SceneController
 
         img.fillAmount = 1;
         Hide(loadingBarImage);
-        Show(mainPanel);
+        //Show(mainPanel);
     }
 
     public void Fade()
@@ -110,78 +103,14 @@ public class LoginSceneController : SceneController
         sceneTransition.SetActive(false);      
         characterSelectUIPanel.SetActive(true);
     }
-    
-    void SelectCharacter(SelectableCharacter ch)
+
+    public void OpenSettingUI()
     {
-        if (currentIndex == selectableCharacters.IndexOf(ch)) return;
-        
-        if (currentIndex != -1)
-            selectableCharacters[currentIndex].SetIdle();
-
-        // 새 선택
-        currentIndex = selectableCharacters.IndexOf(ch);
-        ch.PlayAttackThenSelected();
-
-        MoveCameraTo(ch.FocusPoint);
-        UpdateArrowInteractable();
-        backBtn.gameObject.SetActive(true);
-        characterDetailPanel.gameObject.SetActive(true);
+        SoundManager.Instance.PlaySFX(0);
     }
 
-    public void PrevCharacter()
+    public void OpenCharacterSelectUI()
     {
-        if (currentIndex <= 0) return;
-
-        selectableCharacters[currentIndex].SetIdle();
-        currentIndex--;
-        selectableCharacters[currentIndex].PlayAttackThenSelected();
-
-        MoveCameraTo(selectableCharacters[currentIndex].FocusPoint);
-        UpdateArrowInteractable();
-    }
-
-    public void NextCharacter()
-    {
-        if (currentIndex >= selectableCharacters.Count - 1) return;
-
-        selectableCharacters[currentIndex].SetIdle();
-        currentIndex++;
-        selectableCharacters[currentIndex].PlayAttackThenSelected();
-
-        MoveCameraTo(selectableCharacters[currentIndex].FocusPoint);
-        UpdateArrowInteractable();
-    }
-
-    public void BackToOrigin()
-    {
-        if (currentIndex != -1)
-            selectableCharacters[currentIndex].SetIdle();  // 모두 Idle로
-
-        currentIndex = -1;
-
-        mainCam.transform.DOMove(camOriginPos.position, camMoveTime).SetEase(Ease.InOutSine);
-        mainCam.transform.DORotateQuaternion(camOriginPos.rotation, camMoveTime).SetEase(Ease.InOutSine);
-
-        UpdateArrowInteractable();
-        backBtn.gameObject.SetActive(false);
-        characterDetailPanel.gameObject.SetActive(false);
-    }
-
-    public bool CheckDetailUIPanel()
-    {
-        return currentIndex != -1;
-    }
-    
-    void MoveCameraTo(Transform target)
-    {
-        mainCam.transform.DOMove(target.position,  camMoveTime).SetEase(Ease.InOutSine);
-        mainCam.transform.DORotateQuaternion(target.rotation, camMoveTime).SetEase(Ease.InOutSine);
-    }
-
-    void UpdateArrowInteractable()
-    {
-        bool hasSelection = currentIndex != -1;
-        leftArrowBtn.gameObject.SetActive(hasSelection && currentIndex > 0);
-        rightArrowBtn.gameObject.SetActive(hasSelection && currentIndex < selectableCharacters.Count - 1);
+        SoundManager.Instance.PlaySFX(0);
     }
 }

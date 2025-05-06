@@ -41,7 +41,6 @@ public abstract class SceneController : MonoBehaviour
         if (!Initialized) Initialize();
 
         gameObject.SetActive(true);
-        
     }
 
     // Show 직후 실행할 기능 있는 경우

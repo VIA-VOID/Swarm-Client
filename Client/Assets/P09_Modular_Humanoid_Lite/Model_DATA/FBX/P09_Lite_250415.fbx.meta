@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 5ce3a9faa3050b94891d4c25bf8dfa85
+AssetOrigin:
+  serializedVersion: 1
+  productId: 317283
+  packageName: P09_Modular_Humanoid_Lite
+  packageVersion: 2025.5.01
+  assetPath: Assets/P09_Modular_Humanoid_Lite/Model_DATA/FBX/P09_Lite_250415.fbx
+  uploadId: 753345
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -166,8 +173,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -656,14 +661,6 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: UpperChest
-      humanName: UpperChest
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
     skeleton:
     - name: P09_250322(Clone)
       parentName: 
@@ -818,8 +815,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -8.874821e-10, y: 0.041539557, z: 0.0000000016949073}
-      rotation: {x: -0.0000000069000325, y: 0.000000015892965, z: -0.000000043620638,
-        w: 1}
+      rotation: {x: -0.0000000069000325, y: 0.000000015892965, z: -0.000000043620638, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -839,8 +835,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 8.878942e-10, y: 0.041539546, z: 0.000000013024202}
-      rotation: {x: 0.00000000689976, y: -0.000000015893193, z: 0.000000043620677,
-        w: 1}
+      rotation: {x: 0.00000000689976, y: -0.000000015893193, z: 0.000000043620677, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -905,8 +900,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: 0.000000002392298, y: 0.047133446, z: 0.00000000987075}
-      rotation: {x: -0.0000000041379895, y: -0.00000020861626, z: -0.000000009939014,
-        w: 1}
+      rotation: {x: -0.0000000041379895, y: -0.00000020861626, z: -0.000000009939014, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -926,8 +920,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: -0.000000008008028, y: 0.047133435, z: 0.000000009842992}
-      rotation: {x: 0.000000009938981, y: 0.000000074505806, z: -0.0000000041379398,
-        w: 1}
+      rotation: {x: 0.000000009938981, y: 0.000000074505806, z: -0.0000000041379398, w: 1}
       scale: {x: 1, y: 0.99999994, z: 1}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -992,8 +985,7 @@ ModelImporter:
     - name: Hair_front_center.001
       parentName: Hair_front_Root
       position: {x: 0.008764353, y: 0.042908568, z: 0.031249573}
-      rotation: {x: -0.000000025892685, y: -0.0000023682928, z: 0.00000036250975,
-        w: 1}
+      rotation: {x: -0.000000025892685, y: -0.0000023682928, z: 0.00000036250975, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_front_center.002
       parentName: Hair_front_center.001
@@ -1063,8 +1055,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: -5.2147797e-10, y: 0.05476498, z: 4.4175152e-10}
-      rotation: {x: 0.000000025504187, y: -0.000000015893306, z: -0.000000007396864,
-        w: 1}
+      rotation: {x: 0.000000025504187, y: -0.000000015893306, z: -0.000000007396864, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -1339,8 +1330,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: 0.000000006050932, y: 0.05374599, z: -0.0000000039338914}
-      rotation: {x: -0.000000031642102, y: -0.00000004470348, z: 0.000000004692498,
-        w: 1}
+      rotation: {x: -0.000000031642102, y: -0.00000004470348, z: 0.000000004692498, w: 1}
       scale: {x: 1.0000001, y: 1.0000001, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -1360,8 +1350,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 0.0000000039340335, y: 0.0537461, z: 0.000000007913712}
-      rotation: {x: -0.0000000046925415, y: -0.000000044703484, z: -0.00000003164206,
-        w: 1}
+      rotation: {x: -0.0000000046925415, y: -0.000000044703484, z: -0.00000003164206, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -1436,8 +1425,7 @@ ModelImporter:
     - name: Hair_front_center.001
       parentName: Hair_front_Root
       position: {x: -0.019222219, y: 0.051194426, z: 0.028665878}
-      rotation: {x: -0.000000052200697, y: -0.0000026067114, z: 0.00000036541175,
-        w: 1}
+      rotation: {x: -0.000000052200697, y: -0.0000026067114, z: 0.00000036541175, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_front_center.002
       parentName: Hair_front_center.001
@@ -1507,8 +1495,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -0.000000001809255, y: 0.05270756, z: 0.000000005199084}
-      rotation: {x: -0.000000012229633, y: 0.000000015893079, z: -0.000000034785828,
-        w: 1}
+      rotation: {x: -0.000000012229633, y: 0.000000015893079, z: -0.000000034785828, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -1528,8 +1515,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 0.0000000025301574, y: 0.054764744, z: 0.000000008444001}
-      rotation: {x: 0.000000025504203, y: -0.000000015893306, z: 0.000000035117743,
-        w: 1}
+      rotation: {x: 0.000000025504203, y: -0.000000015893306, z: 0.000000035117743, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -1594,8 +1580,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: 0.000000006050932, y: 0.05374599, z: -0.0000000039338914}
-      rotation: {x: -0.000000031642102, y: -0.00000004470348, z: 0.000000004692498,
-        w: 1}
+      rotation: {x: -0.000000031642102, y: -0.00000004470348, z: 0.000000004692498, w: 1}
       scale: {x: 1.0000001, y: 1.0000001, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -1615,8 +1600,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 0.0000000039340335, y: 0.0537461, z: 0.000000007913712}
-      rotation: {x: -0.0000000046925415, y: -0.000000044703484, z: -0.00000003164206,
-        w: 1}
+      rotation: {x: -0.0000000046925415, y: -0.000000044703484, z: -0.00000003164206, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -1741,8 +1725,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -0.0000000065287296, y: 0.049288753, z: 0.000000008961823}
-      rotation: {x: 0.000000012283703, y: 0.000000015893079, z: -0.00000000583033,
-        w: 1}
+      rotation: {x: 0.000000012283703, y: 0.000000015893079, z: -0.00000000583033, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.002_end
       parentName: Hair_Side_Left.002
@@ -1757,8 +1740,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 0.0000000120923715, y: 0.028648023, z: 0.0000000074606366}
-      rotation: {x: -0.000000024487072, y: -0.000000015893306, z: 0.000000011111721,
-        w: 1}
+      rotation: {x: -0.000000024487072, y: -0.000000015893306, z: 0.000000011111721, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.002_end
       parentName: Hair_Side_Right.002
@@ -1908,8 +1890,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: 4.8535753e-10, y: 0.054764993, z: -0.0000000057188245}
-      rotation: {x: -0.0000000042455395, y: 0.000000015893534, z: -0.00000003937192,
-        w: 1}
+      rotation: {x: -0.0000000042455395, y: 0.000000015893534, z: -0.00000003937192, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -1929,8 +1910,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: -4.8483173e-10, y: 0.054764744, z: 0.0000000055364637}
-      rotation: {x: 0.0000000042453734, y: -0.000000015892851, z: 0.00000003937194,
-        w: 1}
+      rotation: {x: 0.0000000042453734, y: -0.000000015892851, z: 0.00000003937194, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -2070,8 +2050,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: 2.5194424e-10, y: 0.0521772, z: 0.0000000089462695}
-      rotation: {x: -0.000000026766475, y: 0.000000015893647, z: -0.000000034414626,
-        w: 1}
+      rotation: {x: -0.000000026766475, y: 0.000000015893647, z: -0.000000034414626, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -2091,8 +2070,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 0.0000000016115109, y: 0.052177183, z: 0.000000005733451}
-      rotation: {x: 0.000000026766255, y: -0.000000015893193, z: 0.000000034414764,
-        w: 1}
+      rotation: {x: 0.000000026766255, y: -0.000000015893193, z: 0.000000034414764, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -2177,8 +2155,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: -0.0000000010211139, y: 0.051206596, z: -0.000000012594086}
-      rotation: {x: -0.000000051283592, y: -0.000000059604645, z: 0.0000000018477162,
-        w: 1}
+      rotation: {x: -0.000000051283592, y: -0.000000059604645, z: 0.0000000018477162, w: 1}
       scale: {x: 1, y: 1, z: 0.99999994}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -2208,8 +2185,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 0.0000000013766339, y: 0.05120659, z: -0.000000013467568}
-      rotation: {x: -0.00000003437992, y: 0.000000059604645, z: -0.00000003809781,
-        w: 1}
+      rotation: {x: -0.00000003437992, y: 0.000000059604645, z: -0.00000003809781, w: 1}
       scale: {x: 1, y: 1, z: 0.99999994}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -2289,8 +2265,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -5.295817e-10, y: 0.052177187, z: 0.0000000054788387}
-      rotation: {x: 0.00000004463066, y: 0.00000001589319, z: 0.0000000012833368,
-        w: 1}
+      rotation: {x: 0.00000004463066, y: 0.00000001589319, z: 0.0000000012833368, w: 1}
       scale: {x: 1, y: 0.99999994, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -2320,8 +2295,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 5.292051e-10, y: 0.052177195, z: 0.000000009002406}
-      rotation: {x: -0.00000004463071, y: -0.000000015893194, z: -0.0000000012836082,
-        w: 1}
+      rotation: {x: -0.00000004463071, y: -0.000000015893194, z: -0.0000000012836082, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -2476,8 +2450,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: 3.7998404e-10, y: 0.041565664, z: 0.0000000011360868}
-      rotation: {x: -0.000000025254087, y: 0.000000015893647, z: -0.000000036693052,
-        w: 1}
+      rotation: {x: -0.000000025254087, y: 0.000000015893647, z: -0.000000036693052, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -2497,8 +2470,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: -3.7918824e-10, y: 0.04156553, z: -0.0000000028519622}
-      rotation: {x: 0.00000002525385, y: -0.000000015893306, z: 0.000000036693194,
-        w: 1}
+      rotation: {x: 0.00000002525385, y: -0.000000015893306, z: 0.000000036693194, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -2518,8 +2490,7 @@ ModelImporter:
     - name: Hair_Side_Long_Left.002
       parentName: Hair_Side_Long_Left.001
       position: {x: 0.0000000016403305, y: 0.041565668, z: 0.0000000033648249}
-      rotation: {x: -0.000000025254106, y: 0.000000015893306, z: -0.000000047896087,
-        w: 1}
+      rotation: {x: -0.000000025254106, y: 0.000000015893306, z: -0.000000047896087, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Long_Left.003
       parentName: Hair_Side_Long_Left.002
@@ -2549,8 +2520,7 @@ ModelImporter:
     - name: Hair_Side_Long_Right.002
       parentName: Hair_Side_Long_Right.001
       position: {x: -0.0000000016394921, y: 0.041565534, z: -0.000000007460439}
-      rotation: {x: 0.000000025253804, y: -0.000000015893306, z: 0.000000047896222,
-        w: 1}
+      rotation: {x: 0.000000025253804, y: -0.000000015893306, z: 0.000000047896222, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Long_Right.003
       parentName: Hair_Side_Long_Right.002
@@ -2640,8 +2610,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: 0.0000000028509817, y: 0.061208364, z: -7.141008e-10}
-      rotation: {x: 0.0000000048893876, y: 0.00000017881393, z: 0.000000011876045,
-        w: 1}
+      rotation: {x: 0.0000000048893876, y: 0.00000017881393, z: 0.000000011876045, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -2671,8 +2640,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 7.141132e-10, y: 0.061208244, z: -0.0000000027368579}
-      rotation: {x: -0.000000011876074, y: -0.000000029802322, z: 0.000000004889396,
-        w: 1}
+      rotation: {x: -0.000000011876074, y: -0.000000029802322, z: 0.000000004889396, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -2887,8 +2855,7 @@ ModelImporter:
     - name: Hair_front_center.001
       parentName: Hair_front_Root
       position: {x: -0.00000018935027, y: 0.04290856, z: 0.030837322}
-      rotation: {x: -0.000000044027246, y: -0.0000026384976, z: 0.00000036562125,
-        w: 1}
+      rotation: {x: -0.000000044027246, y: -0.0000026384976, z: 0.00000036562125, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_front_center.002
       parentName: Hair_front_center.001
@@ -2913,8 +2880,7 @@ ModelImporter:
     - name: Hair_front_Left.002
       parentName: Hair_front_Left.001
       position: {x: -0.0000000032770728, y: 0.04230571, z: -0.0000000027885854}
-      rotation: {x: 0.000000013315275, y: -0.000000014901161, z: -0.000000027590808,
-        w: 1}
+      rotation: {x: 0.000000013315275, y: -0.000000014901161, z: -0.000000027590808, w: 1}
       scale: {x: 1, y: 1.0000001, z: 1}
     - name: Hair_front_Left.003
       parentName: Hair_front_Left.002
@@ -2934,8 +2900,7 @@ ModelImporter:
     - name: Hair_front_Right.002
       parentName: Hair_front_Right.001
       position: {x: 3.8941428e-10, y: 0.04230583, z: 0.0000000024225955}
-      rotation: {x: -0.000000012576888, y: 0.000000014901161, z: -0.000000027935094,
-        w: 1}
+      rotation: {x: -0.000000012576888, y: 0.000000014901161, z: -0.000000027935094, w: 1}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
     - name: Hair_front_Right.003
       parentName: Hair_front_Right.002
@@ -2960,8 +2925,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -0.0000000022644144, y: 0.04859568, z: -0.000000003885951}
-      rotation: {x: -0.00000005898662, y: 0.000000015892738, z: -0.00000005799366,
-        w: 1}
+      rotation: {x: -0.00000005898662, y: 0.000000015892738, z: -0.00000005799366, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -2981,8 +2945,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 4.7003823e-10, y: 0.04859566, z: 0.000000009410719}
-      rotation: {x: 0.000000058986195, y: -0.000000015893193, z: 0.000000057994114,
-        w: 1}
+      rotation: {x: 0.000000058986195, y: -0.000000015893193, z: 0.000000057994114, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -3047,8 +3010,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: -0.0000000012558061, y: 0.04757691, z: -0.000000011895914}
-      rotation: {x: -0.000000033904872, y: -0.00000017881393, z: 0.000000015139904,
-        w: 1}
+      rotation: {x: -0.000000033904872, y: -0.00000017881393, z: 0.000000015139904, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -3068,8 +3030,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 0.000000004445198, y: 0.047576785, z: -0.00000000684361}
-      rotation: {x: -0.000000015139943, y: 0.00000016391277, z: -0.000000033904904,
-        w: 1}
+      rotation: {x: -0.000000015139943, y: 0.00000016391277, z: -0.000000033904904, w: 1}
       scale: {x: 1, y: 1.0000001, z: 1.0000001}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -3134,8 +3095,7 @@ ModelImporter:
     - name: Hair_front_center.001
       parentName: Hair_front_Root
       position: {x: -0.00000018935027, y: 0.04290856, z: 0.030837322}
-      rotation: {x: -0.000000044027246, y: -0.0000026384976, z: 0.00000036562125,
-        w: 1}
+      rotation: {x: -0.000000044027246, y: -0.0000026384976, z: 0.00000036562125, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_front_center.002
       parentName: Hair_front_center.001
@@ -3160,8 +3120,7 @@ ModelImporter:
     - name: Hair_front_Left.002
       parentName: Hair_front_Left.001
       position: {x: -0.0000000032770728, y: 0.04230571, z: -0.0000000027885854}
-      rotation: {x: 0.000000013315275, y: -0.000000014901161, z: -0.000000027590808,
-        w: 1}
+      rotation: {x: 0.000000013315275, y: -0.000000014901161, z: -0.000000027590808, w: 1}
       scale: {x: 1, y: 1.0000001, z: 1}
     - name: Hair_front_Left.003
       parentName: Hair_front_Left.002
@@ -3181,8 +3140,7 @@ ModelImporter:
     - name: Hair_front_Right.002
       parentName: Hair_front_Right.001
       position: {x: 3.8941428e-10, y: 0.04230583, z: 0.0000000024225955}
-      rotation: {x: -0.000000012576888, y: 0.000000014901161, z: -0.000000027935094,
-        w: 1}
+      rotation: {x: -0.000000012576888, y: 0.000000014901161, z: -0.000000027935094, w: 1}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
     - name: Hair_front_Right.003
       parentName: Hair_front_Right.002
@@ -3222,8 +3180,7 @@ ModelImporter:
     - name: Hair_Side_Left.002
       parentName: Hair_Side_Left.001
       position: {x: -0.0000000022644144, y: 0.04859568, z: -0.000000003885951}
-      rotation: {x: -0.00000005898662, y: 0.000000015892738, z: -0.00000005799366,
-        w: 1}
+      rotation: {x: -0.00000005898662, y: 0.000000015892738, z: -0.00000005799366, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Left.003
       parentName: Hair_Side_Left.002
@@ -3243,8 +3200,7 @@ ModelImporter:
     - name: Hair_Side_Right.002
       parentName: Hair_Side_Right.001
       position: {x: 4.7003823e-10, y: 0.04859566, z: 0.000000009410719}
-      rotation: {x: 0.000000058986195, y: -0.000000015893193, z: 0.000000057994114,
-        w: 1}
+      rotation: {x: 0.000000058986195, y: -0.000000015893193, z: 0.000000057994114, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Side_Right.003
       parentName: Hair_Side_Right.002
@@ -3309,8 +3265,7 @@ ModelImporter:
     - name: Hair_Back_Left.002
       parentName: Hair_Back_Left.001
       position: {x: -0.0000000012558061, y: 0.04757691, z: -0.000000011895914}
-      rotation: {x: -0.000000033904872, y: -0.00000017881393, z: 0.000000015139904,
-        w: 1}
+      rotation: {x: -0.000000033904872, y: -0.00000017881393, z: 0.000000015139904, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_Back_Left.003
       parentName: Hair_Back_Left.002
@@ -3330,8 +3285,7 @@ ModelImporter:
     - name: Hair_Back_Right.002
       parentName: Hair_Back_Right.001
       position: {x: 0.000000004445198, y: 0.047576785, z: -0.00000000684361}
-      rotation: {x: -0.000000015139943, y: 0.00000016391277, z: -0.000000033904904,
-        w: 1}
+      rotation: {x: -0.000000015139943, y: 0.00000016391277, z: -0.000000033904904, w: 1}
       scale: {x: 1, y: 1.0000001, z: 1.0000001}
     - name: Hair_Back_Right.003
       parentName: Hair_Back_Right.002
@@ -3446,8 +3400,7 @@ ModelImporter:
     - name: Hair_front_Right.002
       parentName: Hair_front_Right.001
       position: {x: -0.0000000040835637, y: 0.024082912, z: -0.0000000026512765}
-      rotation: {x: -0.00000008772592, y: -0.000000059604645, z: -0.000000044933387,
-        w: 1}
+      rotation: {x: -0.00000008772592, y: -0.000000059604645, z: -0.000000044933387, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair_front_Right.002_end
       parentName: Hair_front_Right.002
@@ -4307,8 +4260,7 @@ ModelImporter:
     - name: forarm_Twist_L
       parentName: forearm_L
       position: {x: 0.000000025826305, y: 0.11064847, z: -0.0000007150016}
-      rotation: {x: -0.0000000055965748, y: -0.0000000021614126, z: -0.00000016600666,
-        w: 1}
+      rotation: {x: -0.0000000055965748, y: -0.0000000021614126, z: -0.00000016600666, w: 1}
       scale: {x: 0.99999994, y: 0.99999994, z: 1}
     - name: forarm_Twist_L_end
       parentName: forarm_Twist_L
@@ -4448,8 +4400,7 @@ ModelImporter:
     - name: forarm_Twist_R
       parentName: forearm_R
       position: {x: -0.000000020240659, y: 0.110648364, z: -0.0000008326936}
-      rotation: {x: -0.000000027690914, y: 0.000000015101241, z: 0.00000012269061,
-        w: 1}
+      rotation: {x: -0.000000027690914, y: 0.000000015101241, z: 0.00000012269061, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: forarm_Twist_R_end
       parentName: forarm_Twist_R
@@ -4559,8 +4510,7 @@ ModelImporter:
     - name: Osiri_L.001
       parentName: Osiri_L
       position: {x: -0.000000033220942, y: 0.010647356, z: -0.0000000024753035}
-      rotation: {x: -0.00000003105079, y: 0.0000001615312, z: -0.000000025703061,
-        w: 1}
+      rotation: {x: -0.00000003105079, y: 0.0000001615312, z: -0.000000025703061, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Osiri_L.001_end
       parentName: Osiri_L.001
@@ -4610,8 +4560,7 @@ ModelImporter:
     - name: Osiri_R.001
       parentName: Osiri_R
       position: {x: -0.000000011522658, y: 0.010647356, z: 0.000000002386514}
-      rotation: {x: -0.00000017926705, y: -0.0000001788139, z: 0.000000025703322,
-        w: 1}
+      rotation: {x: -0.00000017926705, y: -0.0000001788139, z: 0.000000025703322, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Osiri_R.001_end
       parentName: Osiri_R.001
@@ -4682,10 +4631,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 317283
-  packageName: P09_Modular_Humanoid_Lite
-  packageVersion: 2025.5.01
-  assetPath: Assets/P09_Modular_Humanoid_Lite/Model_DATA/FBX/P09_Lite_250415.fbx
-  uploadId: 753345

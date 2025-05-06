@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : GenericSingleton<UIManager>
 {
@@ -8,6 +9,7 @@ public class UIManager : GenericSingleton<UIManager>
     private GameObject portraitRoot;
     private GameObject landscapeRoot;
 
+    private CanvasScaler canvasScaler;
     private SceneController sceneController;
     
     private int lastW, lastH;
@@ -20,6 +22,10 @@ public class UIManager : GenericSingleton<UIManager>
             Debug.LogError("UIManager: Canvas 오브젝트를 찾지 못했습니다.");
             return;
         }
+        
+        canvasScaler = canvas.GetComponent<CanvasScaler>();
+        if (!canvasScaler)
+            canvasScaler = canvas.gameObject.AddComponent<CanvasScaler>();
         
         sceneController = canvas.GetComponent<SceneController>();
         if (sceneController == null)
@@ -67,6 +73,13 @@ public class UIManager : GenericSingleton<UIManager>
         if (portraitRoot)   portraitRoot.SetActive(isPortrait);
         if (landscapeRoot)  landscapeRoot.SetActive(!isPortrait);
 
+        if (canvasScaler)
+        {
+            canvasScaler.referenceResolution = isPortrait
+                ? new Vector2(1080, 1920)      // 세로 기준
+                : new Vector2(1920, 1080);     // 가로 기준
+        }
+        
         lastW = Screen.width;
         lastH = Screen.height;
     }
