@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed    = 12f;
     [LabelText("가속도")]
     public float acceleration = 8.0f;
+    [LabelText("감속도")]
+    public float deceleration = 20f;
 
     [SerializeField, LabelText("카메라")]
     private Transform cam;
@@ -28,8 +30,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
-        
-        if (!cam) cam = Camera.main.transform;
     }
 
     void Update()
@@ -51,14 +51,28 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal"); 
-        float v = Input.GetAxisRaw("Vertical");   
-        Vector3 dir = new Vector3(h, 0, v).normalized;
+        Vector3 camF = cam.forward;  camF.y = 0;  camF.Normalize();
+        Vector3 camR = cam.right;    camR.y = 0;  camR.Normalize();
         
-        currentSpeed = Mathf.MoveTowards(currentSpeed, dir.magnitude * runSpeed, acceleration * Time.deltaTime);
-
-        Vector3 move = transform.TransformDirection(dir) * currentSpeed;
-        cc.Move(move * Time.deltaTime);
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");  
+        
+        Vector3 dir = (camF * v + camR * h).normalized;
+        
+        float accel = dir.sqrMagnitude < 0.001f ? deceleration : acceleration;
+        currentSpeed = Mathf.MoveTowards(currentSpeed,
+            dir.magnitude * runSpeed,
+            accel * Time.deltaTime);
+        
+        cc.Move(dir * currentSpeed * Time.deltaTime);
+        
+        if (dir.sqrMagnitude > 0.0001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(-dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                targetRot,
+                turnSpeed * Time.deltaTime);
+        }
     }
 
     void Animate()
@@ -72,5 +86,4 @@ public class PlayerController : MonoBehaviour
             attackQueued = false;
         }
     }
-
 }
