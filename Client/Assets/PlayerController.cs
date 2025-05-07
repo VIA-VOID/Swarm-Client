@@ -1,70 +1,76 @@
+using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Move")]
-    public float walkSpeed   = 2.0f;
-    public float runSpeed    = 4.0f;
+    [Title("이동 관련")]
+    [LabelText("이동 속도")]
+    public float runSpeed     = 4.0f;
+    [LabelText("방향 전환 속도")]
+    public float turnSpeed    = 12f;
+    [LabelText("가속도")]
     public float acceleration = 8.0f;
 
-    [Header("Gravity / Jump")]
-    public float gravity     = -9.81f;
-    public float jumpPower   = 4f;
-
+    [SerializeField, LabelText("카메라")]
+    private Transform cam;
+    
+    [SerializeField, LabelText("애니메이터")]
+    private Animator animator;
+    
     CharacterController cc;
-    Animator anim;
-    Vector3 velocity;
     float currentSpeed;
+    bool attackQueued;
+    
+    readonly bool[] skillQueued = new bool[4];
 
-    void Awake()
+    private void Awake()
     {
-        cc   = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
+        cc = GetComponent<CharacterController>();
+        
+        if (!cam) cam = Camera.main.transform;
     }
 
     void Update()
     {
+        ReadInput();
         Move();
-        ApplyGravity();
         Animate();
     }
 
-    #region ── Movement ────────────────────────────────────────────
+    void ReadInput()
+    {
+        if (Input.GetKeyDown(KeyCode.K)) attackQueued = true;
+
+        if (Input.GetKeyDown(KeyCode.Keypad1)) skillQueued[0] = true;
+        if (Input.GetKeyDown(KeyCode.Keypad2)) skillQueued[1] = true;
+        if (Input.GetKeyDown(KeyCode.Keypad3)) skillQueued[2] = true;
+        if (Input.GetKeyDown(KeyCode.Keypad4)) skillQueued[3] = true;
+    }
+
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal");   // A/D 또는 ← →
-        float v = Input.GetAxisRaw("Vertical");     // W/S 또는 ↑ ↓
+        float h = Input.GetAxisRaw("Horizontal"); 
+        float v = Input.GetAxisRaw("Vertical");   
         Vector3 dir = new Vector3(h, 0, v).normalized;
+        
+        currentSpeed = Mathf.MoveTowards(currentSpeed, dir.magnitude * runSpeed, acceleration * Time.deltaTime);
 
-        // 달리기 토글(Shift) ‧ 모바일은 버튼으로 치환 가능
-        float targetSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
-        currentSpeed = Mathf.MoveTowards(currentSpeed, dir.magnitude * targetSpeed, acceleration * Time.deltaTime);
-
-        // 로컬 기준 → 월드 변환 (캐릭터가 바라보는 방향)
         Vector3 move = transform.TransformDirection(dir) * currentSpeed;
         cc.Move(move * Time.deltaTime);
     }
 
-    void ApplyGravity()
-    {
-        if (cc.isGrounded && velocity.y < 0)
-            velocity.y = -2f;     // 살짝 눌러 붙도록
-
-        if (Input.GetKeyDown(KeyCode.Space) && cc.isGrounded)
-            velocity.y = jumpPower;
-
-        velocity.y += gravity * Time.deltaTime;
-        cc.Move(velocity * Time.deltaTime);
-    }
-    #endregion
-
-    #region ── Animation ───────────────────────────────────────────
     void Animate()
     {
-        float animSpeed = currentSpeed / runSpeed;      // 0 ~ 1
-        anim.SetFloat("MoveSpeed", animSpeed, 0.1f, Time.deltaTime);  // DampTime=0.1
+        float speed01 = currentSpeed > 0.1f ? 1f : 0f;
+        animator.SetFloat("MoveSpeed", speed01, 0.05f, Time.deltaTime);
 
-        anim.SetBool ("IsGround", cc.isGrounded);
+        if (attackQueued)
+        {
+            animator.SetTrigger("Attack");
+            attackQueued = false;
+        }
     }
-    #endregion
+
 }
