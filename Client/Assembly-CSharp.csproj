@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Network\Session.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EquipmentListIconView.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SetShadowResolution.cs" />
+    <Compile Include="Assets\AnimationListener.cs" />
     <Compile Include="Assets\MiniMap\_Demo\Player.cs" />
     <Compile Include="Assets\Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\ArmorEditPartData.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SpringBone.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\TransitionView.cs" />
+    <Compile Include="Assets\StatusUI.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Core\SceneEntrance.cs" />
     <Compile Include="Assets\FollowCamera.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Tools\WaterReflection.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Assets\Suriyun\Scripts\MouseOrbitImproved.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BulletShooter.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\ArmorListView.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ClearAttackQueuedOnExit.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\CameraController.cs" />
     <Compile Include="Assets\InfoPanel.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\IdleChanger.cs" />
@@ -1435,6 +1438,10 @@
     <ProjectReference Include="MagicaClothV2.Editor.csproj">
       <Project>{c5af53cd-cee2-974f-5f89-bc4103728bb8}</Project>
       <Name>MagicaClothV2.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="DamageNumbersPro.csproj">
+      <Project>{f19a6ee8-253d-b9c8-b4f6-6c8a336b6c25}</Project>
+      <Name>DamageNumbersPro</Name>
     </ProjectReference>
     <ProjectReference Include="MK.Glow.csproj">
       <Project>{04320b32-7c9f-8447-35b3-5f9f859dff5b}</Project>

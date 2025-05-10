@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,16 +27,33 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField, LabelText("애니메이터")]
     private Animator animator;
+
+    [SerializeField, LabelText("애니메이션 리스너")]
+    private AnimationListener animationListener;
     
     CharacterController cc;
     float currentSpeed;
     bool attackQueued;
-    
-    readonly bool[] skillQueued = new bool[4];
 
+    Dictionary<KeyCode, string> skillKeys = new Dictionary<KeyCode, string>
+    {
+        { KeyCode.Keypad1, "Skill1" },
+        { KeyCode.Keypad2, "Skill2" },
+        { KeyCode.Keypad3, "Skill3" },
+        { KeyCode.Keypad4, "Skill4" },
+        { KeyCode.Keypad5, "Skill5" }
+    };
+    
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
+
+        animationListener.onEndStatus += AnimationListenerOnonEndStatus;
+    }
+
+    private void AnimationListenerOnonEndStatus()
+    {
+        attackQueued = false;
     }
 
     void Update()
@@ -47,16 +65,27 @@ public class PlayerController : MonoBehaviour
 
     void ReadInput()
     {
-        if (Input.GetKeyDown(KeyCode.K)) attackQueued = true;
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            attackQueued = true;
+            animator.SetTrigger("NormalAttack");
+        }
 
-        if (Input.GetKeyDown(KeyCode.Keypad1)) skillQueued[0] = true;
-        if (Input.GetKeyDown(KeyCode.Keypad2)) skillQueued[1] = true;
-        if (Input.GetKeyDown(KeyCode.Keypad3)) skillQueued[2] = true;
-        if (Input.GetKeyDown(KeyCode.Keypad4)) skillQueued[3] = true;
+        foreach (var skill in skillKeys)
+        {
+            if (Input.GetKeyDown(skill.Key))
+            {
+                Debug.Log(skill.Value);
+                animator.SetTrigger(skill.Value);
+                break;
+            }
+        }
     }
 
     void Move()
     {
+        if (attackQueued) return;
+        
         Vector3 camF = cam.forward;  camF.y = 0;  camF.Normalize();
         Vector3 camR = cam.right;    camR.y = 0;  camR.Normalize();
         
@@ -85,11 +114,5 @@ public class PlayerController : MonoBehaviour
     {
         float speed01 = currentSpeed > 0.1f ? 1f : 0f;
         animator.SetFloat("MoveSpeed", speed01, 0.05f, Time.deltaTime);
-
-        if (attackQueued)
-        {
-            animator.SetTrigger("Attack");
-            attackQueued = false;
-        }
     }
 }

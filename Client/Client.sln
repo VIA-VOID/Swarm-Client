@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lilToon.Editor", "lilToon.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MK.Glow.URP.Editor", "MK.Glow.URP.Editor.csproj", "{7ef978fc-75e3-0e58-7b9b-117d656a3185}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DamageNumbersPro", "DamageNumbersPro.csproj", "{f19a6ee8-253d-b9c8-b4f6-6c8a336b6c25}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{9cf74455-0653-9f90-c855-53d6959d5dfd}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{8e399d07-fc4a-7ecd-7881-f923d075ebd1}"
@@ -72,6 +74,8 @@ Global
 		{b9b04b68-2623-3f53-dba6-2afb0f6e9316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ef978fc-75e3-0e58-7b9b-117d656a3185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7ef978fc-75e3-0e58-7b9b-117d656a3185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{f19a6ee8-253d-b9c8-b4f6-6c8a336b6c25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{f19a6ee8-253d-b9c8-b4f6-6c8a336b6c25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9cf74455-0653-9f90-c855-53d6959d5dfd}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9cf74455-0653-9f90-c855-53d6959d5dfd}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8e399d07-fc4a-7ecd-7881-f923d075ebd1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
