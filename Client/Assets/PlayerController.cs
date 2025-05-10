@@ -5,6 +5,12 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    [Title("스테이터스")]
+    [LabelText("플레이어 현재 체력")]
+    public int currentPlayerHP;
+
+    [LabelText("플레이어 최대 체력")] public int playerMaxHP;
+    
     [Title("이동 관련")]
     [LabelText("이동 속도")]
     public float runSpeed     = 4.0f;
@@ -68,7 +74,7 @@ public class PlayerController : MonoBehaviour
         
         if (dir.sqrMagnitude > 0.0001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(-dir);
+            Quaternion targetRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation,
                 targetRot,
                 turnSpeed * Time.deltaTime);

@@ -97,7 +97,6 @@ public class MiniMapController : MonoBehaviour {
 			}
 		}
 	}
-
 	//Release the unmanaged objects
 	void OnDestroy(){
 		//Debug.Log ("MiniMapController OnDestroy");
@@ -156,6 +155,7 @@ public class MiniMapController : MonoBehaviour {
 	void SetCam(){
 		mapCamera.orthographicSize = camSize;
 		mapCamera.farClipPlane = camFarClip;
+		
 		if (target == null) {
 			#if UNITY_EDITOR
 			Debug.Log ("Please assign the target");
@@ -163,9 +163,6 @@ public class MiniMapController : MonoBehaviour {
 		} else {
 			mapCamera.transform.eulerAngles = rotationOfCam;
 
-			if (rotateWithTarget) {
-				mapCamera.transform.eulerAngles = target.eulerAngles + rotationOfCam;
-			}
 			mapCamera.transform.position = target.position + cameraOffset;
 		}
 	}
