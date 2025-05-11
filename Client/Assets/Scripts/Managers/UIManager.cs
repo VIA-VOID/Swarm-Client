@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class UIManager : GenericSingleton<UIManager>
     private SceneController sceneController;
     
     private int lastW, lastH;
+    
+    public static event Action<bool> OnOrientationChanged;
     
     private void Start()
     {
@@ -82,6 +85,8 @@ public class UIManager : GenericSingleton<UIManager>
         
         lastW = Screen.width;
         lastH = Screen.height;
+        
+        OnOrientationChanged?.Invoke(isPortrait);
     }
 
     public SceneController GetSceneController() => sceneController;

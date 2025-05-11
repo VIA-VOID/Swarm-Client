@@ -14,8 +14,8 @@ public class LoginSceneController : SceneController
     [SerializeField, LabelText("메인 패널")] private GameObject mainPanel;
 
     [Header("씬 오브젝트")]
-    [SerializeField] private GameObject sceneObjectParent;
-    [SerializeField] private GameObject sceneTransition;
+    [SerializeField, LabelText("씬오브젝트")] private GameObject sceneObjectParent;
+    [SerializeField, LabelText("메인 패널")] private GameObject sceneTransition;
 
     // [Header("선택 가능한 캐릭터")]
     // [SerializeField] private List<SelectableCharacter> selectableCharacters;
