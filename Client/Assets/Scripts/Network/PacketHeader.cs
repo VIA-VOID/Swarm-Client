@@ -1,3 +1,9 @@
+public enum PacketId
+{
+	SC_PLAYER = 0,
+	CS_PLAYER = 1,
+}
+
 public struct PacketHeader
 {
     // 패킷 식별자
