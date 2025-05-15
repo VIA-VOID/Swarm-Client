@@ -55,6 +55,9 @@ public class Session
         _endPoint = endPoint;
         _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
+        // 소켓옵션 적용
+        SetSocketOpt();
+
         SocketAsyncEventArgs connectArgs = new SocketAsyncEventArgs();
         connectArgs.RemoteEndPoint = endPoint;
 
@@ -153,6 +156,15 @@ public class Session
         var args = new SocketAsyncEventArgs();
         args.Completed += OnIoCompleted;
         return args;
+    }
+
+    // 소켓 옵션 설정
+    private void SetSocketOpt()
+    {
+        // Nagle 비활성화
+        _socket.NoDelay = true;
+        // 5초 대기 후 종료
+        _socket.LingerState = new LingerOption(true, 5);
     }
 
     // 수신 등록
