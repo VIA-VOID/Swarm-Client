@@ -47,10 +47,9 @@ public class LoginSceneController : SceneController
     
     // 로딩 진행 상황따라 그래프 값
     public void FillSlider(float fillAmount)
-    {
-        
+    {        
         Hide(loadingBarImage);
-        Show(ChangePage());
+        //Show(ChangePage());
     }
 
     public void Fade()
