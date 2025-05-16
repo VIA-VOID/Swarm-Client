@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEngine.Audio;      // (옵션) 믹서 연결용
+using UnityEngine.Audio;
+using Random = UnityEngine.Random; // (옵션) 믹서 연결용
 
 /*-------------------------------------------------------
 				SoundManager
@@ -19,20 +21,22 @@ public class SoundManager : GenericSingleton<SoundManager>
     [SerializeField, LabelText("BGM 리스트")] private List<AudioClip> bgmList;
     [SerializeField, LabelText("SFX 리스트")] private List<AudioClip> sfxList;
     
-    private int sfxPoolSize = 10;
-    
     private AudioSource bgmSource;
     private Coroutine bgmFadeCo;
     
     private readonly Queue<AudioSource> sfxPool = new();
     private readonly List<AudioSource> activeSfx = new();
 
-    private float bgmVolume;
-    private float sfxVolume;
+    private float bgmVolume = 0.5f;
+    private float sfxVolume = 0.5f;
+
+    private int sfxPoolSize = 10;
     
     // 설정 초기화 (로컬 값 기준으로 수정해야함)
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+        
         bgmSource = gameObject.AddComponent<AudioSource>();
         bgmSource.outputAudioMixerGroup = bgmMixer;
         bgmSource.loop = true;
@@ -54,11 +58,11 @@ public class SoundManager : GenericSingleton<SoundManager>
         return src;
     }
     
-    // BGM 재생 (BGM 인덱스, 페이드 시간)
-    public void PlayBGM(int clipIndex, float fadeTime = 0.5f)
+    // BGM 재생 (BGM 인덱스, 페이드 시간, 콜백 함수)
+    public void PlayBGM(int clipIndex, float fadeTime = 0.5f, Action onComplete = null)
     {
         if (bgmFadeCo != null) StopCoroutine(bgmFadeCo);
-        bgmFadeCo = StartCoroutine(FadeBgmRoutine(bgmList[clipIndex], fadeTime));
+        bgmFadeCo = StartCoroutine(FadeBgmRoutine(bgmList[clipIndex], fadeTime, onComplete));
     }
 
     public void StopBGM(float fadeTime = 0.5f)
@@ -68,7 +72,7 @@ public class SoundManager : GenericSingleton<SoundManager>
     }
 
     // 페이드 코루틴 (다음 음악, 페이드 시간 )
-    private IEnumerator FadeBgmRoutine(AudioClip nextClip, float time)
+    private IEnumerator FadeBgmRoutine(AudioClip nextClip, float time, Action onComplete = null)
     {
         float startVol = bgmSource.volume;
         float t = 0f;
@@ -99,7 +103,10 @@ public class SoundManager : GenericSingleton<SoundManager>
             bgmSource.volume = Mathf.Lerp(0f, bgmVolume, t / time);
             yield return null;
         }
+
         bgmSource.volume = bgmVolume;
+
+        onComplete?.Invoke();
     }
     
     //

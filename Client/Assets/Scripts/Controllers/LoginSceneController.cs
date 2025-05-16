@@ -12,27 +12,19 @@ using UnityEngine.UI;
 --------------------------------------------------------*/
 public class LoginSceneController : SceneController
 {
-    [Header("로딩 관련")]
-    [SerializeField, LabelText("로딩바 이미지")] private OrientationObject loadingBarImage;
-    [SerializeField, LabelText("로고 이미지")]  private OrientationObject logoImage;
-    [SerializeField, LabelText("메인 패널")] private OrientationObject gameStartButton;
-
-    [Header("씬 오브젝트")]
-    [SerializeField, LabelText("씬오브젝트")] private OrientationObject sceneObjectParent;
-    [SerializeField, LabelText("메인 패널")] private OrientationObject sceneTransition;
+    [SerializeField, LabelText("씬 전환 연출")] private OrientationObject sceneTransition;
 
     [Header("Page0 요소")]
-    //[SerializeField, LabelText("")]
+    [SerializeField, LabelText("로딩바 이미지")] private OrientationObject loadingBarImage;
     
     [Header("Page1 요소")]
     [SerializeField, LabelText("비디오 패널")] private GameObject videoPanel;
+    [SerializeField, LabelText("설정창")] private OrientationObject settingBtn;
     
     [Header("Page2 요소")]
-    
-    [Header("UI 버튼")]
-    [SerializeField, LabelText("캐릭터 선택 패널UI")] private OrientationObject characterSelectUIPanel;
-    [SerializeField, LabelText("설정창")] private Button settingBtn;
 
+    [Header("Page3 요소")] // 설정 패널
+    
     private int currentIndex = -1;     // ‑1이면 아무 것도 선택 안 한 상태
 
     private SoundManager soundManager;
@@ -40,9 +32,13 @@ public class LoginSceneController : SceneController
 
     private void Start()
     {
-        Show(loadingBarImage, () => FillSlider(1));
+        soundManager = SoundManager.Instance;
+        uiManager = UIManager.Instance;
+
+        OrientationObject page0 = usingUIList[0];
+        ChangePage(page0);
         
-        SoundManager.Instance.PlayBGM(0);
+        Show(loadingBarImage, () => FillSliderWithTime());
     }
     
     // 로딩 진행 상황따라 그래프 값
@@ -52,13 +48,47 @@ public class LoginSceneController : SceneController
         //Show(ChangePage());
     }
 
+    public void FillSliderWithTime()
+    {
+        StartCoroutine(FillRoutine());
+    }
+    
+    IEnumerator FillRoutine()
+    {
+        var imgPort = loadingBarImage.GetUIObj(true).GetComponent<Image>();
+        var imgLand = loadingBarImage.GetUIObj(false).GetComponent<Image>();
+        
+        imgPort.fillAmount = 0;
+        imgLand.fillAmount = 0;
+        
+        float t = 0;
+
+        // 임시라 3초로 고정
+        while (t < 3)
+        {
+            t += Time.deltaTime;
+            imgPort.fillAmount = Mathf.Clamp01(t / 3);
+            imgLand.fillAmount = Mathf.Clamp01(t / 3);
+            yield return null;
+        }
+
+        imgPort.fillAmount = 1;
+        imgLand.fillAmount = 1;
+        
+        soundManager.PlayBGM(0);
+        
+        Hide(loadingBarImage);
+
+        ChageMainPage();
+    }
+    
     public void Fade()
     {
         //Hide(touchBG);
         //Hide(mainPanel);
 
         Show(sceneTransition);
-        Show(sceneObjectParent);
+        //Show(sceneObjectParent);
 
         //StartCoroutine(SceneTransitionRoutine());
     }
@@ -66,13 +96,17 @@ public class LoginSceneController : SceneController
     // 로딩 완료후 메인 페이지 전환
     public void ChageMainPage()
     {
+        OrientationObject page2 = usingUIList[1];
+        
+        ChangePage(page2);
+        
         videoPanel.SetActive(true);
     }
     
     // 설정창 전환
     public void OpenSettingUI()
     {
-        SoundManager.Instance.PlaySFX(0);
+        soundManager.PlaySFX(0);
     }
     
     // 캐릭터 선택 화면 전환
@@ -80,11 +114,13 @@ public class LoginSceneController : SceneController
     {
         videoPanel.SetActive(false);
         
-        OrientationObject getUIPanel = usingUIList[1];
+        OrientationObject getUIPanel = usingUIList[2];
         
-        SoundManager.Instance.PlaySFX(0);
+        soundManager.PlaySFX(0);
         
-        ChangePage(getUIPanel);
+        //ChangePage(getUIPanel);
+        // 우선 임시로 바로 캐릭터 생성 화면으로 넘김
+        soundManager.PlayBGM(2, 0.5f, () => uiManager.MoveScene(1));
     }
     
     public void MoveCharacterSelectScene()

@@ -4,7 +4,19 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Resources/Scenes/0_LoginScene.unity
+    guid: 23b1df36a0cf87b478bd9afb09506daa
+  - enabled: 1
+    path: Assets/Resources/Scenes/1_CharacterCreate.unity
+    guid: e230fd2b08c2af24990a272ed644421f
+  - enabled: 1
+    path: Assets/Resources/Scenes/2_WorldScene.unity
+    guid: 2b18253f6a22821428224d11699d094d
+  - enabled: 1
+    path: Assets/Resources/Scenes/3_Dungeon.unity
+    guid: 5fecf40a4744ee3498d0bdfbcb724745
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0

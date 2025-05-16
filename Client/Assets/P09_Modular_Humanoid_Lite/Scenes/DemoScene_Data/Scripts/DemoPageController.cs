@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace P09.Modular.Humanoid
 {
-    public class DemoPageController : MonoBehaviour
+    public class DemoPageController : SceneController
     {
         [Header("View")]
         [SerializeField] private List<EditPage> _editPages;
