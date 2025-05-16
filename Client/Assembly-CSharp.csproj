@@ -9,8 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{12F44184-A422-5F27-22E6-507969043F15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -79,16 +78,13 @@
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Tools\NatureManager.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Character\TestInteractable.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\AutoBlink.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketHeader.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Character\FirstPersonController_Polyart.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\Scenes\Mirror\Scripts\MirrorReflection.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\AvatarView.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\FaceUpdate.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Character\Interactable_Dreamscape.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\AvatarEditData.cs" />
-    <Compile Include="Assets\Scripts\Protocol\Enum.cs" />
-    <Compile Include="Assets\Scripts\Protocol\Protocol.cs" />
-    <Compile Include="Assets\Scripts\Protocol\Struct.cs" />
+    <Compile Include="Assets\Scripts\Packet\PacketHeader.cs" />
     <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
     <Compile Include="Assets\Scripts\Network\Session.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EquipmentListIconView.cs" />
@@ -108,7 +104,6 @@
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\HorizontalSwitcher.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\RandomWind.cs" />
     <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
-    <Compile Include="Assets\Scripts\Network\PacketHandler.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SpringCollider.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Managers\NetworkManager.cs" />
@@ -122,6 +117,7 @@
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\MillRotate.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\RefleshProbe.cs" />
+    <Compile Include="Assets\Scripts\Packet\PacketSystem.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BillBoardParticle.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Misc\Flythrough.cs" />
@@ -143,14 +139,16 @@
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EquipmentSelectView.cs" />
     <Compile Include="Assets\Scripts\Network\GameNetwork.cs" />
     <Compile Include="Assets\8K Skybox Pack Free\Example Scenes\Script\RotateCamera.cs" />
-    <Compile Include="Assets\AutoMovePanel.cs" />
     <Compile Include="Assets\MiniMap\_Scripts\MiniMapController.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Tools\FoliageInteractor.cs" />
     <Compile Include="Assets\Scripts\Network\RingBuffer.cs" />
+    <Compile Include="Assets\Scripts\Packet\PacketHandler.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\ScriptableObjects\HouseElementsScriptableObject.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\ArmorPage.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\AutoBlinkforSD.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BulletDatas.cs" />
+    <Compile Include="Assets\Scripts\Protocol\Enum.cs" />
+    <Compile Include="Assets\Scripts\Protocol\Struct.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\HairColorEditPartData.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\Bullet.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\Animations\Rotator.cs" />
@@ -175,6 +173,7 @@
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BulletShooter.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\ArmorListView.cs" />
     <Compile Include="Assets\Scripts\Controllers\ClearAttackQueuedOnExit.cs" />
+    <Compile Include="Assets\Scripts\Protocol\Protocol.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\CameraController.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\IdleChanger.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SetShadowQuality.cs" />
@@ -1755,9 +1754,6 @@
       <Project>{5E2E880E-1F67-07C4-B2FD-9B0871334F2E}</Project>
       <Name>VFavorites</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Scripts\Packet\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
