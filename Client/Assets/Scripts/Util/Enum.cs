@@ -1,6 +1,10 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+/*-------------------------------------------------------
+				Enum
 
+- 모든 Enum 값 리스트
+--------------------------------------------------------*/
 public enum PathFinderEnum
 {
     [LabelText("지우기")]
@@ -52,4 +56,12 @@ public enum Direction8
     DownLeft,   // 왼쪽 아래
     Left,       // 왼쪽
     UpLeft      // 왼쪽 위
+}
+
+public enum UIType
+{
+    Slider,
+    Panel,
+    Button,
+    Image
 }
