@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+/*-------------------------------------------------------
+				SceneController
+
+- 각 씬의 씬 컨트롤러 부모 클래스
+--------------------------------------------------------*/
+
 [Serializable]
 public abstract class SceneController : MonoBehaviour
 {
-    [LabelText("사용할 UI 리스트")]
-    public List<GameObject> usingUIList;
-
     [SerializeField, LabelText("세로 UI 패널")] private GameObject portraitPanel;
     [SerializeField, LabelText("가로 UI 패널")] private GameObject landScapePanel;
+    
+    [LabelText("사용할 UI 리스트")]
+    public List<OrientationObject> usingUIList;
+
+    private OrientationObject currentPage;
     
     protected Canvas rootCanvas { get; private set; }
     protected bool Initialized { get; private set; }
@@ -25,43 +33,63 @@ public abstract class SceneController : MonoBehaviour
             Initialize();
     }
 
+    // 가로 세로 판별
     public GameObject GetPanel(bool isPortrait)
     {
         return isPortrait ? portraitPanel : landScapePanel;
     }
     
+    // 초기화
     public virtual void Initialize()
     {
         if (Initialized) return;
         Initialized = true;
     }
-    
-    public virtual void Show(GameObject gameObject)
+
+    // 페이지 변경
+    public virtual void ChangePage(OrientationObject newPage)
     {
         if (!Initialized) Initialize();
 
-        gameObject.SetActive(true);
+        // 같은 페이지로 전환하려고 하면 무시 (선택)
+        if (currentPage == newPage) return;
+
+        // 이전 페이지 숨김
+        if (currentPage != null)
+            Hide(currentPage);
+
+        // 새 페이지 표시
+        Show(newPage);
+        currentPage = newPage;
+    }
+    
+    public virtual void Show(OrientationObject uiObj)
+    {
+        if (!Initialized) Initialize();
+
+        uiObj.SetUIActive(true);
     }
 
     // Show 직후 실행할 기능 있는 경우
-    public virtual void Show(GameObject gameObject, Action action)
+    public virtual void Show(OrientationObject uiObj, Action action)
     {
         if (!Initialized) Initialize();
 
-        gameObject.SetActive(true);
+        uiObj.SetUIActive(true);
         
         action();
     }
     
-    public virtual void Hide(GameObject gameObject)
+    public virtual void Hide(OrientationObject uiObj)
     {
-        gameObject.SetActive(false);
+        uiObj.SetUIActive(false);
     }
 
-    public virtual void Hide(GameObject gameObject, Action action)
+    // Hide 직전 실행할 기능이 있는 경우
+    public virtual void Hide(OrientationObject uiObj, Action action)
     {
         action();
-        gameObject.SetActive(false);
+        uiObj.SetUIActive(false);
     }
 
 }

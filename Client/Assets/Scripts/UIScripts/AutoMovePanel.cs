@@ -2,6 +2,12 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+/*-------------------------------------------------------
+				AutoMovePanel
+
+- 가로 세로 변경 이벤트 감지하여 가로, 세로 위치로 자동 이동
+--------------------------------------------------------*/
+
 public class AutoMovePanel : MonoBehaviour
 {
     [SerializeField, LabelText("세로 패널 위치")] private Transform portraitTarget;

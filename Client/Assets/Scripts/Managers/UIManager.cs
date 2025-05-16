@@ -2,7 +2,15 @@ using System;
 using System.ComponentModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+/*-------------------------------------------------------
+				UIManager
+
+- 팝업 관리 및 UI 연출, 애니메이션 관리
+- 씬 이동, 현재 사용 캔버스 탐색 및 화면비 감지
+--------------------------------------------------------*/
 
 public class UIManager : GenericSingleton<UIManager>
 {
@@ -89,5 +97,11 @@ public class UIManager : GenericSingleton<UIManager>
         OnOrientationChanged?.Invoke(isPortrait);
     }
 
+    // 씬 이동
+    public void MoveScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+    
     public SceneController GetSceneController() => sceneController;
 }
