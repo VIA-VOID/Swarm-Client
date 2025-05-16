@@ -13,23 +13,11 @@ public class NetworkManager : MonoBehaviour
 {
     #region Singleton
     private static NetworkManager _instance;
-    public static NetworkManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject go = new GameObject("@NetworkManager");
-                _instance = go.AddComponent<NetworkManager>();
-                DontDestroyOnLoad(go);
-            }
-            return _instance;
-        }
-    }
+    public static NetworkManager Instance => _instance ??= new NetworkManager();
     #endregion
 
     private Session _session;
-    private PacketManager _packetManager = new PacketManager();
+    private PacketManager _packetManager = PacketManager.Instance;
     // 연결 상태 확인
     public bool IsConnected => _session != null && _session.IsConnected();
     // 외부에서 콜백 확장
@@ -51,7 +39,7 @@ public class NetworkManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // 패킷 핸들러 등록
-        PacketHandler.RegisterPacketHandlers(_packetManager);
+        PacketSystem.RegisterAllHandlers();
     }
 
     // 서버에 연결
@@ -152,21 +140,9 @@ public class NetworkManager : MonoBehaviour
 --------------------------------------------------------*/
 public class MainThreadDispatcher : MonoBehaviour
 {
-    #region 싱글톤
+    #region Singleton
     private static MainThreadDispatcher _instance;
-    public static MainThreadDispatcher Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject go = new GameObject("@MainThreadDispatcher");
-                _instance = go.AddComponent<MainThreadDispatcher>();
-                DontDestroyOnLoad(go);
-            }
-            return _instance;
-        }
-    }
+    public static MainThreadDispatcher Instance => _instance ??= new MainThreadDispatcher();
     #endregion
 
     // 실행할 작업 큐
