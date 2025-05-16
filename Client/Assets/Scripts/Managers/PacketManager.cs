@@ -5,50 +5,83 @@ using Google.Protobuf;
 using UnityEngine;
 
 /*-------------------------------------------------------
+				PacketInfo
+
+- 패킷 정보
+- protobuf 패킷 매핑
+--------------------------------------------------------*/
+public class PacketInfo
+{
+    public PacketInfo(PacketId packetId, Type packetType, Func<IMessage> factory, Action<IMessage> handler)
+    {
+        PacketId = packetId;
+        PacketType = packetType;
+        Factory = factory;
+        Handler = handler;
+    }
+    // 패킷 ID
+    public PacketId PacketId { get; private set; }
+    // 패킷 유형
+    public Type PacketType { get; private set; }
+    // 패킷 생성 팩토리
+    public Func<IMessage> Factory { get; private set; }
+    // 패킷 처리 핸들러
+    public Action<IMessage> Handler { get; private set; }
+}
+
+/*-------------------------------------------------------
 				PacketManager
 
-- protobuf 적용
-- 컨텐츠 로직 함수
-- 자동화 도구로 생성된 핸들러들이 여기 추가됨
-	- SC: Server에서 Client로 패킷 전달
-	- CS: Client에서 Server로 패킷 전달
+- 패킷 생성, 직렬화, 역직렬화, 처리 등 패킷 생명주기 관리자
+- Protobuf 메시지와 데이터 간 변환
+- 패킷 테이블(Dictionary)를 이용해 패킷별 처리 로직 자동화
+- 패킷 정보 등록(Register)은 PacketSystem에서 수행
 --------------------------------------------------------*/
 public class PacketManager
 {
-    // PacketId에 따른 핸들러 매핑
-    private Dictionary<PacketId, Action<IMessage>> _handlers = new Dictionary<PacketId, Action<IMessage>>();
-    // 패킷 생성 딕셔너리 - PacketId에 따라 패킷 객체 생성
-    private Dictionary<PacketId, Func<IMessage>> _packetFactories = new Dictionary<PacketId, Func<IMessage>>();
-    // 타입에 따른 PacketId 매핑
+    #region Singleton
+    private static PacketManager _instance;
+    public static PacketManager Instance => _instance ??= new PacketManager();
+    #endregion
+
+    private Dictionary<PacketId, PacketInfo> _packetInfos = new Dictionary<PacketId, PacketInfo>();
     private Dictionary<Type, PacketId> _typeToId = new Dictionary<Type, PacketId>();
 
-    // 패킷 핸들러 등록
-    public void Register(PacketId packetId, Action<IMessage> handler)
+    // 패킷 정보 등록
+    public void Register<T>(PacketId packetId, Action<IMessage> handler) where T : IMessage, new()
     {
-        _handlers[packetId] = handler;
+        Type packetType = typeof(T);
+        // 빈 팩토리 함수 생성
+        Func<IMessage> factory = () => new T();
+        // 패킷 정보 객체 생성, 등록
+        var packetInfo = new PacketInfo(packetId, packetType, factory, handler);
+        _packetInfos.Add(packetId, packetInfo);
+        _typeToId.Add(packetType, packetId);
     }
 
-    // 패킷 생성기 등록
-    public void RegisterFactory(PacketId packetId, Func<IMessage> factory)
+    // 패킷 생성
+    public IMessage CreatePacket(PacketId packetId)
     {
-        _packetFactories[packetId] = factory;
+        if (_packetInfos.TryGetValue(packetId, out var packetInfo))
+        {
+            return packetInfo.Factory();
+        }
+        return null;
     }
 
     // 패킷 타입 등록
     // 타입으로부터 ID 찾기
-    public void RegisterType<T>(PacketId packetId) where T : IMessage
+    public PacketId GetPacketId<T>() where T : IMessage
     {
-        _typeToId[typeof(T)] = packetId;
+        Type packetType = typeof(T);
+        if (_typeToId.TryGetValue(packetType, out var packetId))
+        {
+            return packetId;
+        }
+        return PacketId.INVALID_ID;
     }
 
-    // 패킷 팩토리 메서드들 등록 (자동 생성)
-    public void RegisterPacketFactories()
-    {
-		RegisterFactory(PacketId.SC_PLAYER, () => new Google.Protobuf.Protocol.SC_PLAYER());
-		RegisterFactory(PacketId.CS_PLAYER, () => new Google.Protobuf.Protocol.CS_PLAYER());
-    }
-
-    // 수신한 패킷 처리
+    // 패킷 처리
     public void OnRecvPacket(ArraySegment<byte> buffer)
     {
         if (buffer.Array == null)
@@ -64,58 +97,28 @@ public class PacketManager
         ushort packetSize = BitConverter.ToUInt16(buffer.Array, offset);
         offset += sizeof(ushort);
 
-        // 패킷 생성
-        if (_packetFactories.TryGetValue(packetId, out var factory) == false)
+        if (_packetInfos.TryGetValue(packetId, out var packetInfo))
         {
-            Debug.LogError($"패킷 생성기를 찾을 수 없습니다: ID={packetId}");
-            return;
+            // 패킷 생성
+            IMessage packet = packetInfo.Factory();
+            // 패킷 파싱
+            ArraySegment<byte> dataSegment = new ArraySegment<byte>(
+                buffer.Array,
+                buffer.Offset + PacketHeader.HeaderSize,
+                packetSize - PacketHeader.HeaderSize
+            );
+            // 데이터 파싱
+            packet.MergeFrom(dataSegment.Array, dataSegment.Offset, dataSegment.Count);
+            // 핸들러 호출
+            packetInfo.Handler(packet);
         }
-
-        IMessage packet = factory.Invoke();
-        if (packet == null)
-        {
-            Debug.LogError($"패킷 생성 실패: ID={packetId}");
-            return;
-        }
-
-        // 패킷 파싱
-        ArraySegment<byte> dataSegment = new ArraySegment<byte>(
-            buffer.Array,
-            buffer.Offset + PacketHeader.HeaderSize,
-            packetSize - PacketHeader.HeaderSize
-        );
-
-        // Protobuf 데이터 파싱
-        packet.MergeFrom(dataSegment.Array, dataSegment.Offset, dataSegment.Count);
-
-        // 핸들러 호출
-        if (_handlers.TryGetValue(packetId, out var handler))
-        {
-            handler.Invoke(packet);
-        }
-        else
-        {
-            Debug.LogError($"패킷 핸들러를 찾을 수 없습니다: ID={packetId}");
-        }
-    }
-
-    // 패킷 타입으로부터 ID 찾기
-    private PacketId GetPacketId<T>() where T : IMessage
-    {
-        if (_typeToId.TryGetValue(typeof(T), out PacketId id))
-        {
-            return id;
-        }
-
-        Debug.LogError($"패킷 ID를 찾을 수 없습니다: Type={typeof(T).Name}");
-        return 0;
     }
 
     // 전송할 패킷 버퍼 생성
     public ArraySegment<byte> MakeSendBuffer<T>(T packet) where T : IMessage
     {
-        int payloadSize = packet.CalculateSize();
         PacketId packetId = GetPacketId<T>();
+        int payloadSize = packet.CalculateSize();
         ushort totalSize = (ushort)(payloadSize + PacketHeader.HeaderSize);
 
         byte[] buffer = new byte[totalSize];
@@ -127,7 +130,7 @@ public class PacketManager
         BitConverter.GetBytes(totalSize).CopyTo(buffer, offset);
         offset += sizeof(ushort);
 
-        // 본문 직렬화
+        // 데이터 직렬화
         using (MemoryStream ms = new MemoryStream(buffer, offset, payloadSize, writable: true))
         {
             CodedOutputStream cos = new CodedOutputStream(ms);
