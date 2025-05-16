@@ -24,23 +24,19 @@ namespace Protocol {
     static EnumReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpFbnVtLnByb3RvEghQcm90b2NvbCpoCgpQbGF5ZXJUeXBlEhQKEFBMQVlF",
-            "Ul9UWVBFX05PTkUQABIWChJQTEFZRVJfVFlQRV9LTklHSFQQARIUChBQTEFZ",
-            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEANiBnByb3Rv",
-            "Mw=="));
+            "CgpFbnVtLnByb3RvEghQcm90b2NvbCovCgdNc2dUeXBlEhAKDE1TR19UWVBF",
+            "X0FMTBAAEhIKDk1TR19UWVBFX1dPUkxEEAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), }, null, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.MsgType), }, null, null));
     }
     #endregion
 
   }
   #region Enums
-  public enum PlayerType {
-    [pbr::OriginalName("PLAYER_TYPE_NONE")] None = 0,
-    [pbr::OriginalName("PLAYER_TYPE_KNIGHT")] Knight = 1,
-    [pbr::OriginalName("PLAYER_TYPE_MAGE")] Mage = 2,
-    [pbr::OriginalName("PLAYER_TYPE_ARCHER")] Archer = 3,
+  public enum MsgType {
+    [pbr::OriginalName("MSG_TYPE_ALL")] All = 0,
+    [pbr::OriginalName("MSG_TYPE_WORLD")] World = 1,
   }
 
   #endregion
