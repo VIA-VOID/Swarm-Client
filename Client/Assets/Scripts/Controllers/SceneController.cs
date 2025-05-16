@@ -12,13 +12,13 @@ using UnityEngine;
 [Serializable]
 public abstract class SceneController : MonoBehaviour
 {
+    [SerializeField, LabelText("세로 UI 패널")] private GameObject portraitPanel;
+    [SerializeField, LabelText("가로 UI 패널")] private GameObject landScapePanel;
+    
     [LabelText("사용할 UI 리스트")]
     public List<OrientationObject> usingUIList;
 
     private OrientationObject currentPage;
-    
-    [SerializeField, LabelText("세로 UI 패널")] private GameObject portraitPanel;
-    [SerializeField, LabelText("가로 UI 패널")] private GameObject landScapePanel;
     
     protected Canvas rootCanvas { get; private set; }
     protected bool Initialized { get; private set; }

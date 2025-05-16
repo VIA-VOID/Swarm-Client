@@ -21,6 +21,14 @@ public class LoginSceneController : SceneController
     [SerializeField, LabelText("씬오브젝트")] private OrientationObject sceneObjectParent;
     [SerializeField, LabelText("메인 패널")] private OrientationObject sceneTransition;
 
+    [Header("Page0 요소")]
+    //[SerializeField, LabelText("")]
+    
+    [Header("Page1 요소")]
+    [SerializeField, LabelText("비디오 패널")] private GameObject videoPanel;
+    
+    [Header("Page2 요소")]
+    
     [Header("UI 버튼")]
     [SerializeField, LabelText("캐릭터 선택 패널UI")] private OrientationObject characterSelectUIPanel;
     [SerializeField, LabelText("설정창")] private Button settingBtn;
@@ -32,7 +40,7 @@ public class LoginSceneController : SceneController
 
     private void Start()
     {
-        Show(loadingBarImage);
+        Show(loadingBarImage, () => FillSlider(1));
         
         SoundManager.Instance.PlayBGM(0);
     }
@@ -42,7 +50,7 @@ public class LoginSceneController : SceneController
     {
         
         Hide(loadingBarImage);
-        //Show(mainPanel);
+        Show(ChangePage());
     }
 
     public void Fade()
@@ -56,16 +64,30 @@ public class LoginSceneController : SceneController
         //StartCoroutine(SceneTransitionRoutine());
     }
 
+    // 로딩 완료후 메인 페이지 전환
+    public void ChageMainPage()
+    {
+        videoPanel.SetActive(true);
+    }
+    
+    // 설정창 전환
     public void OpenSettingUI()
     {
         SoundManager.Instance.PlaySFX(0);
     }
-
+    
+    // 캐릭터 선택 화면 전환
     public void OpenCharacterSelectUI()
     {
+        videoPanel.SetActive(false);
+        
+        OrientationObject getUIPanel = usingUIList[1];
+        
         SoundManager.Instance.PlaySFX(0);
+        
+        ChangePage(getUIPanel);
     }
-
+    
     public void MoveCharacterSelectScene()
     {
         
