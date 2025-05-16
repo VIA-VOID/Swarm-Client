@@ -11,7 +11,12 @@ using UnityEngine;
 --------------------------------------------------------*/
 public class PacketHandler
 {
-    // PACKET_HANDLER_METHODS
+	// SC_PLAYER 패킷 처리
+	public static void Handle_SC_PLAYER(Google.Protobuf.Protocol.SC_PLAYER packet)
+	{
+		Debug.Log($"Handle_SC_PLAYER 호출: {packet}");
+	}
+
 
     // 패킷 핸들러 및 팩토리 등록
     public static void RegisterPacketHandlers(PacketManager packetManager)
@@ -20,9 +25,9 @@ public class PacketHandler
         packetManager.RegisterPacketFactories();
 
         // 패킷 타입 등록
-        // REGISTER_PACKET_TYPES
+		packetManager.RegisterType<Google.Protobuf.Protocol.SC_PLAYER>(PacketId.SC_PLAYER);
 
         // 패킷 핸들러 등록
-        // REGISTER_METHODS
+		packetManager.Register(PacketId.SC_PLAYER, msg => Handle_SC_PLAYER((Google.Protobuf.Protocol.SC_PLAYER)msg));
     }
 }
