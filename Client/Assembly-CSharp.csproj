@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\DoorOpening.cs" />
-    <Compile Include="Assets\HoverButton.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EquipmentFrameIconView.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Tools\NatureManager.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Character\TestInteractable.cs" />
@@ -75,7 +74,6 @@
     <Compile Include="Assets\Scripts\Network\Session.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EquipmentListIconView.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SetShadowResolution.cs" />
-    <Compile Include="Assets\AnimationListener.cs" />
     <Compile Include="Assets\MiniMap\_Demo\Player.cs" />
     <Compile Include="Assets\Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\ArmorEditPartData.cs" />
@@ -84,6 +82,7 @@
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\RendererEditPartData.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\WeaponPage.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\BustSizeEditPartData.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LoginSceneController.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\WeaponsListView.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Character\FirstPersonController_Dreamscape.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Terrain\TerrainColliders.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Assets\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
     <Compile Include="Assets\Scripts\Network\PacketHandler.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SpringCollider.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Managers\NetworkManager.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\IEditPartData.cs" />
     <Compile Include="Assets\LODObject.cs" />
@@ -102,16 +102,16 @@
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\FaceEmotionData.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\MillRotate.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
-    <Compile Include="Assets\TouchEffectManager.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\RefleshProbe.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BillBoardParticle.cs" />
+    <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Misc\Flythrough.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\ParticleDropdownController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SceneController.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\ColorEditPartData.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Misc\Cull_Lights.cs" />
-    <Compile Include="Assets\SoundManager.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\Data\WeaponEditPartData.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\AutoMovePanel.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Misc\SmoothMouseLook.cs" />
     <Compile Include="Assets\MiniMap\_Scripts\MapObject.cs" />
     <Compile Include="Assets\Scripts\Network\RecvBuffer.cs" />
@@ -135,26 +135,27 @@
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\Bullet.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\Animations\Rotator.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\EditBodyPage.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SpringBone.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\TransitionView.cs" />
-    <Compile Include="Assets\StatusUI.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Core\SceneEntrance.cs" />
-    <Compile Include="Assets\FollowCamera.cs" />
+    <Compile Include="Assets\Scripts\AnimationListener.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Tools\WaterReflection.cs" />
+    <Compile Include="Assets\Scripts\Managers\AutoOrientation.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Gameplay\Core\SceneExit.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\AutoRotate.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\DemoPageController.cs" />
+    <Compile Include="Assets\Scripts\FollowCamera.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\AudioTrigger.cs" />
     <Compile Include="Assets\Polyart\PolyartStudio\SharedResources\Scripts\Misc\FPS_Counter.cs" />
+    <Compile Include="Assets\Scripts\Managers\TouchEffectManager.cs" />
     <Compile Include="Assets\SelectableCharacter.cs" />
-    <Compile Include="Assets\LoginSceneController.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\HoverButton.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\StatusUI.cs" />
     <Compile Include="Assets\Suriyun\Scripts\MouseOrbitImproved.cs" />
     <Compile Include="Assets\MasterStylizedProjectiles\Scripts\BulletShooter.cs" />
     <Compile Include="Assets\P09_Modular_Humanoid_Lite\Scenes\DemoScene_Data\Scripts\ArmorListView.cs" />
     <Compile Include="Assets\Scripts\Controllers\ClearAttackQueuedOnExit.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\CameraController.cs" />
-    <Compile Include="Assets\InfoPanel.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\IdleChanger.cs" />
     <Compile Include="Assets\Samples\Unity Toon Shader\0.11.0-preview\Universal render pipeline\UnityChan\Scripts\SetShadowQuality.cs" />
     <None Include="Packages\jp.lilxyzw.liltoon\Shader\lts_fakeshadow.shader" />

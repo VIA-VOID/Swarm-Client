@@ -4,24 +4,33 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine.Audio;      // (옵션) 믹서 연결용
 
+/*-------------------------------------------------------
+				SoundManager
+
+- 클라이언트 사운드 관리
+--------------------------------------------------------*/
+
 public class SoundManager : GenericSingleton<SoundManager>
 {
     [Header("오디오 믹서")]
-    [SerializeField] private AudioMixerGroup bgmMixer;
-    [SerializeField] private AudioMixerGroup sfxMixer;
+    [SerializeField, LabelText("BGM 믹서")] private AudioMixerGroup bgmMixer;
+    [SerializeField, LabelText("SFX 믹서")] private AudioMixerGroup sfxMixer;
 
     [SerializeField, LabelText("BGM 리스트")] private List<AudioClip> bgmList;
     [SerializeField, LabelText("SFX 리스트")] private List<AudioClip> sfxList;
     
-    [Header("Pool Settings")]
-    [SerializeField] private int sfxPoolSize = 10;
+    private int sfxPoolSize = 10;
     
     private AudioSource bgmSource;
     private Coroutine bgmFadeCo;
     
     private readonly Queue<AudioSource> sfxPool = new();
     private readonly List<AudioSource> activeSfx = new();
+
+    private float bgmVolume;
+    private float sfxVolume;
     
+    // 설정 초기화 (로컬 값 기준으로 수정해야함)
     void Awake()
     {
         bgmSource = gameObject.AddComponent<AudioSource>();
@@ -31,6 +40,9 @@ public class SoundManager : GenericSingleton<SoundManager>
         
         for (int i = 0; i < sfxPoolSize; i++)
             sfxPool.Enqueue(CreateSfxSource());
+        
+        // 로컬에 저장되어있는 설정값 으로 볼륨 설정
+        // 없으면 디폴트값 설정
     }
 
     private AudioSource CreateSfxSource()
@@ -42,19 +54,21 @@ public class SoundManager : GenericSingleton<SoundManager>
         return src;
     }
     
-    public void PlayBGM(int clipIndex, float volume = 1f, float fadeTime = 0.5f)
+    // BGM 재생 (BGM 인덱스, 페이드 시간)
+    public void PlayBGM(int clipIndex, float fadeTime = 0.5f)
     {
         if (bgmFadeCo != null) StopCoroutine(bgmFadeCo);
-        bgmFadeCo = StartCoroutine(FadeBgmRoutine(bgmList[clipIndex], volume, fadeTime));
+        bgmFadeCo = StartCoroutine(FadeBgmRoutine(bgmList[clipIndex], fadeTime));
     }
 
     public void StopBGM(float fadeTime = 0.5f)
     {
         if (bgmFadeCo != null) StopCoroutine(bgmFadeCo);
-        bgmFadeCo = StartCoroutine(FadeBgmRoutine(null, 0f, fadeTime));
+        bgmFadeCo = StartCoroutine(FadeBgmRoutine(null, fadeTime));
     }
 
-    private IEnumerator FadeBgmRoutine(AudioClip nextClip, float targetVol, float time)
+    // 페이드 코루틴 (다음 음악, 페이드 시간 )
+    private IEnumerator FadeBgmRoutine(AudioClip nextClip, float time)
     {
         float startVol = bgmSource.volume;
         float t = 0f;
@@ -82,19 +96,20 @@ public class SoundManager : GenericSingleton<SoundManager>
         while (t < time)
         {
             t += Time.unscaledDeltaTime;
-            bgmSource.volume = Mathf.Lerp(0f, targetVol, t / time);
+            bgmSource.volume = Mathf.Lerp(0f, bgmVolume, t / time);
             yield return null;
         }
-        bgmSource.volume = targetVol;
+        bgmSource.volume = bgmVolume;
     }
     
-    public void PlaySFX(int sfxIndex, float volume = 1f, float pitchRandom = 0.05f)
+    //
+    public void PlaySFX(int sfxIndex, float pitchRandom = 0.05f)
     {
         if (sfxList[sfxIndex] == null) return;
 
         AudioSource src = sfxPool.Count > 0 ? sfxPool.Dequeue() : CreateSfxSource();
         src.clip = sfxList[sfxIndex];
-        src.volume = volume;
+        src.volume = sfxVolume;
         src.pitch = 1f + Random.Range(-pitchRandom, pitchRandom);
         src.transform.position = Vector3.zero;
         src.Play();
@@ -103,7 +118,7 @@ public class SoundManager : GenericSingleton<SoundManager>
         StartCoroutine(ReleaseWhenDone(src));
     }
 
-    private System.Collections.IEnumerator ReleaseWhenDone(AudioSource src)
+    private IEnumerator ReleaseWhenDone(AudioSource src)
     {
         yield return new WaitUntil(() => !src.isPlaying);
         activeSfx.Remove(src);
