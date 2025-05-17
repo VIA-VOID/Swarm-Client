@@ -114,13 +114,15 @@ public class LoginSceneController : SceneController
     {
         videoPanel.SetActive(false);
         
-        OrientationObject getUIPanel = usingUIList[2];
+        //OrientationObject getUIPanel = usingUIList[2];
+        
+        // 원래는 캐릭터 선택화면 띄워줘야함 (임시로 캐릭터 생성씬으로 이동)
         
         soundManager.PlaySFX(0);
+
+        soundManager.PlayBGM(2);
         
-        //ChangePage(getUIPanel);
-        // 우선 임시로 바로 캐릭터 생성 화면으로 넘김
-        soundManager.PlayBGM(2, 0.5f, () => uiManager.MoveScene(1));
+        uiManager.MoveScene(1);
     }
     
     public void MoveCharacterSelectScene()

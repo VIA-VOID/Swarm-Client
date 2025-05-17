@@ -25,6 +25,13 @@ public class AutoMovePanel : MonoBehaviour
             renderCamera = Camera.main;
     }
 
+    private void Start()
+    {
+        bool isPort = UIManager.Instance.GetIsPortrait();
+
+        HandleOrientationChanged(isPort);
+    }
+
     private void OnEnable()
     {
         UIManager.OnOrientationChanged += HandleOrientationChanged;

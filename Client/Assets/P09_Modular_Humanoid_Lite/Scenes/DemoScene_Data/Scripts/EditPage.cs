@@ -6,7 +6,7 @@ namespace P09.Modular.Humanoid
 {
     public abstract class EditPage : MonoBehaviour
     {
-        [SerializeField] private GameObject _root;
+        [SerializeField] private OrientationObject _root;
         [SerializeField] private ModelRotateButton _modelRotateButton;
         
         protected bool _isActive;
@@ -14,6 +14,8 @@ namespace P09.Modular.Humanoid
         protected UnityAction<DemoPageController.PageType> _onChangePage;
         protected UnityAction<int> _onChangeFaceEmotion;
 
+        protected bool IsPortrait => Screen.height > Screen.width;
+        
         public virtual void Init()
         {
             Hide();
@@ -34,13 +36,13 @@ namespace P09.Modular.Humanoid
         public void Show()
         {
             _isActive = true;
-            _root.SetActive(true);
+            _root.SetUIActive(true);
         }
         
         public void Hide()
         {
             _isActive = false;
-            _root.SetActive(false);
+            _root.SetUIActive(false);
         }
 
         public abstract void UpdateView(bool isReset = false);

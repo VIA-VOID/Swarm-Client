@@ -22,10 +22,28 @@ public class UIManager : GenericSingleton<UIManager>
     private SceneController sceneController;
     
     private int lastW, lastH;
-    
+        
+    private bool isPortrait;
     public static event Action<bool> OnOrientationChanged;
     
-    private void Start()
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+// 씬이 완전히 로드되면 호출됨
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ReconnectSceneReferences(); // → 새 Canvas와 SceneController 다시 찾기
+        ApplyOrientation();         // → 방향 UI 다시 세팅
+    }
+    
+    private void ReconnectSceneReferences()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
         if (canvas == null)
@@ -33,25 +51,22 @@ public class UIManager : GenericSingleton<UIManager>
             Debug.LogError("UIManager: Canvas 오브젝트를 찾지 못했습니다.");
             return;
         }
-        
+
         canvasScaler = canvas.GetComponent<CanvasScaler>();
         if (!canvasScaler)
             canvasScaler = canvas.gameObject.AddComponent<CanvasScaler>();
-        
+
         sceneController = canvas.GetComponent<SceneController>();
         if (sceneController == null)
         {
-            Debug.LogError("UIManager: Canvas 에 SceneController 컴포넌트가 없습니다.");
-        }
-        else
-        {
-            portraitRoot = sceneController.GetPanel(true);
-            landscapeRoot = sceneController.GetPanel(false);
+            Debug.LogError("UIManager: Canvas에 SceneController가 없습니다.");
+            return;
         }
 
-        ApplyOrientation();
+        portraitRoot = sceneController.GetPanel(true);
+        landscapeRoot = sceneController.GetPanel(false);
     }
-
+    
     private void Update()
     {
 #if UNITY_ANDROID || UNITY_IOS
@@ -69,8 +84,6 @@ public class UIManager : GenericSingleton<UIManager>
 
     private void ApplyOrientation()
     {
-        bool isPortrait;
-        
 #if UNITY_ANDROID || UNITY_IOS
         var o = Screen.orientation;
         isPortrait = (o == ScreenOrientation.Portrait || o == ScreenOrientation.PortraitUpsideDown);
@@ -97,6 +110,12 @@ public class UIManager : GenericSingleton<UIManager>
         OnOrientationChanged?.Invoke(isPortrait);
     }
 
+    // 가로 세로 판별 여부 리턴
+    public bool GetIsPortrait()
+    {
+        return isPortrait;
+    }
+    
     // 씬 이동
     public void MoveScene(int index)
     {

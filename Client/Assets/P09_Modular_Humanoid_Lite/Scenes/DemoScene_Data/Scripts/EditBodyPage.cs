@@ -6,56 +6,44 @@ namespace P09.Modular.Humanoid
 {
     public sealed class EditBodyPage : EditPage
     {
-        [SerializeField] private HorizontalSwitcher _sexSwitcher;
-        [SerializeField] private HorizontalSwitcher _hairStyleSwitcher;
-        [SerializeField] private HorizontalSwitcher _hairColorSwitcher;
-        [SerializeField] private HorizontalSwitcher _skinColorSwitcher;
-        [SerializeField] private HorizontalSwitcher _eyeColorSwitcher;
-        [SerializeField] private HorizontalSwitcher _facialHairSwitcher;
-        [SerializeField] private HorizontalSwitcher _bustSizeSwitcher;
+        [SerializeField] private OrientationObject  _sexSwitcher;
+        [SerializeField] private OrientationObject  _hairStyleSwitcher;
+        [SerializeField] private OrientationObject  _hairColorSwitcher;
+        [SerializeField] private OrientationObject  _skinColorSwitcher;
+        [SerializeField] private OrientationObject  _eyeColorSwitcher;
+        [SerializeField] private OrientationObject  _facialHairSwitcher;
+        [SerializeField] private OrientationObject  _bustSizeSwitcher;
         
-        [SerializeField] private HorizontalSwitcher _faceEmotionSwitcher;
+        [SerializeField] private OrientationObject  _faceEmotionSwitcher;
         
-        public override void Init()
+        private bool IsPortrait => Screen.height > Screen.width;
+
+        private void InitSwitcher(OrientationObject orientation)
         {
-            base.Init();
-            _sexSwitcher.Init(_onChangePart);
-            _hairStyleSwitcher.Init(_onChangePart);
-            _hairColorSwitcher.Init(_onChangePart);
-            _skinColorSwitcher.Init(_onChangePart);
-            _eyeColorSwitcher.Init(_onChangePart);
-            _facialHairSwitcher.Init(_onChangePart);
-            _bustSizeSwitcher.Init(_onChangePart);
-            
-            _faceEmotionSwitcher.Init( (editPartType, contentId) => _onChangeFaceEmotion(contentId) );
+            var switcher = orientation.GetUIObj(IsPortrait).GetComponent<HorizontalSwitcher>();
+            switcher.Init(_onChangePart);
         }
 
         public override void UpdateView(bool isReset = false)
         {
-            if(!_isActive) return;
-            var switchers = new[]
-            {
-                _sexSwitcher,
-                _hairStyleSwitcher,
-                _hairColorSwitcher,
-                _skinColorSwitcher,
-                _eyeColorSwitcher,
-                _facialHairSwitcher,
-                _bustSizeSwitcher,
+            OrientationObject[] switchers = {
+                _sexSwitcher, _hairStyleSwitcher, _hairColorSwitcher,
+                _skinColorSwitcher, _eyeColorSwitcher,
+                _facialHairSwitcher, _bustSizeSwitcher,
                 _faceEmotionSwitcher
             };
-            foreach (var switcher in switchers)
+
+            foreach (var orientation in switchers)
             {
+                var switcher = orientation.GetUIObj(IsPortrait).GetComponent<HorizontalSwitcher>();
                 switcher.UpdateView();
                 if (isReset)
-                {
                     switcher.Reset();
-                }
             }
 
             var sexId = DemoPageController.AvatarEditData.SexId;
-            _facialHairSwitcher.gameObject.SetActive(sexId == DemoPageController.MaleSexId);
-            _bustSizeSwitcher.gameObject.SetActive(sexId == DemoPageController.FemaleSexId);
+            _facialHairSwitcher.SetUIActive(sexId == DemoPageController.MaleSexId);
+            _bustSizeSwitcher.SetUIActive(sexId == DemoPageController.FemaleSexId);
         }
     }
 }

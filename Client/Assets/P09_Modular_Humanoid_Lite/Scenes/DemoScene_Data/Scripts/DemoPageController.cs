@@ -45,9 +45,10 @@ namespace P09.Modular.Humanoid
             Init();
         }
 
+        // 시작시 초기화
         private void Init()
         {
-            _currentPage = PageType.Armor;
+            _currentPage = PageType.Body;
             AvatarEditData = new AvatarEditData();
             EditPartDataList = _editPartDataList;
             foreach (var editPage in _editPages)
