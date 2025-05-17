@@ -60,7 +60,7 @@ namespace P09.Modular.Humanoid
 
             var equipmentDataListDic = viewEquipmentList
                 .ToDictionary(selectEquipment => selectEquipment.EditPartType,
-                    selectEquipment => DemoPageController.GetEditPartData(selectEquipment.EditPartType).dataList
+                    selectEquipment => CharacterCreateController.GetEditPartData(selectEquipment.EditPartType).dataList
                         .Cast<ArmorEditPartData>()
                         .Where(d => d.EquipmentGroupId != 0).ToArray());
             

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec80f53b9c54e54bdce670231303d7a, type: 3}
   m_Name: SexEditPartData_02
   m_EditorClassIdentifier: 
-  _equipmentGroupId: 0
   _contentId: 2
-  _displayName: Female
+  _displayName: "\uC5EC\uC131"
   _meshName: Female
   _icon: {fileID: 0}

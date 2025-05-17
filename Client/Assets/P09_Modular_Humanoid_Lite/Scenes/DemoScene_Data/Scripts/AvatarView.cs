@@ -13,7 +13,7 @@ namespace P09.Modular.Humanoid
         [SerializeField] private RuntimeAnimatorController _maleAnimatorController;
         [SerializeField] private RuntimeAnimatorController _femaleAnimatorController;
         
-        private DemoPageController.PageType _pageType;
+        private CharacterCreateController.PageType _pageType;
         private bool _isRotating = false;
         private bool _isLeft = false;
         private int _currentSexId;
@@ -65,45 +65,45 @@ namespace P09.Modular.Humanoid
 
         public void UpdateView()
         {
-            _currentSexId = DemoPageController.AvatarEditData.SexId;
+            _currentSexId = CharacterCreateController.AvatarEditData.SexId;
 
-            _animator.runtimeAnimatorController = _currentSexId == DemoPageController.MaleSexId
+            _animator.runtimeAnimatorController = _currentSexId == CharacterCreateController.MaleSexId
                 ? _maleAnimatorController
                 : _femaleAnimatorController;
             foreach (Transform child in GetComponentsInChildren<Transform>(true))
             {
                 // Sex
-                var (currentSexId, sexDataList) = DemoPageController.GetEditPartData(EditPartType.Sex);
+                var (currentSexId, sexDataList) = CharacterCreateController.GetEditPartData(EditPartType.Sex);
                 UpdateRenderer(child, currentSexId, sexDataList);
                 // HairStyle
-                var (currentHairStyleId, hairStyleDataList) = DemoPageController.GetEditPartData(EditPartType.HairStyle);
+                var (currentHairStyleId, hairStyleDataList) = CharacterCreateController.GetEditPartData(EditPartType.HairStyle);
                 UpdateRenderer(child, currentHairStyleId, hairStyleDataList);
                 // HairColor
-                var (currentHairColorId, hairColorDataList) = DemoPageController.GetEditPartData(EditPartType.HairColor);
+                var (currentHairColorId, hairColorDataList) = CharacterCreateController.GetEditPartData(EditPartType.HairColor);
                 UpdateHairColor(child, currentHairColorId, hairColorDataList);
                 // SkinColor
-                var (currentSkinColorId, skinColorDataList) = DemoPageController.GetEditPartData(EditPartType.Skin);
+                var (currentSkinColorId, skinColorDataList) = CharacterCreateController.GetEditPartData(EditPartType.Skin);
                 UpdateSkinColor(child, currentSkinColorId, skinColorDataList);
                 // EyeColor
-                var (currentEyeColorId, eyeColorDataList) = DemoPageController.GetEditPartData(EditPartType.EyeColor);
+                var (currentEyeColorId, eyeColorDataList) = CharacterCreateController.GetEditPartData(EditPartType.EyeColor);
                 UpdateEyeColor(child, currentEyeColorId, eyeColorDataList);
-                if (_currentSexId == DemoPageController.MaleSexId)
+                if (_currentSexId == CharacterCreateController.MaleSexId)
                 {
                     // FacialHair
-                    var (currentFacialHairId, facialHairDataList) = DemoPageController.GetEditPartData(EditPartType.FacialHair);
+                    var (currentFacialHairId, facialHairDataList) = CharacterCreateController.GetEditPartData(EditPartType.FacialHair);
                     UpdateRenderer(child, currentFacialHairId, facialHairDataList);
                 }
-                else if (_currentSexId == DemoPageController.FemaleSexId)
+                else if (_currentSexId == CharacterCreateController.FemaleSexId)
                 {
                     // BustSize
-                    var (currentBustSizeId, bustSizeDataList) = DemoPageController.GetEditPartData(EditPartType.BustSize);
+                    var (currentBustSizeId, bustSizeDataList) = CharacterCreateController.GetEditPartData(EditPartType.BustSize);
                     UpdateBustSize(child, currentBustSizeId, bustSizeDataList);
                 }
                 
                 // Equipment
                 foreach (var equipmentType in EquipmentTypes)
                 {
-                    var (currentEquipmentId, equipmentDataList) = DemoPageController.GetEditPartData(equipmentType);
+                    var (currentEquipmentId, equipmentDataList) = CharacterCreateController.GetEditPartData(equipmentType);
                     UpdateRenderer(child, currentEquipmentId, equipmentDataList);
                 }
             }
@@ -119,11 +119,11 @@ namespace P09.Modular.Humanoid
                 }
                 else if(child.name == string.Format(data.MeshName, "Male"))
                 {
-                    child.gameObject.SetActive(_currentSexId == DemoPageController.MaleSexId && data.ContentId == currentId);
+                    child.gameObject.SetActive(_currentSexId == CharacterCreateController.MaleSexId && data.ContentId == currentId);
                 }
                 else if (child.name == string.Format(data.MeshName, "Female") || child.name == string.Format(data.MeshName, "Fem"))
                 {
-                    child.gameObject.SetActive(_currentSexId == DemoPageController.FemaleSexId && data.ContentId == currentId);
+                    child.gameObject.SetActive(_currentSexId == CharacterCreateController.FemaleSexId && data.ContentId == currentId);
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace P09.Modular.Humanoid
         private void UpdateHairColor(Transform child, int currentId, List<IEditPartData> dataList)
         {
             var currentData = dataList.FirstOrDefault(d => d.ContentId == currentId); 
-            var hairStyleId = DemoPageController.AvatarEditData.HairStyleId;
+            var hairStyleId = CharacterCreateController.AvatarEditData.HairStyleId;
             foreach (var data in dataList)
             {
                 if (child.name == string.Format(data.MeshName, hairStyleId))

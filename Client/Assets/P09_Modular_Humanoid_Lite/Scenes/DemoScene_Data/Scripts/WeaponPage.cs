@@ -25,8 +25,8 @@ namespace P09.Modular.Humanoid
         {
             var pageType = editPartType switch
             {
-                EditPartType.Weapon or EditPartType.Shield => DemoPageController.PageType.Weapon,
-                _ => DemoPageController.PageType.Armor
+                EditPartType.Weapon or EditPartType.Shield => CharacterCreateController.PageType.Weapon,
+                _ => CharacterCreateController.PageType.Armor
             };
             
             _onChangePage?.Invoke(pageType);

@@ -46,7 +46,7 @@ namespace P09.Modular.Humanoid
             Dictionary<int, IEditPartData[]> equipmentDataListDic = new();
             for (var i = 0; i < viewEquipmentList.Count; i++)
             {
-                var dataList = DemoPageController.GetEditPartData(viewEquipmentList[i].EditPartType).dataList
+                var dataList = CharacterCreateController.GetEditPartData(viewEquipmentList[i].EditPartType).dataList
                     .OfType<WeaponEditPartData>()
                     .Where(d => d.WeaponGroupId == viewEquipmentList[i].SubCategory);
                 equipmentDataListDic.Add(viewEquipmentList[i].SubCategory, dataList.Cast<IEditPartData>().ToArray());

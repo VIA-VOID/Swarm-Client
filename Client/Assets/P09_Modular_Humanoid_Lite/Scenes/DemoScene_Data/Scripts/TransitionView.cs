@@ -21,7 +21,11 @@ namespace P09.Modular.Humanoid
         public void ChangeTransition(bool isEditAvatar)
         {
             _animator.SetBool(IsEditAvatar, isEditAvatar);
-            StartCoroutine(ClickCooldown());
+
+            if (_button.isActiveAndEnabled)
+            {
+                StartCoroutine(ClickCooldown());
+            }
         }
         
         IEnumerator ClickCooldown()

@@ -24,7 +24,7 @@ namespace P09.Modular.Humanoid
         public void Init(UnityAction<EditPartType, int> onChangeContent)
         {
             _currentIndex = 0;
-            _dataList = DemoPageController.GetAnyEditPartDataList(_type);
+            _dataList = CharacterCreateController.GetAnyEditPartDataList(_type);
             _onChangeContent = onChangeContent;
             if (_dataList == null || _dataList.Count == 0)
             {
@@ -46,15 +46,32 @@ namespace P09.Modular.Humanoid
 
         public void UpdateView()
         {
-            if (_dataList == null || _currentIndex >= _dataList.Count)
+            if (_dataList == null || _dataList.Count == 0)
             {
-                Debug.LogWarning($"Invalid state: DataList is null or index {_currentIndex} out of range");
+                Debug.LogWarning($"[{name}] No data to update view.");
                 return;
             }
+            
+            int currentContentId = CharacterCreateController.AvatarEditData.GetCurrentId(_type);
+            
+            int index = _dataList.FindIndex(d => d.ContentId == currentContentId);
+
+            // 유효한 index면 반영
+            if (index >= 0)
+            {
+                _currentIndex = index;
+            }
+            else
+            {
+                _currentIndex = 0; // fallback
+            }
+
+            // UI 갱신
             if (_text != null)
             {
                 _text.text = _dataList[_currentIndex]?.DisplayName;
             }
+
             if (_image != null)
             {
                 var data = _dataList[_currentIndex] as ColorEditPartData;

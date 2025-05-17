@@ -20,7 +20,7 @@ namespace P09.Modular.Humanoid
 
         public void Init(UnityAction<EditPartType> onClickFrame)
         {
-            _dataList = DemoPageController.GetEditPartData(_type).dataList;
+            _dataList = CharacterCreateController.GetEditPartData(_type).dataList;
             _onClickFrame = onClickFrame;
             _icon.sprite = null;
             _button.onClick.RemoveAllListeners();
@@ -29,7 +29,7 @@ namespace P09.Modular.Humanoid
 
         public void UpdateView()
         {
-            var currentEquipmentId = DemoPageController.AvatarEditData.GetCurrentId(_type);
+            var currentEquipmentId = CharacterCreateController.AvatarEditData.GetCurrentId(_type);
             if (_dataList == null)
             {
                 Debug.LogWarning($"Invalid state: DataList is null or index {currentEquipmentId} out of range. Type: {_type}");
@@ -57,7 +57,7 @@ namespace P09.Modular.Humanoid
                 case ArmorEditPartData armorEditPartData:
                     _icon.gameObject.SetActive(true);
                     _emptyIcon.gameObject.SetActive(false);
-                    _icon.sprite = DemoPageController.AvatarEditData.SexId == DemoPageController.MaleSexId
+                    _icon.sprite = CharacterCreateController.AvatarEditData.SexId == CharacterCreateController.MaleSexId
                         ? armorEditPartData.MaleIcon
                         : armorEditPartData.FemaleIcon;
                     break;

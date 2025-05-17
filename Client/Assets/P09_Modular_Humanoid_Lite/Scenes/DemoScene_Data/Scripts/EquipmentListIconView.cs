@@ -31,14 +31,14 @@ namespace P09.Modular.Humanoid
         public void UpdateView()
         {
             _root.SetActive(true);
-            var currentId = DemoPageController.AvatarEditData.GetCurrentId(_editPartType);
+            var currentId = CharacterCreateController.AvatarEditData.GetCurrentId(_editPartType);
             switch (_partData)
             {
                 case WeaponEditPartData weaponEditPartData:
                     _equipmentIcon.sprite = weaponEditPartData.Icon;
                     break;
                 case ArmorEditPartData armorEditPartData:
-                    _equipmentIcon.sprite = DemoPageController.AvatarEditData.SexId == DemoPageController.MaleSexId
+                    _equipmentIcon.sprite = CharacterCreateController.AvatarEditData.SexId == CharacterCreateController.MaleSexId
                         ? armorEditPartData.MaleIcon
                         : armorEditPartData.FemaleIcon;
                     break;
