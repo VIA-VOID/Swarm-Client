@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class SwarmClientEditorTarget : TargetRules
 {
-	public SwarmClientEditorTarget( TargetInfo Target) : base(Target)
+	public SwarmClientEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V4;
