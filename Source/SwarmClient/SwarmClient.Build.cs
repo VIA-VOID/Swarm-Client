@@ -17,6 +17,8 @@ public class SwarmClient : ModuleRules
             "EnhancedInput",
             "NavigationSystem",
             "Navmesh",
+            "Sockets",
+            "Networking"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] 
