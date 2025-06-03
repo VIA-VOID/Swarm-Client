@@ -35,6 +35,7 @@ public class SwarmClient : ModuleRules
             "SwarmClient/Network/",
             "SwarmClient/Packet/",
             "SwarmClient/Protocol/",
+            "SwarmClient/Character/",
         });
     }
 }
