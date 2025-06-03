@@ -10,9 +10,6 @@ UCLASS(minimalapi)
 class ASwarmClientGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
-public:
-	ASwarmClientGameMode();
 };
 
 
