@@ -2,6 +2,7 @@
 #include "NetworkThread.h"
 #include "Sockets.h"
 #include "SocketSubsystem.h"
+#include "Packet/PacketHandler.h"
 
 /*----------------------------
         FSession
@@ -20,14 +21,14 @@ FSession::~FSession()
 }
 
 // 서버 연결
-bool FSession::ConnectToServer(const FString& InServerAddress, int32 InPort)
+bool FSession::ConnectToServer(const FString& InServerAddress, int32 InServerPort)
 {
     if (IsConnect)
     {
         return false;
     }
     ServerAddress = InServerAddress;
-    ServerPort = InPort;
+    ServerPort = InServerPort;
     // 소켓 생성
     if (CreateSocket() == false)
     {
@@ -80,19 +81,14 @@ void FSession::RecvPacket(const TArray<uint8>& Packet)
     ReceiveQueue.Enqueue(Packet);
 }
 
-// 게임 스레드에서 호출됨
 // 수신된 패킷 처리
 void FSession::ProcessRecvPackets()
 {
     TArray<uint8> PacketData;
-    
     // 수신된 모든 패킷 처리
     while (ReceiveQueue.Dequeue(PacketData))
     {
-        // 패킷 처리
-        //static void HandlePacket(Session* session, BYTE* buffer, uint16 len);
-        // todo: protobuf PacketHandler::HandlePacket 실행
-        // ClientPacketHandler::HandlePacket(this, PacketData.GetData(), PacketData.Num());
+        FPacketHandler::HandlePacket(this, PacketData.GetData(), PacketData.Num());
     }
 }
 

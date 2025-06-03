@@ -15,7 +15,7 @@ public:
 	FSession();
 	~FSession();
 	// 서버 연결
-	bool ConnectToServer(const FString& InServerAddress, int32 InPort);
+	bool ConnectToServer(const FString& InServerAddress, int32 InServerPort);
 	// 연결 종료
 	void Disconnect();
 	// 송신큐 삽입
@@ -23,7 +23,6 @@ public:
 	// 수신큐 삽입
 	template <typename T>
 	void SendPacket(const T& ProtoPacket);
-	// 게임 스레드에서 호출됨
 	// 수신된 패킷 처리
 	void ProcessRecvPackets();
 	// Socket Get
@@ -53,7 +52,7 @@ private:
     
 	// 연결 정보
 	FString ServerAddress;
-	uint16 ServerPort;
+	int32 ServerPort;
 
 	// 연결여부
 	bool IsConnect;
