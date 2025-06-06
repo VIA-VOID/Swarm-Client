@@ -1,5 +1,9 @@
 #pragma once
 
+#include "NetworkThread.h"
+#include "NetworkDefine.h"
+#include "Packet/PacketId.h"
+
 class FSendThread;
 class FRecvThread;
 
@@ -18,11 +22,11 @@ public:
 	bool ConnectToServer(const FString& InServerAddress, int32 InServerPort);
 	// 연결 종료
 	void Disconnect();
-	// 송신큐 삽입
-	void RecvPacket(const TArray<uint8>& Packet);
 	// 수신큐 삽입
+	void RecvPacket(const TArray<uint8>& Packet);
+	// 송신큐 삽입
 	template <typename T>
-	void SendPacket(const T& ProtoPacket);
+	void SendPacket(const EPacketID PacketId, const T& ProtoPacket);
 	// 수신된 패킷 처리
 	void ProcessRecvPackets();
 	// Socket Get
@@ -58,13 +62,36 @@ private:
 	bool IsConnect;
 };
 
-// 수신큐 삽입
+// 송신큐 삽입
 template <typename T>
-void FSession::SendPacket(const T& ProtoPacket)
+void FSession::SendPacket(const EPacketID PacketId, const T& ProtoPacket)
 {
-	if (Socket == nullptr || IsConnect == false)
+	if (Socket == nullptr || IsConnect == false || SendThread.IsValid() == false)
 	{
 		return;
 	}
-	ReceiveQueue.Enqueue(ProtoPacket);
+
+	// 송신데이터 조립
+	const uint16 PayloadSize = static_cast<uint16>(ProtoPacket.ByteSizeLong());
+	const uint16 PacketSize = PayloadSize + sizeof(FPacketHeader);
+
+	// 데이터 직렬화
+	TArray<uint8> PayloadBuffer;
+	PayloadBuffer.SetNumUninitialized(PayloadSize);
+	ProtoPacket.SerializeToArray(PayloadBuffer.GetData(), PayloadSize);
+
+	// 헤더 조립
+	FPacketHeader Header;
+	Header.PacketId = static_cast<uint16>(PacketId);
+	Header.PacketSize = PacketSize;
+
+	// 전체 조립
+	TArray<uint8> AllPacket;
+	AllPacket.SetNumUninitialized(PacketSize);
+
+	FMemory::Memcpy(AllPacket.GetData(), &Header, sizeof(FPacketHeader));
+	FMemory::Memcpy(AllPacket.GetData() + sizeof(FPacketHeader), PayloadBuffer.GetData(), PayloadSize);
+	
+	// 패킷 송신 요청
+	SendThread->RequestSend(AllPacket);
 }

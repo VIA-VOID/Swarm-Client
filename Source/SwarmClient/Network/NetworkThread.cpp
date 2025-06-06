@@ -1,11 +1,12 @@
 #include "NetworkThread.h"
 #include "NetworkDefine.h"
+#include "Session.h"
 #include "Sockets.h"
 
 /*----------------------------
 		FNetworkThread
 ----------------------------*/
-FNetworkThread::FNetworkThread(const TSharedPtr<FSession>& InSession)
+FNetworkThread::FNetworkThread(const FSessionRef& InSession)
 	: IsRunning(false), OwnerSession(InSession)
 {
 }
@@ -30,7 +31,7 @@ void FNetworkThread::Shutdown()
 /*----------------------------
 		FSendThread
 ----------------------------*/
-FSendThread::FSendThread(const TSharedPtr<FSession>& InSession)
+FSendThread::FSendThread(const FSessionRef& InSession)
 	: FNetworkThread(InSession)
 {
 	// 스레드 생성
@@ -112,13 +113,13 @@ void FSendThread::RequestSend(const TArray<uint8>& PacketData)
 /*----------------------------
 		FRecvThread
 ----------------------------*/
-FRecvThread::FRecvThread(const TSharedPtr<FSession>& InSession)
+FRecvThread::FRecvThread(const FSessionRef& InSession)
     : FNetworkThread(InSession)
 {
 	// 스레드 생성
 	Thread.Reset(FRunnableThread::Create(this, TEXT("FRecvThread")));
 	// 버퍼 reserve
-    RecvBuffer.SetNum(BUFFER_SIZE);
+    RecvBuffer.SetNumUninitialized(BUFFER_SIZE);
 }
 
 FRecvThread::~FRecvThread()
@@ -177,7 +178,7 @@ uint32 FRecvThread::Run()
                     {
                         // 전체 패킷 추출
                         TArray<uint8> AllPacket;
-                    	AllPacket.SetNum(Header.PacketSize);
+                    	AllPacket.SetNumUninitialized(Header.PacketSize);
                     	FMemory::Memcpy(AllPacket.GetData(), AllPacket.GetData(), Header.PacketSize);
                     	// 수신큐 삽입
                         Session->RecvPacket(AllPacket);

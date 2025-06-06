@@ -1,12 +1,13 @@
 #pragma once
+#include "Macro.h"
 #include "PacketId.h"
 #include "Network/NetworkDefine.h"
 
 class FSession;
 class FPacketHandler;
 
-using FPacketFunc = TFunction<void(FSession*, BYTE*, uint16)>;
-using FPacketClass = TArray<TUniquePtr<FPacketHandler>>;
+using FPacketFunc = TFunction<void(FSessionRef, BYTE*, uint16)>;
+using FPacketClass = TArray<FPacketHandlerURef>;
 
 /*--------------------------------------------------------
 					FPacketHandler
@@ -27,7 +28,7 @@ public:
 	// 상속받아 구현
 	virtual void RegisterHandlers() = 0;
 	// 함수 테이블에 등록된 함수 실행 (템플릿 HandlePacket 함수 실행)
-	static void HandlePacket(FSession* Session, BYTE* Buffer, uint16 Len);
+	static void HandlePacket(FSessionRef Session, BYTE* Buffer, uint16 Len);
 
 protected:
 	// 함수 테이블에 패킷 등록
@@ -35,7 +36,7 @@ protected:
 	static void RegisterPacket(EPacketID PacketId, HandleFunc Handle);
 	// 전달받은 RunFunc 함수 실행
 	template<typename PacketType, typename RunFunc>
-	static void HandlePacket(RunFunc Func, FSession* Session, BYTE* Buffer, uint16 Len);
+	static void HandlePacket(RunFunc Func, FSessionRef Session, BYTE* Buffer, uint16 Len);
 
 protected:
 	// 함수 테이블
@@ -48,7 +49,7 @@ protected:
 template<typename PacketType, typename HandleFunc>
 void FPacketHandler::RegisterPacket(EPacketID PacketId, HandleFunc Handle)
 {
-	Handlers[static_cast<uint16>(PacketId)] = [Handle](FSession* Session, BYTE* Buffer, uint16 Len)
+	Handlers[static_cast<uint16>(PacketId)] = [Handle](FSessionRef Session, BYTE* Buffer, uint16 Len)
 		{
 			HandlePacket<PacketType>(Handle, Session, Buffer, Len);
 		};
@@ -56,7 +57,7 @@ void FPacketHandler::RegisterPacket(EPacketID PacketId, HandleFunc Handle)
 
 // 전달받은 RunFunc 함수 실행
 template<typename PacketType, typename RunFunc>
-void FPacketHandler::HandlePacket(RunFunc Func, FSession* Session, BYTE* Buffer, uint16 Len)
+void FPacketHandler::HandlePacket(RunFunc Func, FSessionRef Session, BYTE* Buffer, uint16 Len)
 {
 	PacketType Packet;
 	BYTE* Payload = Buffer + sizeof(FPacketHeader);
@@ -64,7 +65,7 @@ void FPacketHandler::HandlePacket(RunFunc Func, FSession* Session, BYTE* Buffer,
 
 	if (Packet.ParseFromArray(Payload, PayloadSize) == false)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Packet ParseFromArray 실패: %s, PacketSize: %d"), typeid(RunFunc).name(), Len);
+		UE_LOG(LogTemp, Error, TEXT("Packet ParseFromArray 실패: %hs, PacketSize: %d"), typeid(RunFunc).name(), Len);
 	}
 
 	Func(Session, Packet);

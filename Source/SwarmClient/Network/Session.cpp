@@ -1,5 +1,4 @@
 #include "Session.h"
-#include "NetworkThread.h"
 #include "Sockets.h"
 #include "SocketSubsystem.h"
 #include "Packet/PacketHandler.h"
@@ -75,7 +74,7 @@ void FSession::Disconnect()
     }
 }
 
-// 송신큐 삽입
+// 수신큐 삽입
 void FSession::RecvPacket(const TArray<uint8>& Packet)
 {
     ReceiveQueue.Enqueue(Packet);
@@ -88,7 +87,7 @@ void FSession::ProcessRecvPackets()
     // 수신된 모든 패킷 처리
     while (ReceiveQueue.Dequeue(PacketData))
     {
-        FPacketHandler::HandlePacket(this, PacketData.GetData(), PacketData.Num());
+        FPacketHandler::HandlePacket(AsShared(), PacketData.GetData(), PacketData.Num());
     }
 }
 

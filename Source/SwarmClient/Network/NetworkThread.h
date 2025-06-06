@@ -1,5 +1,5 @@
 #pragma once
-#include "Session.h"
+#include "Macro.h"
 
 class FSession;
 
@@ -12,7 +12,7 @@ class FSession;
 class SWARMCLIENT_API FNetworkThread : public FRunnable
 {
 public:
-	FNetworkThread(const TSharedPtr<FSession>& InSession);
+	FNetworkThread(const FSessionRef& InSession);
 	virtual ~FNetworkThread() override = default;
 	virtual uint32 Run() override = 0;
 	virtual void Stop() override;
@@ -21,7 +21,7 @@ public:
 
 protected:
 	bool IsRunning;
-	TWeakPtr<FSession> OwnerSession;
+	FSessionWRef OwnerSession;
 	TUniquePtr<FRunnableThread> Thread;
 };
 
@@ -33,7 +33,7 @@ protected:
 class SWARMCLIENT_API FSendThread : public FNetworkThread
 {
 public:
-	FSendThread(const TSharedPtr<FSession>& InSession);
+	FSendThread(const FSessionRef& InSession);
 	virtual ~FSendThread() override;
 	// 스레드 실행
 	// blocking Send 호출
@@ -54,7 +54,7 @@ private:
 class SWARMCLIENT_API FRecvThread : public FNetworkThread
 {
 public:
-	FRecvThread(const TSharedPtr<FSession>& InSession);
+	FRecvThread(const FSessionRef& InSession);
 	virtual ~FRecvThread() override;
 	// 스레드 실행
 	// blocking Recv 호출

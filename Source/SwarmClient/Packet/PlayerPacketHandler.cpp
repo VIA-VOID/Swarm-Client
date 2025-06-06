@@ -1,9 +1,12 @@
 #include "PlayerPacketHandler.h"
 
-void FPlayerPacketHandler::Handle_SC_PLAYER_CREATE(FSession* Session, Protocol::SC_PLAYER_CREATE& Packet)
+// 캐릭터 입장 & 생성
+void FPlayerPacketHandler::Handle_SC_PLAYER_ENTER_GAME(FSessionRef Session, Protocol::SC_PLAYER_ENTER_GAME& Packet)
 {
 }
 
-void FPlayerPacketHandler::Handle_SC_PLAYER_MOVE(FSession* Session, Protocol::SC_PLAYER_MOVE& Packet)
+// 캐릭터 이동
+void FPlayerPacketHandler::Handle_SC_PLAYER_MOVE(FSessionRef Session, Protocol::SC_PLAYER_MOVE& Packet)
 {
+	
 }
