@@ -27,8 +27,8 @@ struct FZoneInfo
 	FString ZoneName;
 	FVector2D MinPos;
 	FVector2D MaxPos;
-	FIntPoint MinGrid;
-	FIntPoint MaxGrid;
+	FVector2D MinGrid;
+	FVector2D MaxGrid;
 };
 
 /*--------------------------------------------------------
