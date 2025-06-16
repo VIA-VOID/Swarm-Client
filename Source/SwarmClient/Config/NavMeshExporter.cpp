@@ -7,7 +7,7 @@
 
 // Sets default values
 ANavMeshExporter::ANavMeshExporter()
-    : NavMesh(nullptr)
+    : GridSize(100.0f), OutputFileName(TEXT("MapData")), NavMesh(nullptr)
 { 	
 	PrimaryActorTick.bCanEverTick = false;
 }
@@ -25,7 +25,7 @@ void ANavMeshExporter::ExportMapData()
     }
 
     // 맵 경계 계산
-    FBox MapBounds = GetMapBounds();
+    GetMapBounds();
     if (MapBounds.IsValid == false)
     {
         UE_LOG(LogTemp, Error, TEXT("맵 경계가 유효하지 않음"));
@@ -33,8 +33,8 @@ void ANavMeshExporter::ExportMapData()
     }
 
     // 그리드 크기 계산
-    int32 GridX = FMath::CeilToInt(MapBounds.GetSize().X / GridSize);
-    int32 GridY = FMath::CeilToInt(MapBounds.GetSize().Y / GridSize);
+    const int32 GridX = FMath::CeilToInt(MapBounds.GetSize().X / GridSize);
+    const int32 GridY = FMath::CeilToInt(MapBounds.GetSize().Y / GridSize);
 
     UE_LOG(LogTemp, Warning, TEXT("맵 크기: %dx%d 그리드"), GridX, GridY);
 
@@ -62,8 +62,7 @@ void ANavMeshExporter::ExportMapData()
     }
 
     // JSON 파일로 저장
-    bool IsSaved = SaveToJSON(MapData, GridX, GridY);
-    if (IsSaved)
+    if (SaveToJSON(MapData, GridX, GridY))
     {
         UE_LOG(LogTemp, Warning, TEXT("맵 데이터 추출 완료!"));
     }
@@ -71,6 +70,61 @@ void ANavMeshExporter::ExportMapData()
     {
         UE_LOG(LogTemp, Error, TEXT("파일 저장 실패"));
     }
+}
+
+// Zone 생성
+void ANavMeshExporter::CreateZones()
+{
+    Zones.Empty();
+    // 맵 중심점
+    const float CenterX = (MapBounds.Min.X + MapBounds.Max.X) * 0.5f;
+    const float CenterY = (MapBounds.Min.Y + MapBounds.Max.Y) * 0.5f;
+    // Zone 삽입
+    AddZone(EZoneType::Town, TEXT("TownZone"),
+        FVector2D(MapBounds.Min.X, CenterY),
+        FVector2D(CenterX, MapBounds.Max.Y));
+
+    AddZone(EZoneType::Pve, TEXT("PveZone"),
+        FVector2D(CenterX, CenterY),
+        FVector2D(MapBounds.Max.X, MapBounds.Max.Y));
+
+    AddZone(EZoneType::Pvp, TEXT("PvpZone"),
+        FVector2D(CenterX, MapBounds.Min.Y),
+        FVector2D(MapBounds.Max.X, CenterY));
+
+    AddZone(EZoneType::Boss, TEXT("BossZone"),
+        FVector2D(MapBounds.Min.X, MapBounds.Min.Y),
+        FVector2D(CenterX, CenterY));
+}
+
+void ANavMeshExporter::AddZone(const EZoneType ZoneType, const FString& ZoneName, const FVector2D& MinPos, const FVector2D& MaxPos)
+{
+    FZoneInfo Zone;
+    Zone.ZoneType = static_cast<int32>(ZoneType);
+    Zone.ZoneName = ZoneName;
+    Zone.MinPos = MinPos;
+    Zone.MaxPos = MaxPos;
+    // 그리드 좌표로 변환
+    SetToGridPos(Zone);
+    Zones.Add(Zone);
+}
+
+// 월드 좌표를 그리드 좌표로 변환
+void ANavMeshExporter::SetToGridPos(FZoneInfo& Zone) const
+{
+    Zone.MinGrid.X = static_cast<int32>((Zone.MinPos.X - MapBounds.Min.X) / GridSize);
+    Zone.MinGrid.Y = static_cast<int32>((Zone.MinPos.Y - MapBounds.Min.Y) / GridSize);
+    Zone.MaxGrid.X = static_cast<int32>((Zone.MaxPos.X - MapBounds.Min.X) / GridSize) - 1;
+    Zone.MaxGrid.Y = static_cast<int32>((Zone.MaxPos.Y - MapBounds.Min.Y) / GridSize) - 1;
+    
+    // 경계 체크
+    const int32 MaxGridX = FMath::CeilToInt(MapBounds.GetSize().X / GridSize) - 1;
+    const int32 MaxGridY = FMath::CeilToInt(MapBounds.GetSize().Y / GridSize) - 1;
+    
+    Zone.MinGrid.X = FMath::Clamp(Zone.MinGrid.X, 0, MaxGridX);
+    Zone.MinGrid.Y = FMath::Clamp(Zone.MinGrid.Y, 0, MaxGridY);
+    Zone.MaxGrid.X = FMath::Clamp(Zone.MaxGrid.X, 0, MaxGridX);
+    Zone.MaxGrid.Y = FMath::Clamp(Zone.MaxGrid.Y, 0, MaxGridY);
 }
 
 // NavMesh 가져오기
@@ -82,7 +136,7 @@ bool ANavMeshExporter::GetNavMesh()
         return false;
     }
 
-    UNavigationSystemV1* NavSystem = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
+    const UNavigationSystemV1* NavSystem = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World);
     if (NavSystem == nullptr)
     {
         return false;
@@ -93,25 +147,17 @@ bool ANavMeshExporter::GetNavMesh()
 }
 
 // 맵 경계 가져오기
-FBox ANavMeshExporter::GetMapBounds()
+void ANavMeshExporter::GetMapBounds()
 {
-    // 빈 박스 리턴
     if (NavMesh == nullptr)
     {
-        return FBox(ForceInit);
+        MapBounds = FBox(ForceInit);
     }
-
-    // 경계 가져오기
-    FBox Bounds = NavMesh->GetBounds();
-
-    UE_LOG(LogTemp, Warning, TEXT("[SimpleExtractor] 맵 경계: (%.1f, %.1f) ~ (%.1f, %.1f)"),
-        Bounds.Min.X, Bounds.Min.Y, Bounds.Max.X, Bounds.Max.Y);
-
-    return Bounds;
+    MapBounds = NavMesh->GetBounds();
 }
 
 // 이동 가능여부
-bool ANavMeshExporter::IsWalkable(float X, float Y)
+bool ANavMeshExporter::IsWalkable(const float X, const float Y) const
 {
     if (NavMesh == nullptr)
     {
@@ -119,26 +165,54 @@ bool ANavMeshExporter::IsWalkable(float X, float Y)
     }
 
     // 2D 좌표만 사용
-    FVector WorldPos(X, Y, 0.0f);    
+    const FVector WorldPos(X, Y, 0.0f);    
     FNavLocation NavLocation;
-    FVector SearchExtent(GridSize * 0.5f, GridSize * 0.5f, 10000.0f);
+    const FVector SearchExtent(GridSize * 0.5f, GridSize * 0.5f, 10000.0f);
     // navMesh상 위치 투영
     return NavMesh->ProjectPoint(WorldPos, NavLocation, SearchExtent);
 }
 
 // json 파일로 저장
-bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, int32 GridX, int32 GridY)
+bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const int32 GridX, const int32 GridY)
 {
+    // Zone 생성
+    CreateZones();
     // JSON 루트 객체 생성
-    TSharedPtr<FJsonObject> RootObject = MakeShareable(new FJsonObject);
-
-    // 기본 정보
+    const TSharedPtr<FJsonObject> RootObject = MakeShareable(new FJsonObject);
+    // 기본 정보 추가
     RootObject->SetStringField(TEXT("mapName"), GetWorld()->GetMapName());
     RootObject->SetNumberField(TEXT("gridX"), GridX);
     RootObject->SetNumberField(TEXT("gridY"), GridY);
     RootObject->SetNumberField(TEXT("gridSize"), GridSize);
     RootObject->SetNumberField(TEXT("totalCells"), GridX * GridY);
     RootObject->SetStringField(TEXT("exportTime"), FDateTime::Now().ToString());
+    // Zone 정보 추가
+    TArray<TSharedPtr<FJsonValue>> ZoneArray;
+    for (const FZoneInfo& Zone : Zones)
+    {
+        const TSharedPtr<FJsonObject> ZoneObject = MakeShareable(new FJsonObject);
+        ZoneObject->SetNumberField(TEXT("zoneType"), Zone.ZoneType);
+        ZoneObject->SetStringField(TEXT("zoneName"), Zone.ZoneName);
+        
+        // 월드 좌표
+        TSharedPtr<FJsonObject> WorldObject = MakeShareable(new FJsonObject);
+        WorldObject->SetNumberField(TEXT("minX"), Zone.MinPos.X);
+        WorldObject->SetNumberField(TEXT("minY"), Zone.MinPos.Y);
+        WorldObject->SetNumberField(TEXT("maxX"), Zone.MaxPos.X);
+        WorldObject->SetNumberField(TEXT("maxY"), Zone.MaxPos.Y);
+        ZoneObject->SetObjectField(TEXT("worldPos"), WorldObject);
+        
+        // 서버 그리드 좌표
+        TSharedPtr<FJsonObject> ServerObject = MakeShareable(new FJsonObject);
+        ServerObject->SetNumberField(TEXT("minX"), Zone.MinGrid.X);
+        ServerObject->SetNumberField(TEXT("minY"), Zone.MinGrid.Y);
+        ServerObject->SetNumberField(TEXT("maxX"), Zone.MaxGrid.X);
+        ServerObject->SetNumberField(TEXT("maxY"), Zone.MaxGrid.Y);
+        ZoneObject->SetObjectField(TEXT("serverPos"), ServerObject);
+        
+        ZoneArray.Add(MakeShareable(new FJsonValueObject(ZoneObject)));
+    }
+    RootObject->SetArrayField(TEXT("zones"), ZoneArray);
 
     // 맵 데이터 저장
     TArray<TSharedPtr<FJsonValue>> MapRows;
@@ -155,29 +229,28 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, int32 Gr
 
     // JSON 문자열로 변환
     FString OutputString;
-    TSharedRef<TJsonWriter<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>> Writer =
+    const TSharedRef<TJsonWriter<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>> Writer =
         TJsonWriterFactory<TCHAR, TPrettyJsonPrintPolicy<TCHAR>>::Create(&OutputString);
     FJsonSerializer::Serialize(RootObject.ToSharedRef(), Writer);
 
     // 파일 경로 생성
-    FString FilePath = FPaths::Combine(
+    const FString FilePath = FPaths::Combine(
         FPaths::ProjectContentDir(),
         TEXT("ServerData"),
         OutputFileName + TEXT(".json")
     );
 
     // 디렉토리 생성
-    FString Directory = FPaths::GetPath(FilePath);
-    if (FPaths::DirectoryExists(Directory) == false)
+    if (const FString Directory = FPaths::GetPath(FilePath); FPaths::DirectoryExists(Directory) == false)
     {
         IFileManager::Get().MakeDirectory(*Directory, true);
     }
 
     // 파일 저장
-    bool IsSaved = FFileHelper::SaveStringToFile(OutputString, *FilePath);
+    const bool IsSaved = FFileHelper::SaveStringToFile(OutputString, *FilePath);
     if (IsSaved)
     {
-        int64 FileSize = IFileManager::Get().FileSize(*FilePath);
+        const int64 FileSize = IFileManager::Get().FileSize(*FilePath);
         UE_LOG(LogTemp, Warning, TEXT("파일 저장 완료: %s (%.2f KB)"), *FilePath, FileSize / 1024.0f);
     }
     return IsSaved;
