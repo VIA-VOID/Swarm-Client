@@ -179,7 +179,7 @@ uint32 FRecvThread::Run()
                         // 전체 패킷 추출
                         TArray<uint8> AllPacket;
                     	AllPacket.SetNumUninitialized(Header.PacketSize);
-                    	FMemory::Memcpy(AllPacket.GetData(), AllPacket.GetData(), Header.PacketSize);
+                    	FMemory::Memcpy(AllPacket.GetData(), PacketBuffer.GetData(), Header.PacketSize);
                     	// 수신큐 삽입
                         Session->RecvPacket(AllPacket);
                         // 조립 버퍼 데이터 제거
