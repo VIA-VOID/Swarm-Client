@@ -3,8 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Macro.h"
 #include "Engine/GameInstance.h"
-#include "NetworkGameInstance.generated.h"
+#include "SwarmGameInstance.generated.h"
 
 class FSession;
 
@@ -14,12 +15,12 @@ class FSession;
 - 네트워크 및 세션 관리
 --------------------------------------------------------*/
 UCLASS()
-class SWARMCLIENT_API UNetworkGameInstance : public UGameInstance, public FTickableGameObject
+class SWARMCLIENT_API USwarmGameInstance : public UGameInstance, public FTickableGameObject
 {
 	GENERATED_BODY()
 
 public:
-	UNetworkGameInstance();
+	USwarmGameInstance();
 	// 서버 연결
 	UFUNCTION(BlueprintCallable, Category = "Network")
 	void ConnectToServer(const FString& InAddress, int32 InServerPort);
@@ -30,9 +31,10 @@ public:
 protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual TStatId GetStatId() const override;
+	virtual void OnStart() override;
 
 private:
-	TSharedPtr<FSession> GameSession;
+	FSessionRef GameSession;
 	FString ServerAddress;
 	int32 ServerPort;
 };
