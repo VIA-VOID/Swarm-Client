@@ -10,6 +10,10 @@ UCLASS(minimalapi)
 class ASwarmClientGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+	// 자동스폰 방지
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override {}
 };
 
 
