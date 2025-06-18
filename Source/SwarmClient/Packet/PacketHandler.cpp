@@ -2,18 +2,21 @@
 
 // 자동생성
 // 도메인별 핸들러 include
-#include "ChatPacketHandler.h"
 #include "PlayerPacketHandler.h"
+#include "ChatPacketHandler.h"
 
+UWorld* FPacketHandler::World;
 FPacketFunc FPacketHandler::Handlers[UINT16_MAX];
 FPacketClass FPacketHandler::DomainHandlerClasses;
 
 // 파생 클래스들의 테이블 등록, 초기화
 // 자동생성 코드
-void FPacketHandler::Init()
+void FPacketHandler::Init(UWorld* InWorld)
 {
-	DomainHandlerClasses.Add(MakeUnique<FChatPacketHandler>());
+	World = InWorld;
+
 	DomainHandlerClasses.Add(MakeUnique<FPlayerPacketHandler>());
+	DomainHandlerClasses.Add(MakeUnique<FChatPacketHandler>());
 
 	// 도메인별로 함수 테이블 등록
 	for (const auto& Handler : DomainHandlerClasses)

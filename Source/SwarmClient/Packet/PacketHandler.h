@@ -23,7 +23,7 @@ public:
 	virtual ~FPacketHandler() = default;
 	// 파생 클래스들의 테이블 등록, 초기화
 	// 자동생성 코드
-	static void Init();
+	static void Init(UWorld* InWorld);
 	// 함수 테이블 등록
 	// 상속받아 구현
 	virtual void RegisterHandlers() = 0;
@@ -39,6 +39,8 @@ protected:
 	static void HandlePacket(RunFunc Func, FSessionRef Session, BYTE* Buffer, uint16 Len);
 
 protected:
+	// 언리얼 월드 객체 
+	static UWorld* World;
 	// 함수 테이블
 	static FPacketFunc Handlers[UINT16_MAX];
 	// 도메인별 핸들러
@@ -49,7 +51,7 @@ protected:
 template<typename PacketType, typename HandleFunc>
 void FPacketHandler::RegisterPacket(EPacketID PacketId, HandleFunc Handle)
 {
-	Handlers[static_cast<uint16>(PacketId)] = [Handle](FSessionRef Session, BYTE* Buffer, uint16 Len)
+	Handlers[static_cast<uint16>(PacketId)] = [Handle](FSessionRef Session, BYTE* Buffer, uint16 Len) -> void
 		{
 			HandlePacket<PacketType>(Handle, Session, Buffer, Len);
 		};
