@@ -1,7 +1,6 @@
 #pragma once
 #include "PacketHandler.h"
 #include "Protocol/Protocol.pb.h"
-#include "Config/Macro.h"
 
 class FSession;
 
@@ -20,11 +19,15 @@ public:
 	virtual void RegisterHandlers() override
 	{
 		RegisterPacket<Protocol::SC_PLAYER_ENTER_GAME>(EPacketID::SC_PLAYER_ENTER_GAME, Handle_SC_PLAYER_ENTER_GAME);
+		RegisterPacket<Protocol::SC_PLAYER_SPAWN>(EPacketID::SC_PLAYER_SPAWN, Handle_SC_PLAYER_SPAWN);
+		RegisterPacket<Protocol::SC_PLAYER_DESPAWN>(EPacketID::SC_PLAYER_DESPAWN, Handle_SC_PLAYER_DESPAWN);
 		RegisterPacket<Protocol::SC_PLAYER_MOVE>(EPacketID::SC_PLAYER_MOVE, Handle_SC_PLAYER_MOVE);
 	}
 
 private:
 	// 자동생성
-	static void Handle_SC_PLAYER_ENTER_GAME(FSessionRef Session, Protocol::SC_PLAYER_ENTER_GAME& Packet);
-	static void Handle_SC_PLAYER_MOVE(FSessionRef Session, Protocol::SC_PLAYER_MOVE& Packet);
+	static void Handle_SC_PLAYER_ENTER_GAME(FSessionRef Session, const Protocol::SC_PLAYER_ENTER_GAME& Packet);
+	static void Handle_SC_PLAYER_SPAWN(FSessionRef Session, const Protocol::SC_PLAYER_SPAWN& Packet);
+	static void Handle_SC_PLAYER_DESPAWN(FSessionRef Session, const Protocol::SC_PLAYER_DESPAWN& Packet);
+	static void Handle_SC_PLAYER_MOVE(FSessionRef Session, const Protocol::SC_PLAYER_MOVE& Packet);
 };

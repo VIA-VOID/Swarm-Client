@@ -23,5 +23,5 @@ public:
 
 private:
 	// 자동생성
-	static void Handle_SC_CHAT_MSG(FSessionRef Session, Protocol::SC_CHAT_MSG& Packet);
+	static void Handle_SC_CHAT_MSG(FSessionRef Session, const Protocol::SC_CHAT_MSG& Packet);
 };
