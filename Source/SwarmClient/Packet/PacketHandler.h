@@ -1,5 +1,5 @@
 #pragma once
-#include "Macro.h"
+#include "GameMacro.h"
 #include "PacketId.h"
 #include "Network/NetworkDefine.h"
 
