@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Macro.h"
+#include "GameMacro.h"
 #include "Engine/GameInstance.h"
 #include "SwarmGameInstance.generated.h"
 
