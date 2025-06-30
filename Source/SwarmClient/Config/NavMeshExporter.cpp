@@ -2,6 +2,8 @@
 
 
 #include "Config/NavMeshExporter.h"
+
+#include "GameDefine.h"
 #include "NavigationSystem.h"
 #include "NavMesh/RecastNavMesh.h"
 
@@ -81,50 +83,26 @@ void ANavMeshExporter::CreateZones()
     const float CenterY = (MapBounds.Min.Y + MapBounds.Max.Y) * 0.5f;
     // Zone 삽입
     AddZone(EZoneType::Town, TEXT("TownZone"),
-        FVector2D(MapBounds.Min.X, CenterY),
-        FVector2D(CenterX, MapBounds.Max.Y));
-
-    AddZone(EZoneType::Pve, TEXT("PveZone"),
-        FVector2D(CenterX, CenterY),
-        FVector2D(MapBounds.Max.X, MapBounds.Max.Y));
+        FWorld3D(MapBounds.Min.X, CenterY),
+        FWorld3D(CenterX, MapBounds.Max.Y));
 
     AddZone(EZoneType::Pvp, TEXT("PvpZone"),
-        FVector2D(CenterX, MapBounds.Min.Y),
-        FVector2D(MapBounds.Max.X, CenterY));
+        FWorld3D(CenterX, CenterY),
+        FWorld3D(MapBounds.Max.X, MapBounds.Max.Y));
+
+    AddZone(EZoneType::Pve, TEXT("PveZone"),
+        FWorld3D(CenterX, MapBounds.Min.Y),
+        FWorld3D(MapBounds.Max.X, CenterY));
 
     AddZone(EZoneType::Boss, TEXT("BossZone"),
-        FVector2D(MapBounds.Min.X, MapBounds.Min.Y),
-        FVector2D(CenterX, CenterY));
+        FWorld3D(MapBounds.Min.X, MapBounds.Min.Y),
+        FWorld3D(CenterX, CenterY));
 }
 
-void ANavMeshExporter::AddZone(const EZoneType ZoneType, const FString& ZoneName, const FVector2D& MinPos, const FVector2D& MaxPos)
+void ANavMeshExporter::AddZone(const EZoneType ZoneType, const FString& ZoneName, const FWorld3D& MinPos, const FWorld3D& MaxPos)
 {
-    FZoneInfo Zone;
-    Zone.ZoneType = static_cast<int32>(ZoneType);
-    Zone.ZoneName = ZoneName;
-    Zone.MinPos = MinPos;
-    Zone.MaxPos = MaxPos;
-    // 그리드 좌표로 변환
-    SetToGridPos(Zone);
+    const FZoneInfo Zone(static_cast<int32>(ZoneType), ZoneName, MinPos, MaxPos);
     Zones.Add(Zone);
-}
-
-// 월드 좌표를 그리드 좌표로 변환
-void ANavMeshExporter::SetToGridPos(FZoneInfo& Zone) const
-{
-    Zone.MinGrid.X = static_cast<int32>((Zone.MinPos.X - MapBounds.Min.X) / GridSize);
-    Zone.MinGrid.Y = static_cast<int32>((Zone.MinPos.Y - MapBounds.Min.Y) / GridSize);
-    Zone.MaxGrid.X = static_cast<int32>((Zone.MaxPos.X - MapBounds.Min.X) / GridSize) - 1;
-    Zone.MaxGrid.Y = static_cast<int32>((Zone.MaxPos.Y - MapBounds.Min.Y) / GridSize) - 1;
-    
-    // 경계 체크
-    const int32 MaxGridX = FMath::CeilToInt(MapBounds.GetSize().X / GridSize) - 1;
-    const int32 MaxGridY = FMath::CeilToInt(MapBounds.GetSize().Y / GridSize) - 1;
-    
-    Zone.MinGrid.X = FMath::Clamp(Zone.MinGrid.X, 0, MaxGridX);
-    Zone.MinGrid.Y = FMath::Clamp(Zone.MinGrid.Y, 0, MaxGridY);
-    Zone.MaxGrid.X = FMath::Clamp(Zone.MaxGrid.X, 0, MaxGridX);
-    Zone.MaxGrid.Y = FMath::Clamp(Zone.MaxGrid.Y, 0, MaxGridY);
 }
 
 // NavMesh 가져오기
@@ -181,9 +159,13 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const in
     const TSharedPtr<FJsonObject> RootObject = MakeShareable(new FJsonObject);
     // 기본 정보 추가
     RootObject->SetStringField(TEXT("mapName"), GetWorld()->GetMapName());
+    RootObject->SetNumberField(TEXT("gridSize"), GridSize);
     RootObject->SetNumberField(TEXT("gridX"), GridX);
     RootObject->SetNumberField(TEXT("gridY"), GridY);
-    RootObject->SetNumberField(TEXT("gridSize"), GridSize);
+    RootObject->SetNumberField(TEXT("worldMinX"), MapBounds.Min.X * GPos_Revise_Num);
+    RootObject->SetNumberField(TEXT("worldMinY"), MapBounds.Min.Y * GPos_Revise_Num);
+    RootObject->SetNumberField(TEXT("worldMaxX"), MapBounds.Max.X * GPos_Revise_Num);
+    RootObject->SetNumberField(TEXT("worldMaxY"), MapBounds.Max.Y * GPos_Revise_Num);
     RootObject->SetNumberField(TEXT("totalCells"), GridX * GridY);
     RootObject->SetStringField(TEXT("exportTime"), FDateTime::Now().ToString());
     // Zone 정보 추가
@@ -196,20 +178,12 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const in
         
         // 월드 좌표
         TSharedPtr<FJsonObject> WorldObject = MakeShareable(new FJsonObject);
-        WorldObject->SetNumberField(TEXT("minX"), Zone.MinPos.X);
-        WorldObject->SetNumberField(TEXT("minY"), Zone.MinPos.Y);
-        WorldObject->SetNumberField(TEXT("maxX"), Zone.MaxPos.X);
-        WorldObject->SetNumberField(TEXT("maxY"), Zone.MaxPos.Y);
+        WorldObject->SetNumberField(TEXT("minX"), Zone.MinPos.X * GPos_Revise_Num);
+        WorldObject->SetNumberField(TEXT("minY"), Zone.MinPos.Y * GPos_Revise_Num);
+        WorldObject->SetNumberField(TEXT("maxX"), Zone.MaxPos.X * GPos_Revise_Num);
+        WorldObject->SetNumberField(TEXT("maxY"), Zone.MaxPos.Y * GPos_Revise_Num);
         ZoneObject->SetObjectField(TEXT("worldPos"), WorldObject);
-        
-        // 서버 그리드 좌표
-        TSharedPtr<FJsonObject> ServerObject = MakeShareable(new FJsonObject);
-        ServerObject->SetNumberField(TEXT("minX"), Zone.MinGrid.X);
-        ServerObject->SetNumberField(TEXT("minY"), Zone.MinGrid.Y);
-        ServerObject->SetNumberField(TEXT("maxX"), Zone.MaxGrid.X);
-        ServerObject->SetNumberField(TEXT("maxY"), Zone.MaxGrid.Y);
-        ZoneObject->SetObjectField(TEXT("serverPos"), ServerObject);
-        
+
         ZoneArray.Add(MakeShareable(new FJsonValueObject(ZoneObject)));
     }
     RootObject->SetArrayField(TEXT("zones"), ZoneArray);

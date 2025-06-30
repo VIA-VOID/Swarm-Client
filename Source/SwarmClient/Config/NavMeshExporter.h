@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "NavMesh/RecastNavMesh.h"
+#include "Zone/World3D.h"
 #include "NavMeshExporter.generated.h"
 
 // Zone 타입
@@ -12,8 +13,8 @@ UENUM()
 enum class EZoneType : uint8
 {
 	Town = 0,
-	Pve = 1,
-	Pvp = 2,
+	Pvp = 1,
+	Pve = 2,
 	Boss = 3
 };
 
@@ -22,13 +23,17 @@ USTRUCT()
 struct FZoneInfo
 {
 	GENERATED_BODY()
+
+	FZoneInfo()
+		: ZoneType(static_cast<int32>(EZoneType::Town)), ZoneName(FString()), MinPos(0, 0), MaxPos(0, 0) {}
+	
+	FZoneInfo(const uint8 InZoneType, const FString& InZoneName, const FWorld3D InMinPos, const FWorld3D InMaxPos)
+		: ZoneType(InZoneType), ZoneName(InZoneName), MinPos(InMinPos), MaxPos(InMaxPos) {}
 	
 	uint8 ZoneType;
 	FString ZoneName;
-	FVector2D MinPos;
-	FVector2D MaxPos;
-	FVector2D MinGrid;
-	FVector2D MaxGrid;
+	FWorld3D MinPos;
+	FWorld3D MaxPos;
 };
 
 /*--------------------------------------------------------
@@ -53,9 +58,7 @@ private:
 	// Zone 생성
 	void CreateZones();
 	// Zones에 ZoneInfo 추가
-	void AddZone(const EZoneType ZoneType, const FString& ZoneName, const FVector2D& MinPos, const FVector2D& MaxPos);
-	// 월드 좌표를 그리드 좌표로 변환
-	void SetToGridPos(FZoneInfo& Zone) const;
+	void AddZone(const EZoneType ZoneType, const FString& ZoneName, const FWorld3D& MinPos, const FWorld3D& MaxPos);
 	// NavMesh 가져오기
 	bool GetNavMesh();
 	// 맵 경계 가져오기
