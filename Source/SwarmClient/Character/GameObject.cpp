@@ -37,7 +37,6 @@ void AGameObject::UpdateObjectInfo(const Protocol::ObjectInfo& InObjInfo)
 {
 	Type = InObjInfo.type();
 	StatInfo.CopyFrom(InObjInfo.statinfo());
-	State = InObjInfo.state();
 	Name = InObjInfo.name();
 	UpdatePosition(InObjInfo.posinfo());
 }

@@ -44,8 +44,6 @@ protected:
 	// 위치 및 방향 정보
 	Protocol::PosInfo PosInfo;
 	FWorld3D World3D;
-	// 캐릭터 상태
-	Protocol::ObjectState State;
 	// 스탯 정보
 	Protocol::StatInfo StatInfo;
 	// 이름
