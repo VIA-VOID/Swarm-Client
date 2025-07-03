@@ -28,13 +28,17 @@ public:
 	void EnterPlayer(const Protocol::SC_PLAYER_ENTER_GAME& Packet);
 	// Player 스폰 패킷
 	void SpawnPlayer(const Protocol::SC_PLAYER_SPAWN& Packet);
+	// Player 디스폰
+	void DespawnPlayer(const uint64 ObjectId);
 	// 플레이어 찾기
 	ASwarmPlayer* FindPlayer(const uint64 PlayerId);
 	
 private:
 	// Object 스폰
 	void SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool IsOwn = false);
-
+	// Object 디스폰
+	void DespawnObject(const uint64 ObjectId);
+	// Player 스폰
 	void SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpawnParameters& SpawnParams,
 		const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn = false);
 

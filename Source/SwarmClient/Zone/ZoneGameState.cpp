@@ -32,6 +32,13 @@ void AZoneGameState::SpawnPlayer(const Protocol::SC_PLAYER_SPAWN& Packet)
 	SpawnObject(ObjInfo, false);
 }
 
+// Player 디스폰
+void AZoneGameState::DespawnPlayer(const uint64 ObjectId)
+{
+	// Object 디스폰
+	DespawnObject(ObjectId);
+}
+
 // Object 스폰
 void AZoneGameState::SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool IsOwn/* = false*/)
 {
@@ -61,8 +68,21 @@ void AZoneGameState::SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool
 	}
 }
 
+// Object 디스폰
+void AZoneGameState::DespawnObject(const uint64 ObjectId)
+{
+	ASwarmPlayer* Player = FindPlayer(ObjectId); 
+	if (Player == nullptr)
+	{
+		return;
+	}
+
+	Players.Remove(ObjectId);
+	Player->Destroy();
+}
+
 void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpawnParameters& SpawnParams,
-	const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn/* = false*/)
+                                 const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn/* = false*/)
 {
 	UWorld* World = GetWorld();
 	if (World == nullptr)
