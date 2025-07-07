@@ -6,17 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "NavMesh/RecastNavMesh.h"
 #include "Zone/World3D.h"
+#include "Zone/ZoneDefine.h"
 #include "NavMeshExporter.generated.h"
-
-// Zone 타입
-UENUM()
-enum class EZoneType : uint8
-{
-	Town = 0,
-	Pvp = 1,
-	Pve = 2,
-	Boss = 3
-};
 
 // Zone 정보
 USTRUCT()
