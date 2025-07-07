@@ -3,6 +3,7 @@
 
 #include "Zone/ZoneGameState.h"
 
+#include "MapDataLoader.h"
 #include "Struct.pb.h"
 #include "World3D.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,6 +13,9 @@
 
 AZoneGameState::AZoneGameState()
 {
+	// 맵 데이터 읽어오기
+	const FString Dir = FPaths::Combine(FPaths::ProjectContentDir(), TEXT("ServerData"), TEXT("MapData.json"));
+	FMapDataLoader::LoadMapDataFromFile(Dir, MapData);
 }
 
 // 플레이어 입장 처리 패킷

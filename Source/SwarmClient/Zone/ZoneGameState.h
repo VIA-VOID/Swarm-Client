@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Protocol.pb.h"
+#include "ZoneDefine.h"
 #include "GameFramework/GameStateBase.h"
 #include "ZoneGameState.generated.h"
 
@@ -48,4 +49,7 @@ private:
 	TSubclassOf<ASwarmPlayer> OtherPlayerClass;
 	ASwarmMyPlayer* MyPlayer;
 	TMap<uint64, ASwarmPlayer*> Players;
+
+	// 맵데이터
+	FMapData MapData;
 };
