@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 
 // 버퍼 크기 (4KB)
-constexpr uint32 BUFFER_SIZE = 4096;
+constexpr uint32 G_Buffer_Size = 4096;
 // 패킷 버퍼 크기 (512MB)
-constexpr uint32 PACKET_BUFFER_SIZE = 512;
+constexpr uint32 G_Packet_Buffer_Size = 512;
 
 /**
  *	패킷구조

@@ -54,7 +54,7 @@ uint32 FSendThread::Run()
 	UE_LOG(LogTemp, Log, TEXT("FSendThread 시작"));
 	// 패킷 버퍼
 	TArray<uint8> PacketBuffer;
-	PacketBuffer.Reserve(PACKET_BUFFER_SIZE);
+	PacketBuffer.Reserve(G_Packet_Buffer_Size);
 	
 	while (IsRunning)
 	{
@@ -119,7 +119,7 @@ FRecvThread::FRecvThread(const FSessionRef& InSession)
 	// 스레드 생성
 	Thread.Reset(FRunnableThread::Create(this, TEXT("FRecvThread")));
 	// 버퍼 reserve
-    RecvBuffer.SetNumUninitialized(BUFFER_SIZE);
+    RecvBuffer.SetNumUninitialized(G_Buffer_Size);
 }
 
 FRecvThread::~FRecvThread()
@@ -132,7 +132,7 @@ uint32 FRecvThread::Run()
     IsRunning = true;
 	// 패킷 조립 버퍼
     TArray<uint8> PacketBuffer;
-	PacketBuffer.Reserve(PACKET_BUFFER_SIZE);
+	PacketBuffer.Reserve(G_Packet_Buffer_Size);
 	
     UE_LOG(LogTemp, Log, TEXT("FRecvThread 시작"));
 
