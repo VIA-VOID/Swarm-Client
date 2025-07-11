@@ -5,7 +5,6 @@
 
 #include "MapDataLoader.h"
 #include "Struct.pb.h"
-#include "World3D.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/SwarmMyPlayer.h"
 #include "Player/SwarmPlayerController.h"
@@ -48,14 +47,11 @@ void AZoneGameState::SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool
 {
 	const Protocol::PosInfo PosInfo = ObjInfo.posinfo();
 	const Protocol::ObjectType ObjType = ObjInfo.type();
-
-	// 서버 좌표 보정
-	const FWorld3D World3D = FWorld3D(PosInfo.x(), PosInfo.y(), PosInfo.z(), PosInfo.yaw());
-	const FVector SpawnVector = World3D.ConvertToVector();
+	const FVector SpawnVector(PosInfo.x(), PosInfo.y(), PosInfo.z());
 	
 	// 스폰
 	const FVector SpawnLocation(SpawnVector);
-	const FRotator SpawnRotation = FRotator(0, World3D.GetYaw(), 0);
+	const FRotator SpawnRotation = FRotator(0, PosInfo.yaw(), 0);
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -85,6 +81,7 @@ void AZoneGameState::DespawnObject(const uint64 ObjectId)
 	Player->Destroy();
 }
 
+// Player 스폰
 void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpawnParameters& SpawnParams,
                                  const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn/* = false*/)
 {
@@ -135,7 +132,7 @@ void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpaw
 			// 플레이어 정보 업데이트
 			OtherPlayer->UpdatePlayerInfo(ObjInfo);
 			
-			Players.Add(ObjectId, OtherPlayer);	
+			Players.Add(ObjectId, OtherPlayer);
 		}
 	}
 }

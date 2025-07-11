@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameMacro.h"
 #include "Protocol.pb.h"
 #include "ZoneDefine.h"
 #include "GameFramework/GameStateBase.h"
