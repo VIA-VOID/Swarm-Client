@@ -18,9 +18,9 @@ private:
 	// MapData로 변환
 	static bool ParseJsonToMapData(const FString& JsonString, FMapData& OutMapData);
 	// Zone 정보 파싱
-	static bool ParseZones(const TSharedPtr<FJsonObject>& JsonObject, TArray<FZone>& OutZones);
+	static bool ParseZones(const TSharedPtr<FJsonObject>& JsonObject, TArray<FZoneInfo>& OutZones);
 	// 맵 그리드 파싱
-	static bool ParseMapGrid(const TSharedPtr<FJsonObject>& JsonObject, TArray<TArray<int32>>& OutMapGrid);
+	static bool ParseMapGrid(const TSharedPtr<FJsonObject>& JsonObject, TArray<TArray<int8>>& OutMapGrid);
 	// Zone 위치 정보 파싱
 	static bool ParseZonePosition(const TSharedPtr<FJsonObject>& JsonObject, FZonePosition& OutPosition);
 };

@@ -66,10 +66,10 @@ bool FMapDataLoader::ParseJsonToMapData(const FString& JsonString, FMapData& Out
     OutMapData.GridSize = JsonObject->GetIntegerField(TEXT("gridSize"));
     OutMapData.GridX = JsonObject->GetIntegerField(TEXT("gridX"));
     OutMapData.GridY = JsonObject->GetIntegerField(TEXT("gridY"));
-    OutMapData.WorldMinX = JsonObject->GetIntegerField(TEXT("worldMinX")) / GPos_Revise_Num;
-    OutMapData.WorldMinY = JsonObject->GetIntegerField(TEXT("worldMinY")) / GPos_Revise_Num;
-    OutMapData.WorldMaxX = JsonObject->GetIntegerField(TEXT("worldMaxX")) / GPos_Revise_Num;
-    OutMapData.WorldMaxY = JsonObject->GetIntegerField(TEXT("worldMaxY")) / GPos_Revise_Num;
+    OutMapData.WorldMinX = JsonObject->GetIntegerField(TEXT("worldMinX"));
+    OutMapData.WorldMinY = JsonObject->GetIntegerField(TEXT("worldMinY"));
+    OutMapData.WorldMaxX = JsonObject->GetIntegerField(TEXT("worldMaxX"));
+    OutMapData.WorldMaxY = JsonObject->GetIntegerField(TEXT("worldMaxY"));
 
     // Zone 정보 파싱
     if (ParseZones(JsonObject, OutMapData.Zones) == false)
@@ -89,7 +89,7 @@ bool FMapDataLoader::ParseJsonToMapData(const FString& JsonString, FMapData& Out
 }
 
 // Zone 정보 파싱
-bool FMapDataLoader::ParseZones(const TSharedPtr<FJsonObject>& JsonObject, TArray<FZone>& OutZones)
+bool FMapDataLoader::ParseZones(const TSharedPtr<FJsonObject>& JsonObject, TArray<FZoneInfo>& OutZones)
 {
     // zones 가져오기
     const TArray<TSharedPtr<FJsonValue>>* ZoneArray;
@@ -110,30 +110,29 @@ bool FMapDataLoader::ParseZones(const TSharedPtr<FJsonObject>& JsonObject, TArra
             continue;
         }
 
-        FZone Zone;
+        FZoneInfo ZoneInfo;
         
-        Zone.ZoneName = ZoneObject->GetStringField(TEXT("zoneName"));
-        Zone.ZoneType = static_cast<EZoneType>(ZoneObject->GetIntegerField(TEXT("zoneType")));
-        Zone.GridSize = ZoneObject->GetIntegerField(TEXT("gridSize"));
+        ZoneInfo.ZoneName = ZoneObject->GetStringField(TEXT("zoneName"));
+        ZoneInfo.ZoneType = ZoneObject->GetIntegerField(TEXT("zoneType"));
 
         // 월드 위치 정보 파싱
         TSharedPtr<FJsonObject> WorldPosObject = ZoneObject->GetObjectField(TEXT("worldPos"));
         if (WorldPosObject.IsValid())
         {
-            if (ParseZonePosition(WorldPosObject, Zone.WorldPos) == false)
+            if (ParseZonePosition(WorldPosObject, ZoneInfo.WorldPos) == false)
             {
                 continue;
             }
         }
 
-        OutZones.Add(Zone);
+        OutZones.Add(ZoneInfo);
     }
     
     return true;
 }
 
 // 맵 그리드 파싱
-bool FMapDataLoader::ParseMapGrid(const TSharedPtr<FJsonObject>& JsonObject, TArray<TArray<int32>>& OutMapGrid)
+bool FMapDataLoader::ParseMapGrid(const TSharedPtr<FJsonObject>& JsonObject, TArray<TArray<int8>>& OutMapGrid)
 {
     // mapData 가져오기
     const TArray<TSharedPtr<FJsonValue>>* MapDataArray;
@@ -154,12 +153,12 @@ bool FMapDataLoader::ParseMapGrid(const TSharedPtr<FJsonObject>& JsonObject, TAr
             return false;
         }
 
-        TArray<int32> Row;
+        TArray<int8> Row;
         Row.Reserve(RowArray->Num());
         
         for (int32 X = 0; X < RowArray->Num(); X++)
         {
-            int32 CellValue = (*RowArray)[X]->AsNumber();
+            const int32 CellValue = (*RowArray)[X]->AsNumber();
             Row.Add(CellValue);
         }
 
@@ -177,10 +176,10 @@ bool FMapDataLoader::ParseZonePosition(const TSharedPtr<FJsonObject>& JsonObject
         return false;
     }
 
-    OutPosition.MinX = JsonObject->GetIntegerField(TEXT("minX")) / GPos_Revise_Num;
-    OutPosition.MinY = JsonObject->GetIntegerField(TEXT("minY")) / GPos_Revise_Num;
-    OutPosition.MaxX = JsonObject->GetIntegerField(TEXT("maxX")) / GPos_Revise_Num;
-    OutPosition.MaxY = JsonObject->GetIntegerField(TEXT("maxY")) / GPos_Revise_Num;
+    OutPosition.MinX = JsonObject->GetIntegerField(TEXT("minX"));
+    OutPosition.MinY = JsonObject->GetIntegerField(TEXT("minY"));
+    OutPosition.MaxX = JsonObject->GetIntegerField(TEXT("maxX"));
+    OutPosition.MaxY = JsonObject->GetIntegerField(TEXT("maxY"));
 
     return true;
 }
