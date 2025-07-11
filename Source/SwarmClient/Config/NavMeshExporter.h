@@ -5,27 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "NavMesh/RecastNavMesh.h"
-#include "Zone/World3D.h"
 #include "Zone/ZoneDefine.h"
 #include "NavMeshExporter.generated.h"
-
-// Zone 정보
-USTRUCT()
-struct FZoneInfo
-{
-	GENERATED_BODY()
-
-	FZoneInfo()
-		: ZoneType(static_cast<int32>(EZoneType::Town)), ZoneName(FString()), MinPos(0, 0), MaxPos(0, 0) {}
-	
-	FZoneInfo(const uint8 InZoneType, const FString& InZoneName, const FWorld3D InMinPos, const FWorld3D InMaxPos)
-		: ZoneType(InZoneType), ZoneName(InZoneName), MinPos(InMinPos), MaxPos(InMaxPos) {}
-	
-	uint8 ZoneType;
-	FString ZoneName;
-	FWorld3D MinPos;
-	FWorld3D MaxPos;
-};
 
 /*--------------------------------------------------------
 					ANavMeshExporter
@@ -49,7 +30,7 @@ private:
 	// Zone 생성
 	void CreateZones();
 	// Zones에 ZoneInfo 추가
-	void AddZone(const EZoneType ZoneType, const FString& ZoneName, const FWorld3D& MinPos, const FWorld3D& MaxPos);
+	void AddZone(const EZoneType ZoneType, const FString& ZoneName, const FZonePosition& ZonePosition);
 	// NavMesh 가져오기
 	bool GetNavMesh();
 	// 맵 경계 가져오기

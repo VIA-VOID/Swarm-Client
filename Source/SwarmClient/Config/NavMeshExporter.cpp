@@ -83,25 +83,21 @@ void ANavMeshExporter::CreateZones()
     const float CenterY = (MapBounds.Min.Y + MapBounds.Max.Y) * 0.5f;
     // Zone 삽입
     AddZone(EZoneType::Town, TEXT("TownZone"),
-        FWorld3D(MapBounds.Min.X, CenterY),
-        FWorld3D(CenterX, MapBounds.Max.Y));
+        FZonePosition(MapBounds.Min.X, CenterY, CenterX, MapBounds.Max.Y));
 
     AddZone(EZoneType::Pvp, TEXT("PvpZone"),
-        FWorld3D(CenterX, CenterY),
-        FWorld3D(MapBounds.Max.X, MapBounds.Max.Y));
+        FZonePosition(CenterX, CenterY, MapBounds.Max.X, MapBounds.Max.Y));
 
     AddZone(EZoneType::Pve, TEXT("PveZone"),
-        FWorld3D(CenterX, MapBounds.Min.Y),
-        FWorld3D(MapBounds.Max.X, CenterY));
+        FZonePosition(CenterX, MapBounds.Min.Y, MapBounds.Max.X, CenterY));
 
     AddZone(EZoneType::Boss, TEXT("BossZone"),
-        FWorld3D(MapBounds.Min.X, MapBounds.Min.Y),
-        FWorld3D(CenterX, CenterY));
+        FZonePosition(MapBounds.Min.X, MapBounds.Min.Y, CenterX, CenterY));
 }
 
-void ANavMeshExporter::AddZone(const EZoneType ZoneType, const FString& ZoneName, const FWorld3D& MinPos, const FWorld3D& MaxPos)
+void ANavMeshExporter::AddZone(const EZoneType ZoneType, const FString& ZoneName, const FZonePosition& ZonePosition)
 {
-    const FZoneInfo Zone(static_cast<int32>(ZoneType), ZoneName, MinPos, MaxPos);
+    const FZoneInfo Zone(ZoneType, ZoneName, ZonePosition);
     Zones.Add(Zone);
 }
 
@@ -162,10 +158,10 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const in
     RootObject->SetNumberField(TEXT("gridSize"), GridSize);
     RootObject->SetNumberField(TEXT("gridX"), GridX);
     RootObject->SetNumberField(TEXT("gridY"), GridY);
-    RootObject->SetNumberField(TEXT("worldMinX"), MapBounds.Min.X * GPos_Revise_Num);
-    RootObject->SetNumberField(TEXT("worldMinY"), MapBounds.Min.Y * GPos_Revise_Num);
-    RootObject->SetNumberField(TEXT("worldMaxX"), MapBounds.Max.X * GPos_Revise_Num);
-    RootObject->SetNumberField(TEXT("worldMaxY"), MapBounds.Max.Y * GPos_Revise_Num);
+    RootObject->SetNumberField(TEXT("worldMinX"), MapBounds.Min.X);
+    RootObject->SetNumberField(TEXT("worldMinY"), MapBounds.Min.Y);
+    RootObject->SetNumberField(TEXT("worldMaxX"), MapBounds.Max.X);
+    RootObject->SetNumberField(TEXT("worldMaxY"), MapBounds.Max.Y);
     RootObject->SetNumberField(TEXT("totalCells"), GridX * GridY);
     RootObject->SetStringField(TEXT("exportTime"), FDateTime::Now().ToString());
     // Zone 정보 추가
@@ -178,10 +174,10 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const in
         
         // 월드 좌표
         TSharedPtr<FJsonObject> WorldObject = MakeShareable(new FJsonObject);
-        WorldObject->SetNumberField(TEXT("minX"), Zone.MinPos.X * GPos_Revise_Num);
-        WorldObject->SetNumberField(TEXT("minY"), Zone.MinPos.Y * GPos_Revise_Num);
-        WorldObject->SetNumberField(TEXT("maxX"), Zone.MaxPos.X * GPos_Revise_Num);
-        WorldObject->SetNumberField(TEXT("maxY"), Zone.MaxPos.Y * GPos_Revise_Num);
+        WorldObject->SetNumberField(TEXT("minX"), Zone.WorldPos.MinX);
+        WorldObject->SetNumberField(TEXT("minY"), Zone.WorldPos.MinY);
+        WorldObject->SetNumberField(TEXT("maxX"), Zone.WorldPos.MaxX);
+        WorldObject->SetNumberField(TEXT("maxY"), Zone.WorldPos.MaxY);
         ZoneObject->SetObjectField(TEXT("worldPos"), WorldObject);
 
         ZoneArray.Add(MakeShareable(new FJsonValueObject(ZoneObject)));
