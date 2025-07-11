@@ -23,10 +23,12 @@ public:
 	USwarmGameInstance();
 	// 서버 연결
 	UFUNCTION(BlueprintCallable, Category = "Network")
-	void ConnectToServer(const FString& InAddress, int32 InServerPort);
+	void ConnectToServer(const FString& InAddress, const int32 InServerPort);
 	// 서버 연결 해제
 	UFUNCTION(BlueprintCallable, Category = "Network")
 	void DisconnectFromServer();
+	// 세션 가져오기
+	FSessionRef GetGameSession();
 
 protected:
 	virtual void Tick(float DeltaTime) override;

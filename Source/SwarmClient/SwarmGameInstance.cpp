@@ -13,16 +13,16 @@ USwarmGameInstance::USwarmGameInstance()
 }
 
 // 서버 연결
-void USwarmGameInstance::ConnectToServer(const FString& InServerAddress, int32 InServerPort)
+void USwarmGameInstance::ConnectToServer(const FString& InAddress, const int32 InServerPort)
 {
 	if (GameSession == nullptr)
 	{
 		GameSession = MakeShared<FSession>();
 	}
 	// 서버 연결 및 네트워크 스레드 시작
-	if (GameSession->ConnectToServer(InServerAddress, InServerPort) == false)
+	if (GameSession->ConnectToServer(InAddress, InServerPort) == false)
 	{
-		UE_LOG(LogTemp, Error, TEXT("서버 연결 실패: %s:%d"), *InServerAddress, InServerPort);
+		UE_LOG(LogTemp, Error, TEXT("서버 연결 실패: %s:%d"), *InAddress, InServerPort);
 		GameSession.Reset();
 		return;
 	}
@@ -42,9 +42,14 @@ void USwarmGameInstance::DisconnectFromServer()
 	{
 		return;
 	}
-	// TODO: 연결 해제 패킷 전송
-	// 이후에 Disconnect 실행
+
 	GameSession->Disconnect();
+}
+
+// 세션 가져오기
+FSessionRef USwarmGameInstance::GetGameSession()
+{
+	return GameSession;
 }
 
 // 매 프레임마다 실행
