@@ -12,6 +12,9 @@ enum class EZoneType : uint8
 // Zone 위치 정보
 struct FZonePosition
 {
+	FZonePosition(const float InMinX, const float InMinY, const float InMaxX, const float InMaxY)
+		: MinX(InMinX), MinY(InMinY), MaxX(InMaxX), MaxY(InMaxY) {}
+	
 	int32 MinX = 0;
 	int32 MinY = 0;
 	int32 MaxX = 0;
@@ -19,11 +22,17 @@ struct FZonePosition
 };
 
 // Zone 정보
-struct FZone
+struct FZoneInfo
 {
+	FZoneInfo()
+		: ZoneName(""), ZoneType(0), GridSize(0), WorldPos(0, 0, 0, 0) {}
+	
+	FZoneInfo(const EZoneType InZoneType, const FString& InZoneName, const FZonePosition ZonePosition)
+		: ZoneName(InZoneName), ZoneType(static_cast<uint8>(InZoneType)), WorldPos(ZonePosition) {}
+	
 	FString ZoneName;
-	EZoneType ZoneType;
-	int32 GridSize = 0;
+	uint8 ZoneType;
+	int32 GridSize;
 	FZonePosition WorldPos;
 };
 
@@ -38,7 +47,7 @@ struct FMapData
 	int32 WorldMinY = 0;
 	int32 WorldMaxX = 0;
 	int32 WorldMaxY = 0;
-	TArray<FZone> Zones;
+	TArray<FZoneInfo> Zones;
 	// 맵 그리드 데이터
-	TArray<TArray<int32>> MapGrid;
+	TArray<TArray<int8>> MapGrid;
 };
