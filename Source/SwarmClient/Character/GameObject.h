@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Struct.pb.h"
 #include "GameFramework/Character.h"
-#include "Zone/World3D.h"
 #include "GameObject.generated.h"
 
 class AZoneGameState;
@@ -27,6 +26,10 @@ public:
 	void UpdateObjectInfo(const Protocol::ObjectInfo& InObjInfo);
 	// 위치 업데이트
 	void UpdatePosition(const Protocol::PosInfo& InPosInfo);
+	// 현재위치 가져오기
+	Protocol::PosInfo GetPosInfo() const;
+	// Id 가져오기
+	uint64 GetObjectId() const;
 	// Player인지 확인
 	bool IsPlayer() const;
 	// Monster인지 확인
@@ -41,9 +44,8 @@ protected:
 	uint64 ObjectId;
 	// 캐릭터 타입
 	Protocol::ObjectType Type;
-	// 위치 및 방향 정보
+	// 위치 정보
 	Protocol::PosInfo PosInfo;
-	FWorld3D World3D;
 	// 스탯 정보
 	Protocol::StatInfo StatInfo;
 	// 이름

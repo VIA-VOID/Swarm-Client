@@ -35,9 +35,12 @@ AGameObject::AGameObject()
 // Object 정보 업데이트
 void AGameObject::UpdateObjectInfo(const Protocol::ObjectInfo& InObjInfo)
 {
+	ObjectId = InObjInfo.objectid();
 	Type = InObjInfo.type();
 	StatInfo.CopyFrom(InObjInfo.statinfo());
 	Name = InObjInfo.name();
+	GetCharacterMovement()->MaxWalkSpeed = static_cast<float>(StatInfo.movespeed());
+
 	UpdatePosition(InObjInfo.posinfo());
 }
 
@@ -56,7 +59,18 @@ void AGameObject::Tick(float DeltaTime)
 void AGameObject::UpdatePosition(const Protocol::PosInfo& InPosInfo)
 {
 	PosInfo.CopyFrom(InPosInfo);
-	World3D.UpdatePosition(InPosInfo);
+}
+
+// Protocol::PosInfo 가져오기
+Protocol::PosInfo AGameObject::GetPosInfo() const
+{
+	return PosInfo;
+}
+
+// ID 가져오기
+uint64 AGameObject::GetObjectId() const
+{
+	return ObjectId;
 }
 
 // Player인지 확인
