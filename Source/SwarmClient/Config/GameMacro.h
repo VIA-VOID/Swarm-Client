@@ -11,3 +11,11 @@ UNIQUE_PTR(FPacketHandler);
 SHARED_PTR(FSession);
 
 WEAK_PTR(FSession);
+
+//----------------------------------------------------------//
+// 함수 매크로
+
+// 패킷전송
+#define SEND_PACKET(PacketId, ProtoPacket) \
+	USwarmGameInstance* SwarmGameInstance = Cast<USwarmGameInstance>(GWorld->GetGameInstance()); \
+	SwarmGameInstance->GetGameSession()->SendPacket(PacketId, ProtoPacket);
