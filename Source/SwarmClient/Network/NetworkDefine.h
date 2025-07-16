@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 
 // 버퍼 크기 (4KB)
-constexpr uint32 G_Buffer_Size = 4096;
+constexpr uint32 GBuffer_Size = 4096;
 // 패킷 버퍼 크기 (512MB)
-constexpr uint32 G_Packet_Buffer_Size = 512;
+constexpr uint32 GPacket_Buffer_Size = 512;
+// RTT 평균 측정 개수
+constexpr uint16 GAvg_Rtt_Count = 10;
 
 /**
  *	패킷구조

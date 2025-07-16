@@ -2,6 +2,7 @@
 
 // 자동생성
 // 도메인별 핸들러 include
+#include "SystemPacketHandler.h"
 #include "PlayerPacketHandler.h"
 #include "ChatPacketHandler.h"
 
@@ -15,6 +16,7 @@ void FPacketHandler::Init(UWorld* InWorld)
 {
 	World = InWorld;
 
+	DomainHandlerClasses.Add(MakeUnique<FSystemPacketHandler>());
 	DomainHandlerClasses.Add(MakeUnique<FPlayerPacketHandler>());
 	DomainHandlerClasses.Add(MakeUnique<FChatPacketHandler>());
 

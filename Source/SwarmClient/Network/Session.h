@@ -2,6 +2,7 @@
 
 #include "NetworkThread.h"
 #include "NetworkDefine.h"
+#include "Containers/Deque.h"
 #include "Packet/PacketId.h"
 
 class FSendThread;
@@ -29,8 +30,12 @@ public:
 	void SendPacket(const EPacketID PacketId, const T& ProtoPacket);
 	// 수신된 패킷 처리
 	void ProcessRecvPackets();
+	// RTT 업데이트
+	void UpdateRoundTripTime(const int32 RoundTripTime);
 	// Socket Get
 	FSocket* GetSocket() const;
+	// RTT 평균값 가져오기
+	int32 GetRttAvg() const;
 
 private:
 	// 소켓 생성
@@ -57,6 +62,10 @@ private:
 	// 연결 정보
 	FString ServerAddress;
 	int32 ServerPort;
+
+	// RTT
+	int32 AvgRoundTripTime;
+	TDeque<int32> RttDeque;
 
 	// 연결여부
 	bool IsConnect;

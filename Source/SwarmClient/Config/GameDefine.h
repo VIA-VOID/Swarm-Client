@@ -1,4 +1,6 @@
 #pragma once
 
-// 좌표 보정 수치(기본 소수점 3자리)
-constexpr int32 GPos_Revise_Num = 1000;
+// RTT 측정 최대 크기
+constexpr uint8 GRtt_History_Size = 100;
+// 이동패킷 전송 간격 (기본 초당 5회)
+constexpr float GMove_Packet_Interval = 0.2;

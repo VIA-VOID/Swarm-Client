@@ -2,6 +2,7 @@
 #include "Sockets.h"
 #include "SocketSubsystem.h"
 #include "Packet/PacketHandler.h"
+#include <numeric>
 
 /*----------------------------
         FSession
@@ -91,10 +92,33 @@ void FSession::ProcessRecvPackets()
     }
 }
 
+// RTT 업데이트
+void FSession::UpdateRoundTripTime(const int32 RoundTripTime)
+{
+    if (RttDeque.Num() >= GAvg_Rtt_Count)
+    {
+        RttDeque.PopFirst();
+    }
+
+    RttDeque.PushLast(RoundTripTime);
+
+    if (RttDeque.IsEmpty() == false)
+    {
+        const int32 Sum = std::accumulate(RttDeque.begin(), RttDeque.end(), 0);
+        AvgRoundTripTime = Sum / RttDeque.Num();
+    }
+}
+
 // Socket Get
 FSocket* FSession::GetSocket() const
 {
     return Socket;
+}
+
+// RTT 평균값 가져오기
+int32 FSession::GetRttAvg() const
+{
+    return AvgRoundTripTime <= 0 ? 1 : AvgRoundTripTime;
 }
 
 // 소켓 생성
