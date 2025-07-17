@@ -64,6 +64,11 @@ void ASwarmPlayerController::SetupInputComponent()
 // 이동 Input 받기
 void ASwarmPlayerController::Move(const FInputActionValue& Value)
 {
+	if (Player == nullptr)
+	{
+		return;
+	}
+
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -71,8 +76,8 @@ void ASwarmPlayerController::Move(const FInputActionValue& Value)
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 	// 캐릭터 이동
-	GetCharacter()->AddMovementInput(ForwardDirection, MovementVector.Y);
-	GetCharacter()->AddMovementInput(RightDirection, MovementVector.X);
+	Player->AddMovementInput(ForwardDirection, MovementVector.Y);
+	Player->AddMovementInput(RightDirection, MovementVector.X);
 	
 	const FVector MoveDirection = ForwardDirection * MovementVector.Y + RightDirection * MovementVector.X;
 	const FVector CurrentLocation = Player->GetActorLocation();
@@ -115,6 +120,11 @@ void ASwarmPlayerController::Look(const FInputActionValue& Value)
 // 이동 패킷 전송
 void ASwarmPlayerController::SendMovePacket(const Protocol::PosInfo& InPosInfo)
 {
+	if (Player == nullptr)
+	{
+		return;
+	}
+
 	// 이동방향 벡터
 	const FVector CurrentAcceleration = Player->GetCharacterMovement()->GetCurrentAcceleration();
 	const FVector WorldMoveDirection = CurrentAcceleration.GetSafeNormal();
