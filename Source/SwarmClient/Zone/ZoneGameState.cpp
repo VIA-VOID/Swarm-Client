@@ -26,8 +26,8 @@ void AZoneGameState::EnterPlayer(const Protocol::SC_PLAYER_ENTER_GAME& Packet)
 	SpawnObject(ObjInfo, true);
 }
 
-// Player 스폰 패킷
-void AZoneGameState::SpawnPlayer(const Protocol::SC_PLAYER_SPAWN& Packet)
+// Object 스폰 패킷
+void AZoneGameState::SpawnObject(const Protocol::SC_OBJECT_SPAWN& Packet)
 {
 	const Protocol::ObjectInfo ObjInfo = Packet.objectinfo();
 
@@ -35,11 +35,40 @@ void AZoneGameState::SpawnPlayer(const Protocol::SC_PLAYER_SPAWN& Packet)
 	SpawnObject(ObjInfo, false);
 }
 
-// Player 디스폰
-void AZoneGameState::DespawnPlayer(const uint64 ObjectId)
+// Object 디스폰
+void AZoneGameState::DespawnObject(const uint64 ObjectId)
 {
 	// Object 디스폰
-	DespawnObject(ObjectId);
+	AGameObject* Object = FindObject(ObjectId);
+	if (Object == nullptr)
+	{
+		return;
+	}
+	
+	Objects.Remove(ObjectId);
+	Object->Destroy();
+}
+
+// Object 찾기
+AGameObject* AZoneGameState::FindObject(const uint64 ObjectId)
+{
+	if (const auto FindObject = Objects.Find(ObjectId))
+	{
+		return *FindObject;
+	}
+	return nullptr;
+}
+
+ASwarmPlayer* AZoneGameState::FindPlayer(const uint64 ObjectId)
+{
+	if (const auto FindObject = Objects.Find(ObjectId))
+	{
+		if ((*FindObject)->IsPlayer())
+		{
+			return Cast<ASwarmPlayer>(*FindObject);	
+		}		
+	}
+	return nullptr;
 }
 
 // Object 스폰
@@ -68,19 +97,6 @@ void AZoneGameState::SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool
 	}
 }
 
-// Object 디스폰
-void AZoneGameState::DespawnObject(const uint64 ObjectId)
-{
-	ASwarmPlayer* Player = FindPlayer(ObjectId); 
-	if (Player == nullptr)
-	{
-		return;
-	}
-
-	Players.Remove(ObjectId);
-	Player->Destroy();
-}
-
 // Player 스폰
 void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpawnParameters& SpawnParams,
                                  const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn/* = false*/)
@@ -97,7 +113,7 @@ void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpaw
 	}
 	// 중복 처리 체크
 	const uint64 ObjectId = ObjInfo.objectid();
-	if (FindPlayer(ObjectId) != nullptr)
+	if (FindObject(ObjectId) != nullptr)
 	{
 		return;
 	}
@@ -121,7 +137,7 @@ void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpaw
 			PlayerController->Possess(SwarmMyPlayer);
 		
 			MyPlayer = SwarmMyPlayer;
-			Players.Add(ObjectId, Cast<ASwarmPlayer>(SwarmMyPlayer));
+			Objects.Add(ObjectId, Cast<ASwarmPlayer>(SwarmMyPlayer));
 		}
 	}
 	else
@@ -132,17 +148,7 @@ void AZoneGameState::SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpaw
 			// 플레이어 정보 업데이트
 			OtherPlayer->UpdatePlayerInfo(ObjInfo);
 			
-			Players.Add(ObjectId, OtherPlayer);
+			Objects.Add(ObjectId, OtherPlayer);
 		}
 	}
-}
-
-// 플레이어 찾기
-ASwarmPlayer* AZoneGameState::FindPlayer(const uint64 PlayerId)
-{
-	if (const auto FindPlayer = Players.Find(PlayerId))
-	{
-		return *FindPlayer;
-	}
-	return nullptr;
 }

@@ -28,18 +28,18 @@ public:
 
 	// 플레이어 입장 처리 패킷
 	void EnterPlayer(const Protocol::SC_PLAYER_ENTER_GAME& Packet);
-	// Player 스폰 패킷
-	void SpawnPlayer(const Protocol::SC_PLAYER_SPAWN& Packet);
-	// Player 디스폰
-	void DespawnPlayer(const uint64 ObjectId);
-	// 플레이어 찾기
-	ASwarmPlayer* FindPlayer(const uint64 PlayerId);
+	// Object 스폰 패킷
+	void SpawnObject(const Protocol::SC_OBJECT_SPAWN& Packet);
+	// Object 디스폰
+	void DespawnObject(const uint64 ObjectId);
+	// Object 찾기
+	AGameObject* FindObject(const uint64 ObjectId);
+	ASwarmPlayer* FindPlayer(const uint64 ObjectId);
+	
 	
 private:
 	// Object 스폰
 	void SpawnObject(const Protocol::ObjectInfo& ObjInfo, const bool IsOwn = false);
-	// Object 디스폰
-	void DespawnObject(const uint64 ObjectId);
 	// Player 스폰
 	void SpawnPlayer(const Protocol::ObjectInfo& ObjInfo, FActorSpawnParameters& SpawnParams,
 		const FVector& SpawnLocation, const FRotator& SpawnRotation, const bool IsOwn = false);
@@ -49,8 +49,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ASwarmPlayer> OtherPlayerClass;
 	ASwarmMyPlayer* MyPlayer;
-	TMap<uint64, ASwarmPlayer*> Players;
-
+	TMap<uint64, AGameObject*> Objects;
+	
 	// 맵데이터
 	FMapData MapData;
 };

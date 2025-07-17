@@ -4,6 +4,7 @@
 // 도메인별 핸들러 include
 #include "SystemPacketHandler.h"
 #include "PlayerPacketHandler.h"
+#include "ObjectPacketHandler.h"
 #include "ChatPacketHandler.h"
 
 UWorld* FPacketHandler::World;
@@ -18,6 +19,7 @@ void FPacketHandler::Init(UWorld* InWorld)
 
 	DomainHandlerClasses.Add(MakeUnique<FSystemPacketHandler>());
 	DomainHandlerClasses.Add(MakeUnique<FPlayerPacketHandler>());
+	DomainHandlerClasses.Add(MakeUnique<FObjectPacketHandler>());
 	DomainHandlerClasses.Add(MakeUnique<FChatPacketHandler>());
 
 	// 도메인별로 함수 테이블 등록
