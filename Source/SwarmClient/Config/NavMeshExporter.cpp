@@ -138,12 +138,29 @@ bool ANavMeshExporter::IsWalkable(const float X, const float Y) const
         return false;
     }
 
-    // 2D 좌표만 사용
-    const FVector WorldPos(X, Y, 0.0f);    
+    // 검색범위를 GridSize의 10%로 지정
+    const FVector QueryPoint(X, Y, 0.0f);
+    const float Radius = GridSize * 0.1f;
+    // 검색 박스 크기 지정, z축은 사용하지 않음 
+    const FVector SearchExtent(Radius, Radius, 10000.0f);
     FNavLocation NavLocation;
-    const FVector SearchExtent(GridSize * 0.5f, GridSize * 0.5f, 10000.0f);
-    // navMesh상 위치 투영
-    return NavMesh->ProjectPoint(WorldPos, NavLocation, SearchExtent);
+
+    // NavMesh로 지정 좌표 투영
+    if (NavMesh->ProjectPoint(QueryPoint, NavLocation, SearchExtent))
+    {
+        // 원본좌표와 투영좌표 거리 계산
+        const float Distance2D = FVector2D::Distance(
+            FVector2D(X, Y),
+            FVector2D(NavLocation.Location.X, NavLocation.Location.Y)
+        );
+        // 거리판별
+        if (Distance2D <= Radius)
+        {
+            return true;
+        }
+    }
+    // 이동불가
+    return false;
 }
 
 // json 파일로 저장
