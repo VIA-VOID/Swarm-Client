@@ -181,10 +181,17 @@ bool ANavMeshExporter::SaveToJSON(const TArray<TArray<int32>>& MapData, const in
     RootObject->SetNumberField(TEXT("worldMaxY"), MapBounds.Max.Y);
     RootObject->SetNumberField(TEXT("totalCells"), GridX * GridY);
     RootObject->SetStringField(TEXT("exportTime"), FDateTime::Now().ToString());
+
     // Zone 정보 추가
     TArray<TSharedPtr<FJsonValue>> ZoneArray;
     for (const FZoneInfo& Zone : Zones)
     {
+        if (Zone.ZoneType == 0)
+        {
+            // 마을 맵일 경우 스폰 offset 설정
+            RootObject->SetNumberField(TEXT("spawnOffset"), (Zone.WorldPos.MaxX - Zone.WorldPos.MinX) / 4);        
+        }
+        
         const TSharedPtr<FJsonObject> ZoneObject = MakeShareable(new FJsonObject);
         ZoneObject->SetNumberField(TEXT("zoneType"), Zone.ZoneType);
         ZoneObject->SetStringField(TEXT("zoneName"), Zone.ZoneName);
