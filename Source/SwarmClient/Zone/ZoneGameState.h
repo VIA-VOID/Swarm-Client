@@ -32,6 +32,10 @@ public:
 	void SpawnObject(const Protocol::SC_OBJECT_SPAWN& Packet);
 	// Object 디스폰
 	void DespawnObject(const uint64 ObjectId);
+	// 월드 좌표 그리드 좌표로 변환
+	FVector2D MakeGridIndex(const FVector& WorldPosition) const;
+	// 이동 가능여부
+	bool CanGo(const FVector& WorldPosition) const;
 	// Object 찾기
 	AGameObject* FindObject(const uint64 ObjectId);
 	ASwarmPlayer* FindPlayer(const uint64 ObjectId);

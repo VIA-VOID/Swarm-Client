@@ -49,6 +49,29 @@ void AZoneGameState::DespawnObject(const uint64 ObjectId)
 	Object->Destroy();
 }
 
+// 월드 좌표 그리드 좌표로 변환
+FVector2D AZoneGameState::MakeGridIndex(const FVector& WorldPosition) const
+{
+	const float GridX = (WorldPosition.X - MapData.WorldMinX) / MapData.GridSize;
+	const float GridY = (WorldPosition.Y - MapData.WorldMinY) / MapData.GridSize;
+	return FVector2D(GridX, GridY);
+}
+
+// 이동 가능여부
+bool AZoneGameState::CanGo(const FVector& WorldPosition) const
+{
+	const FVector2D GridPos = MakeGridIndex(WorldPosition);
+	const int32 GridX = FMath::FloorToInt(GridPos.X);
+	const int32 GridY = FMath::FloorToInt(GridPos.Y);
+
+	// 그리드 범위 넘으면 이동 불가
+	if (GridX < 0 || GridX >= MapData.GridX || GridY < 0 || GridY >= MapData.GridY)
+	{
+		return false;
+	}
+	return MapData.MapGrid[GridY][GridX] == 1;
+}
+
 // Object 찾기
 AGameObject* AZoneGameState::FindObject(const uint64 ObjectId)
 {

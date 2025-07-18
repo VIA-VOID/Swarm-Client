@@ -8,6 +8,7 @@
 #include "Struct.pb.h"
 #include "SwarmPlayerController.generated.h"
 
+class AZoneGameState;
 class ASwarmMyPlayer;
 
 /*-------------------------------------------------------
@@ -50,6 +51,8 @@ protected:
 	UInputAction* LookAction;
 
 private:
+	// GameState
+	AZoneGameState* GameState;
 	// 캐릭터
 	ASwarmMyPlayer* Player;
 	// 이동관련

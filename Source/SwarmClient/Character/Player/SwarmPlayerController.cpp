@@ -11,6 +11,7 @@
 #include "Session.h"
 #include "SwarmGameInstance.h"
 #include "SwarmMyPlayer.h"
+#include "ZoneGameState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -33,6 +34,11 @@ void ASwarmPlayerController::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+
+	if (AZoneGameState* ZoneGameState = Cast<AZoneGameState>(GetWorld()->GetGameState()))
+	{
+		GameState = ZoneGameState;
 	}
 }
 
@@ -64,14 +70,14 @@ void ASwarmPlayerController::SetupInputComponent()
 // 이동 Input 받기
 void ASwarmPlayerController::Move(const FInputActionValue& Value)
 {
-	if (Player == nullptr)
+	if (Player == nullptr || GameState == nullptr)
 	{
 		return;
 	}
 
+	const FVector PrevLocation = Player->GetActorLocation();
 	const FVector2D MovementVector = Value.Get<FVector2D>();
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FRotator YawRotation(0, GetControlRotation().Yaw, 0);
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -79,11 +85,27 @@ void ASwarmPlayerController::Move(const FInputActionValue& Value)
 	Player->AddMovementInput(ForwardDirection, MovementVector.Y);
 	Player->AddMovementInput(RightDirection, MovementVector.X);
 	
-	const FVector MoveDirection = ForwardDirection * MovementVector.Y + RightDirection * MovementVector.X;
+	// 이동 가능지점 판별
+	// 이동방향에서 GCan_Move_Distance 만큼 앞선 위치 체크
 	const FVector CurrentLocation = Player->GetActorLocation();
-	const FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, CurrentLocation + MoveDirection);
+	const FVector MoveDirection = ForwardDirection * MovementVector.Y + RightDirection * MovementVector.X;
+	const FVector NextLocation = CurrentLocation + MoveDirection * GCan_Move_Distance;
+	
+	if (GameState->CanGo(NextLocation) == false)
+	{
+		// 이동불가
+		UE_LOG(LogTemp, Warning, TEXT("이동 불가능한 지점: X=%f, Y=%f"), NextLocation.X, NextLocation.Y);
+		LastMovement = MovementVector;
+
+		// 다음틱에 이전 위치로 이동시킴
+		GetWorld()->GetTimerManager().SetTimerForNextTick([this, PrevLocation]()
+		{
+			Player->SetActorLocation(PrevLocation);
+		});
+	}
 
 	// 캐릭터 위치 업데이트
+	const FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, CurrentLocation + MoveDirection);
 	Protocol::PosInfo PlayerPos;
 	PlayerPos.set_x(CurrentLocation.X);
 	PlayerPos.set_y(CurrentLocation.Y);
