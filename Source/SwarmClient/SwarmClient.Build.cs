@@ -14,6 +14,8 @@ public class SwarmClient : ModuleRules
             "CoreUObject", 
             "Engine", 
             "InputCore", 
+            "Slate", 
+            "SlateCore", 
             "EnhancedInput",
             "NavigationSystem",
             "Navmesh",
@@ -37,6 +39,7 @@ public class SwarmClient : ModuleRules
             "SwarmClient/Protocol/",
             "SwarmClient/Character/",
             "SwarmClient/Zone/",
+            "SwarmClient/Chat/",
         });
     }
 }
