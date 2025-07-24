@@ -36,6 +36,8 @@ public:
 	FVector2D MakeGridIndex(const FVector& WorldPosition) const;
 	// 이동 가능여부
 	bool CanGo(const FVector& WorldPosition) const;
+	// 내캐릭터 가져오기
+	ASwarmMyPlayer* GetMyPlayer() const;
 	// Object 찾기
 	AGameObject* FindObject(const uint64 ObjectId);
 	ASwarmPlayer* FindPlayer(const uint64 ObjectId);

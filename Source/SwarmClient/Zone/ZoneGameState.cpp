@@ -72,6 +72,12 @@ bool AZoneGameState::CanGo(const FVector& WorldPosition) const
 	return MapData.MapGrid[GridY][GridX] == 1;
 }
 
+// 내캐릭터 가져오기
+ASwarmMyPlayer* AZoneGameState::GetMyPlayer() const
+{
+	return MyPlayer;
+}
+
 // Object 찾기
 AGameObject* AZoneGameState::FindObject(const uint64 ObjectId)
 {
