@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Protocol.pb.h"
 #include "SwarmPlayer.h"
 #include "SwarmMyPlayer.generated.h"
 
@@ -19,6 +20,9 @@ class SWARMCLIENT_API ASwarmMyPlayer : public ASwarmPlayer
 
 public:
 	ASwarmMyPlayer();
+
+	// 채팅 메시지 수신
+	void RecvChatMessage(const Protocol::SC_CHAT_MSG& InMsg);
 
 protected:
 	virtual void BeginPlay() override;

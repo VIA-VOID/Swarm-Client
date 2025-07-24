@@ -3,6 +3,7 @@
 
 #include "Character/Player/SwarmPlayerController.h"
 
+#include "ChatWidget.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameDefine.h"
@@ -12,6 +13,7 @@
 #include "SwarmGameInstance.h"
 #include "SwarmMyPlayer.h"
 #include "ZoneGameState.h"
+#include "Blueprint/UserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -27,18 +29,31 @@ void ASwarmPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// MappingContext 등록
 	if (IsLocalController())
 	{
-		// MappingContext 등록
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
 
+	// GameState 매핑
 	if (AZoneGameState* ZoneGameState = Cast<AZoneGameState>(GetWorld()->GetGameState()))
 	{
 		GameState = ZoneGameState;
+	}
+
+	// 채팅 UI 매핑
+	if (ChatWidgetClass)
+	{
+		UUserWidget* TempWidget = CreateWidget<UUserWidget>(this, ChatWidgetClass);
+		ChatWidget = Cast<UChatWidget>(TempWidget);
+        
+		if (ChatWidget)
+		{
+			ChatWidget->AddToViewport(10);
+		}
 	}
 }
 
@@ -64,6 +79,8 @@ void ASwarmPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ASwarmPlayerController::Move);
 		// 시점
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASwarmPlayerController::Look);
+		// 채팅(엔터)
+		EnhancedInputComponent->BindAction(ChatAction, ETriggerEvent::Triggered, this, &ASwarmPlayerController::FocusChatInput);
 	}
 }
 
@@ -159,4 +176,34 @@ void ASwarmPlayerController::SendMovePacket(const Protocol::PosInfo& InPosInfo)
 	MovePkt.mutable_movevector()->set_y(WorldMoveDirection.Y);
 
 	SEND_PACKET(EPacketID::CS_PLAYER_MOVE, MovePkt);
+}
+
+// 채팅 전송
+void ASwarmPlayerController::SendChatMessage(const FString& Message, EMsgType MsgType)
+{
+	if (Message.IsEmpty())
+	{
+		return;
+	}
+
+	// 패킷 전송
+	Protocol::CS_CHAT_MSG ChatPkt;
+	ChatPkt.set_msg(TCHAR_TO_UTF8(*Message));
+	ChatPkt.set_msgtype(static_cast<Protocol::MsgType>(MsgType));
+	
+	SEND_PACKET(EPacketID::CS_CHAT_MSG, ChatPkt);
+}
+
+UChatWidget* ASwarmPlayerController::GetChatWidget() const
+{
+	return ChatWidget;
+}
+
+// 채팅창 포커스
+void ASwarmPlayerController::FocusChatInput()
+{
+	if (ChatWidget)
+	{
+		ChatWidget->FocusInputField();
+	}
 }

@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChatDefine.h"
 #include "GameFramework/PlayerController.h"
 #include "InputActionValue.h"
 #include "Struct.pb.h"
 #include "SwarmPlayerController.generated.h"
 
+class UChatWidget;
 class AZoneGameState;
 class ASwarmMyPlayer;
 
@@ -24,6 +26,10 @@ class SWARMCLIENT_API ASwarmPlayerController : public APlayerController
 
 public:
 	ASwarmPlayerController();
+	// 채팅 전송
+	void SendChatMessage(const FString& Message, EMsgType MsgType);
+	// 채팅 UI 가져오기
+	UChatWidget* GetChatWidget() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -38,7 +44,10 @@ private:
 	void Look(const FInputActionValue& Value);
 	// 이동 패킷 전송
 	void SendMovePacket(const Protocol::PosInfo& InPosInfo);
-
+	// 채팅창 포커스
+	UFUNCTION(BlueprintCallable, Category = "Chat")
+	void FocusChatInput();
+	
 protected:
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -49,6 +58,12 @@ protected:
 	// 시점 action
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
+	// 채팅 action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ChatAction;
+	// 채팅 UI 클래스
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UChatWidget> ChatWidgetClass;
 
 private:
 	// GameState
@@ -58,4 +73,6 @@ private:
 	// 이동관련
 	float SendDelayTime;
 	FVector2D LastMovement;
+	// 채팅 UI
+	UChatWidget* ChatWidget;
 };

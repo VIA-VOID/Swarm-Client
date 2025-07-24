@@ -3,6 +3,8 @@
 
 #include "Character/Player/SwarmMyPlayer.h"
 
+#include "ChatWidget.h"
+#include "SwarmPlayerController.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -28,4 +30,22 @@ void ASwarmMyPlayer::BeginPlay()
 void ASwarmMyPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+// 채팅 메시지 수신
+void ASwarmMyPlayer::RecvChatMessage(const Protocol::SC_CHAT_MSG& InMsg)
+{
+	const ASwarmPlayerController* PC = Cast<ASwarmPlayerController>(GetController());
+	if (PC == nullptr)
+	{
+		return;
+	}
+	UChatWidget* UI = PC->GetChatWidget();
+	if (UI == nullptr)
+	{
+		return;
+	}
+	// 채팅 메시지 추가
+	const FChatMessage ChatMsg(InMsg.timestamp(), Name, UTF8_TO_TCHAR(InMsg.msg().c_str()), static_cast<EMsgType>(InMsg.msgtype()));
+	UI->AddChatMessage(ChatMsg);
 }
