@@ -49,5 +49,5 @@ protected:
 	// 스탯 정보
 	Protocol::StatInfo StatInfo;
 	// 이름
-	std::string Name;
+	FString Name;
 };

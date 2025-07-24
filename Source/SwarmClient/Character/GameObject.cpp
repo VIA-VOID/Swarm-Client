@@ -38,7 +38,7 @@ void AGameObject::UpdateObjectInfo(const Protocol::ObjectInfo& InObjInfo)
 	ObjectId = InObjInfo.objectid();
 	Type = InObjInfo.type();
 	StatInfo.CopyFrom(InObjInfo.statinfo());
-	Name = InObjInfo.name();
+	Name = InObjInfo.name().c_str();
 	GetCharacterMovement()->MaxWalkSpeed = static_cast<float>(StatInfo.movespeed());
 
 	UpdatePosition(InObjInfo.posinfo());
