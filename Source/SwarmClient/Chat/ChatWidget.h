@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ChatDefine.h"
+#include "Protocol.pb.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/EditableText.h"
@@ -26,7 +27,7 @@ public:
     virtual FReply NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
 
     // 채팅 메시지 추가
-    void AddChatMessage(const FChatMessage& Message);
+    void AddChatMessage(const Protocol::SC_CHAT_MSG& InMsg);
     // 채팅창에 포커스
     void FocusInputField();
     // 포커스 해제
@@ -48,9 +49,7 @@ private:
     // 채팅 타입 변경
     void SetCurrentChatType(const EMsgType NewChatType);
     // 채팅 타입별 색상 가져오기
-    FLinearColor GetChatTypeColor(EMsgType ChatType) const;
-    // 채팅 타입별 접두사 가져오기
-    FString GetChatTypePrefix(const EMsgType ChatType) const;
+    FLinearColor GetChatTypeColor(const Protocol::MsgType MsgType) const;
 
 protected:
     // 채팅 - 전체 버튼

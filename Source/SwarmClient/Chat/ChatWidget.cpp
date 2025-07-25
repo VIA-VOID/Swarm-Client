@@ -65,29 +65,19 @@ FReply UChatWidget::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent
 }
 
 // 채팅 메시지 추가
-void UChatWidget::AddChatMessage(const FChatMessage& Message)
+void UChatWidget::AddChatMessage(const Protocol::SC_CHAT_MSG& InMsg)
 {
     if (ChatScrollBox == nullptr || ChatMessageContainer == nullptr)
     {
         return;
     }
 
-    // 메시지 포맷
-    const FLinearColor MessageColor = GetChatTypeColor(Message.MsgType);
-    const FString ChatPrefix = GetChatTypePrefix(Message.MsgType);
-    const FDateTime MessageTime = FDateTime::FromUnixTimestamp(Message.Timestamp / 1000);
-    const FDateTime KoTime = MessageTime + FTimespan::FromHours(9);
-    const FString TimeString = FString::Printf(TEXT("[%02d:%02d]"), KoTime.GetHour(), KoTime.GetMinute());
-    const FString FullMessage = FString::Printf(TEXT("%s %s %s: %s"), 
-        *TimeString, 
-        *ChatPrefix, 
-        *Message.PlayerName, 
-        *Message.Message);
-    
+    const FLinearColor MessageColor = GetChatTypeColor(InMsg.msgtype());
+
     // 위젯 생성 후 스크롤박스 내 삽입
     if (UTextBlock* MessageText = WidgetTree->ConstructWidget<UTextBlock>())
     {
-        MessageText->SetText(FText::FromString(FullMessage));
+        MessageText->SetText(FText::FromString(UTF8_TO_TCHAR(InMsg.msg().c_str())));
         MessageText->SetColorAndOpacity(FSlateColor(MessageColor));
         MessageText->SetAutoWrapText(true);
 
@@ -174,33 +164,17 @@ void UChatWidget::OnChatInputCommitted(const FText& Text, const ETextCommit::Typ
 }
 
 // 채팅 타입별 색상 가져오기
-FLinearColor UChatWidget::GetChatTypeColor(EMsgType ChatType) const
+FLinearColor UChatWidget::GetChatTypeColor(const Protocol::MsgType MsgType) const
 {
-    switch (ChatType)
+    switch (MsgType)
     {
-    case EMsgType::General:
+    case Protocol::MSG_TYPE_General:
         return FLinearColor::White;
-    case EMsgType::Local:
-        return FLinearColor::Gray;
-    case EMsgType::System:
+    case Protocol::MSG_TYPE_Local:
+        return FLinearColor(0.945f, 1.0f, 0.667f, 1.0f);
+    case Protocol::MSG_TYPE_System:
         return FLinearColor::Yellow;
     default:
         return FLinearColor::White;
-    }
-}
-
-// 채팅 타입별 접두사 가져오기
-FString UChatWidget::GetChatTypePrefix(const EMsgType ChatType) const
-{
-    switch (ChatType)
-    {
-    case EMsgType::General:
-        return TEXT("[일반]");
-    case EMsgType::Local:
-        return TEXT("[지역]");
-    case EMsgType::System:
-        return TEXT("[시스템]");
-    default:
-        return TEXT("[모두]");
     }
 }

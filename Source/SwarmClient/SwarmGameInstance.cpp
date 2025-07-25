@@ -27,11 +27,9 @@ void USwarmGameInstance::ConnectToServer(const FString& InAddress, const int32 I
 		return;
 	}
 	// 캐릭터 생성 패킷 전송
-	// todo: 캐릭터 선택창에서 직업, 캐릭터명 지정 후 넘기게
-	// 현재는 선택창이 따로 없기 때문에 하드코딩
 	Protocol::CS_PLAYER_ENTER_GAME EnterGame;
 	EnterGame.set_playertype(Protocol::PLAYER_TYPE_WARRIOR);
-	EnterGame.set_name("PLAYER-01");
+	EnterGame.set_name("");
 	GameSession->SendPacket(EPacketID::CS_PLAYER_ENTER_GAME, EnterGame);
 }
 

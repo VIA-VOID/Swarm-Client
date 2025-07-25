@@ -46,6 +46,5 @@ void ASwarmMyPlayer::RecvChatMessage(const Protocol::SC_CHAT_MSG& InMsg)
 		return;
 	}
 	// 채팅 메시지 추가
-	const FChatMessage ChatMsg(InMsg.timestamp(), Name, UTF8_TO_TCHAR(InMsg.msg().c_str()), static_cast<EMsgType>(InMsg.msgtype()));
-	UI->AddChatMessage(ChatMsg);
+	UI->AddChatMessage(InMsg);
 }
